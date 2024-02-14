@@ -1,8 +1,15 @@
-import React from 'react'
-import { Polyline, Polygon, Tooltip } from 'react-leaflet'
-import ZoomLevel from './ZoomLevel';
+import React, {useState}  from 'react'
+import { Polyline, Polygon, Tooltip, useMapEvents } from 'react-leaflet'
 
 export default function TradeLines() {
+
+	let [ZoomLevel, setZoomLevel] = useState(3);
+
+	const mapEvents = useMapEvents({
+		zoomend: () => {
+			setZoomLevel(mapEvents.getZoom());
+		},
+	});
 
 	const lineStyle = {
     weight: 10,

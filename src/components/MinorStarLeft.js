@@ -1,13 +1,23 @@
-import React from "react";
+import React, {useState}  from "react";
 import {
   Marker,
   Tooltip,
-  Popup,
+	Popup,
+	useMapEvents
 } from "react-leaflet";
 import { Icon } from "leaflet";
-import ZoomLevel from "./ZoomLevel.js";
 
 export default function MinorStarLeft(props) {
+
+	let [ZoomLevel, setZoomLevel] = useState(3);
+
+	const mapEvents = useMapEvents({
+		zoomend: () => {
+			setZoomLevel(mapEvents.getZoom());
+		},
+	});
+
+
 	const position = props.position
 	const name = props.name
 

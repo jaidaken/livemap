@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import "./Markers.css"
 import {
   Tooltip,
-  useMapEvents,
 	Polygon,
+	useMapEvents,
 } from "react-leaflet";
 import MajorStar from "./components/MajorStar.js";
 import MidStar from "./components/MidStar.js";
@@ -11,9 +11,16 @@ import MinorStarLeft from "./components/MinorStarLeft.js"
 import MinorStarRight from "./components/MinorStarRight.js"
 import CircleObject from "./components/Circle.js";
 import TradeLines from "./components/TradeLines.js";
-import ZoomLevel from "./components/ZoomLevel.js";
 
 export default function Markers() {
+
+	let [ZoomLevel, setZoomLevel] = useState(3);
+
+	const mapEvents = useMapEvents({
+		zoomend: () => {
+			setZoomLevel(mapEvents.getZoom());
+		},
+	});
 
 	const titleStyle = {
 		color: "#231F20",
@@ -46,7 +53,7 @@ export default function Markers() {
 
 
 		<div>
-			<MajorStar position={[-112.22, 108.75]} name={"Galactic Center"} />
+			<MajorStar ZoomLevel={ZoomLevel} position={[-112.22, 108.75]} name={"Galactic Center"} />
 			<MajorStar position={[-76.31, 108.39]} name={"Coruscant"}/>
 			<MidStar position={[-123.17, 148.45]} name={"Corellia"}/>
 			<MinorStarLeft position={[-127.08, 131.48]} name={"Dybrin"} />
@@ -61,15 +68,10 @@ export default function Markers() {
 			<MinorStarRight position={[-90.78, 109.08]} name={"Empress Teta"} />
 			<MinorStarRight position={[-90.78, 109.08]} name={"Empress Teta"} />
 
-
-
 			<CircleObject center={[-112.22, 108.75]} radius={51.35} style={coreWorldsStyle} />
 			<CircleObject center={[-112.22, 108.75]} radius={29.57} style={deepCoreStyle} />
 
-
 			<TradeLines />
-
-
 
 			<Polygon
         color="transparent"
