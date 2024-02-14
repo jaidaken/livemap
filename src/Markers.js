@@ -3,7 +3,7 @@ import "./Markers.css"
 import {
   Tooltip,
 	Polygon,
-	useMapEvents,
+	useMapEvents
 } from "react-leaflet";
 import MajorStar from "./components/MajorStar.js";
 import MidStar from "./components/MidStar.js";
@@ -29,7 +29,7 @@ export default function Markers() {
 	}
   const deepCoreStyle = {
 		fillColor: "#0079C0",
-		fillOpacity: 0.2,
+		fillOpacity: 1,
     color: "#202933",
     dashArray: ZoomLevel <= 3 ? "12 12" : "24 24",
     weight: ZoomLevel <= 3 ? 5 : ZoomLevel <= 5 ? 10 : 15,
@@ -39,7 +39,7 @@ export default function Markers() {
 
 	const coreWorldsStyle = {
 		fillColor: "#0073BB",
-		fillOpacity: 0.5,
+		fillOpacity: 0.2,
     color: "#202933",
     dashArray: ZoomLevel <= 3 ? "12 12" : "24 24",
     weight: ZoomLevel <= 3 ? 5 : ZoomLevel <= 5 ? 10 : 15,
@@ -66,7 +66,7 @@ export default function Markers() {
 			<MinorStarLeft position={[-92.2, 106.73]} name={"Keeara Major"} />
 			<MinorStarLeft position={[-90.52, 105.94]} name={"Symbia"} />
 			<MinorStarRight position={[-90.78, 109.08]} name={"Empress Teta"} />
-			<MinorStarRight position={[-90.78, 109.08]} name={"Empress Teta"} />
+			<MinorStarRight position={[-96.96875, 108.75]} name={"Typhon"} />
 
 			<CircleObject center={[-112.22, 108.75]} radius={51.35} style={coreWorldsStyle} />
 			<CircleObject center={[-112.22, 108.75]} radius={29.57} style={deepCoreStyle} />
