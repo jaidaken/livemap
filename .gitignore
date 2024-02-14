@@ -22,4 +22,11 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-/public/images/*
+/public/images/0/*
+/public/images/1/*
+/public/images/2/*
+/public/images/3/*
+/public/images/4/*
+/public/images/5/*
+/public/images/6/*
+/public/images/7/*
