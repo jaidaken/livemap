@@ -1,24 +1,15 @@
-import React, { useState} from "react";
+import React from "react";
 import {
   Marker,
   Tooltip,
-  useMapEvents,
   Popup,
 } from "react-leaflet";
 import { Icon } from "leaflet";
-
+import ZoomLevel from "./ZoomLevel.js";
 
 export default function MidStar(props) {
 	const position = props.position
 	const name = props.name
-
-  let [zoomLevel, setZoomLevel] = useState(3);
-
-  const mapEvents = useMapEvents({
-    zoomend: () => {
-      setZoomLevel(mapEvents.getZoom());
-    },
-	});
 
 	const midIcon = new Icon({
     iconUrl: "/images/marker-icon-mid.svg",
@@ -39,7 +30,7 @@ export default function MidStar(props) {
 
   return (
     <div>
-      {zoomLevel >= 3 ? (
+      {ZoomLevel >= 3 ? (
         <Marker position={position} icon={midIcon}>
           <Tooltip direction="right" opacity={1} permanent>
             <div className="major-popup" style={midStyle}>

@@ -3,17 +3,22 @@ import "leaflet/dist/leaflet.css";
 import "./App.css";
 import {
   MapContainer,
-  TileLayer,
+	TileLayer,
+	useMapEvents
 } from "react-leaflet";
 import { CRS } from "leaflet";
 import Markers from "./Markers.js";
 
 const offlineMap = "/images/{z}/{x}/{y}.png";
 
-const bounds = [
-  [51.49, -0.08],
-  [51.5, -0.06],
-];
+const MapEvents = () => {
+  useMapEvents({
+    click(e) {
+      console.log(`[${e.latlng.lat}, ${e.latlng.lng}]`);
+    },
+  });
+  return false;
+};
 
 function App() {
   return (
@@ -29,10 +34,9 @@ function App() {
 						scrollWheelZoom={true}
           >
             <TileLayer attribution="" url={offlineMap} />
-            <Markers />
+						<Markers />
+						<MapEvents />
           </MapContainer>
-          {/* <MapEvents />
-					{ Zoom >= 5 ? <Marker> your marker options and params </Marker> : null } */}
         </div>
       </header>
     </div>
