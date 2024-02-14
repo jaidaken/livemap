@@ -1,5 +1,19 @@
+import React from "react";
+import "leaflet/dist/leaflet.css";
 import "./App.css";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import {
+  MapContainer,
+  TileLayer,
+} from "react-leaflet";
+import { CRS } from "leaflet";
+import Markers from "./Markers.js";
+
+const offlineMap = "/images/{z}/{x}/{y}.png";
+
+const bounds = [
+  [51.49, -0.08],
+  [51.5, -0.06],
+];
 
 function App() {
   return (
@@ -7,20 +21,18 @@ function App() {
       <header className="App-header">
         <div className="map-container">
           <MapContainer
-            center={[51.505, -0.09]}
-            zoom={13}
-            scrollWheelZoom={false}
+            crs={CRS.Simple}
+            center={[-120, 120]}
+            zoom={3}
+            minZoom={2}
+            maxZoom={7}
+						scrollWheelZoom={true}
           >
-            <TileLayer
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-              url="./images/{z}/{x}/{y}.png"
-            />
-            <Marker position={[51.505, -0.09]}>
-              <Popup>
-                A pretty CSS3 popup. <br /> Easily customizable.
-              </Popup>
-            </Marker>
+            <TileLayer attribution="" url={offlineMap} />
+            <Markers />
           </MapContainer>
+          {/* <MapEvents />
+					{ Zoom >= 5 ? <Marker> your marker options and params </Marker> : null } */}
         </div>
       </header>
     </div>

@@ -32,6 +32,7 @@
   width: 1600px;
   height: 1600px;
   -webkit-transform-origin: 0 0;
+	transform-origin: 0 0;
 }
 .leaflet-marker-icon,
 .leaflet-marker-shadow {
@@ -382,7 +383,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 /* Default icon URLs */
 .leaflet-default-icon-path {
   /* used only in path-guessing heuristic, see L.Icon.Default */
-  background-image: url(images/marker-icon.svg);
+  background-image: url(./public/images/marker-icon.svg);
 }
 
 /* attribution and scale controls */
