@@ -47,3 +47,11 @@
   height: 24px; /* Adjust height as needed */
   margin-right: 8px; /* Adjust margin as needed */
 }
+
+.tooltip-content {
+  white-space: pre-wrap;
+}
+
+.title-span {
+	text-align: center;
+}

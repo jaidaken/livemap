@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./Markers.css";
-import { Tooltip, Polygon, useMap } from "react-leaflet";
+import { useMap } from "react-leaflet";
 import MajorStar from "./components/MajorStar.js";
 import MidStar from "./components/MidStar.js";
 import MinorStarLeft from "./components/MinorStarLeft.js";
@@ -9,6 +9,8 @@ import MinorStarRight from "./components/MinorStarRight.js";
 import MinorStarRightLegends from "./components/MinorStarRightLegends.js";
 import CircleObject from "./components/Circle.js";
 import TradeLines from "./components/TradeLines.js";
+import TitleObject from "./components/Title.js";
+import PolygonObject from "./components/Polygon.js";
 
 export default function Markers() {
   const [ZoomLevel, setZoomLevel] = useState(3);
@@ -16,21 +18,9 @@ export default function Markers() {
 
   map.on("zoomend", () => {
     setZoomLevel(map.getZoom());
-  });
+	});
 
-  const titleStyle = {
-    color: "#231F20",
-    fontSize:
-      ZoomLevel <= 3 ? 40 : ZoomLevel === 4 ? 75 : ZoomLevel === 5 ? 180 : 250,
-    lineHeight:
-      ZoomLevel <= 3
-        ? "30px"
-        : ZoomLevel === 4
-        ? "60px"
-        : ZoomLevel === 5
-        ? "160px"
-        : "200px",
-  };
+
 
   return (
     <div>
@@ -53,6 +43,13 @@ export default function Markers() {
       <MinorStarRight position={[-90.78, 109.08]} name={"Empress Teta"} />
       <MinorStarRight position={[-96.96875, 108.75]} name={"Typhon"} />
 
+
+			<PolygonObject
+      positions={"innerRim"}
+      color="#1B609F"
+      opacity={1}
+			/>
+
 			<CircleObject
         center={[-112.22, 108.75]}
         radius={68.55}
@@ -74,20 +71,13 @@ export default function Markers() {
 
       <TradeLines />
 
-      <Polygon
-        color="transparent"
-        positions={[
-          [-110, 93],
-          [-110, 93],
-          [-110, 93],
-        ]}
-      >
-        <Tooltip direction="right" offset={[0, 0]} opacity={1} permanent>
-          <div style={titleStyle}>
-            D E E P <br /> C O R E
-          </div>
-        </Tooltip>
-      </Polygon>
+			<TitleObject color="" coords={[-110, 93]} text={`D E E P\nC O R E`} />
+			<TitleObject color="" coords={[-131.6875, 65.96875]} text={`C O R E\nW O R L D S`} />
+			<TitleObject color="" coords={[-145.6875, 48.4375]} text={`C O L O N I E S`} />
+			<TitleObject color="" coords={[-168.5625, 40.125]} text={`I N N E R\nR I M`} />
+			<TitleObject color="" coords={[-195.75, 28.625]} text={`E X P A N S I O N\nR E G I O N`} />
+
+
     </div>
   );
 }
