@@ -49,7 +49,7 @@ export default function MinorStarLeft(props) {
             </div>
           </Tooltip>
           <Popup >
-					<a href={`https://starwars.fandom.com/wiki/${name.replace(/ /g,"_")}`} target="_blank" rel="noreferrer">Wiki</a>
+					<a href={`https://starwars.fandom.com/wiki/${name.replace(/ /g,"_")}`} target="_blank" rel="noreferrer">{name} wiki page</a>
 				</Popup>
         </Marker>
       ) : null}
