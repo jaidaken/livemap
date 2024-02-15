@@ -7,8 +7,6 @@ import Markers from "./Markers.js";
 import GridLayer from "./components/GeoGrid.js";
 import Key from "./components/Key.js";
 
-const offlineMap = "/images/{z}/{x}/{y}.png";
-
 const MapEvents = () => {
   useMapEvents({
     click(e) {
@@ -30,7 +28,8 @@ function App() {
             maxZoom={7}
             scrollWheelZoom={true}
           >
-					<TileLayer attribution="" url={offlineMap} />
+					{/* <TileLayer attribution="" url="/images/{z}/{x}/{y}.png" /> */}
+					<TileLayer attribution="" url="" />
 					<Key />
             <Markers />
             <MapEvents />
