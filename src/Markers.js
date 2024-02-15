@@ -3,24 +3,27 @@ import "./Markers.css"
 import {
   Tooltip,
 	Polygon,
-	useMapEvents
+	useMapEvents,
+	useMap
 } from "react-leaflet";
 import MajorStar from "./components/MajorStar.js";
 import MidStar from "./components/MidStar.js";
 import MinorStarLeft from "./components/MinorStarLeft.js"
+import MinorStarLeftLegends from "./components/MinorStarLeftLegends.js"
 import MinorStarRight from "./components/MinorStarRight.js"
+import MinorStarRightLegends from "./components/MinorStarRightLegends.js"
 import CircleObject from "./components/Circle.js";
 import TradeLines from "./components/TradeLines.js";
 
 export default function Markers() {
 
-	let [ZoomLevel, setZoomLevel] = useState(3);
+  const [ZoomLevel, setZoomLevel] = useState(3);
+  const map = useMap();
 
-	const mapEvents = useMapEvents({
-		zoomend: () => {
-			setZoomLevel(mapEvents.getZoom());
-		},
-	});
+  map.on('zoomend', () => {
+    setZoomLevel(map.getZoom());
+  });
+
 
 	const titleStyle = {
 		color: "#231F20",
@@ -62,7 +65,7 @@ export default function Markers() {
 			<MinorStarRight position={[-99.66, 97.96]} name={"Prakith"} />
 			<MinorStarRight position={[-90.78, 109.08]} name={"Empress Teta"} />
 			<MinorStarRight position={[-84.02, 108.97]} name={"Jerrilek"} />
-			<MinorStarLeft position={[-104.43, 90.09]} name={"Odik"} />
+			<MinorStarLeftLegends position={[-104.43, 90.09]} name={"Odik"} />
 			<MinorStarLeft position={[-92.2, 106.73]} name={"Keeara Major"} />
 			<MinorStarLeft position={[-90.52, 105.94]} name={"Symbia"} />
 			<MinorStarRight position={[-90.78, 109.08]} name={"Empress Teta"} />

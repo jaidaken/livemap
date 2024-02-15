@@ -5,6 +5,7 @@ import { MapContainer, TileLayer, useMapEvents } from "react-leaflet";
 import { CRS } from "leaflet";
 import Markers from "./Markers.js";
 import GridLayer from "./components/GeoGrid.js";
+import Key from "./components/Key.js";
 
 const offlineMap = "/images/{z}/{x}/{y}.png";
 
@@ -20,7 +21,6 @@ const MapEvents = () => {
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
         <div className="map-container">
           <MapContainer
             crs={CRS.Simple}
@@ -30,7 +30,8 @@ function App() {
             maxZoom={7}
             scrollWheelZoom={true}
           >
-						<TileLayer attribution="" url={offlineMap} />
+					<TileLayer attribution="" url={offlineMap} />
+					<Key />
             <Markers />
             <MapEvents />
             <GridLayer
@@ -46,8 +47,8 @@ function App() {
               labelOpacity={0.2}
             />
           </MapContainer>
+
         </div>
-      </header>
     </div>
   );
 }

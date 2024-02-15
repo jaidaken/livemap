@@ -15,6 +15,7 @@
 .map-container {
   width: 100vw;
   height: 100vh;
+	z-index: 1;
 }
 
 .leaflet-container {
@@ -23,10 +24,32 @@
   background-color: #26244a;
 }
 
-.grid-label {
-  border-radius: 4px;
-  padding: 2px 4px;
-  font-size: 12px;
-  text-align: left;
-	color: #214E83;
+.key-container {
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  width: 200px; /* Adjust width as needed */
+  position: relative; /* Add position relative */
+}
+.key-container {
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  width: 100%; /* Adjust width as needed */
+}
+
+/* Key item styles */
+.key-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+/* Key marker styles */
+.key-marker {
+  width: 24px; /* Adjust width as needed */
+  height: 24px; /* Adjust height as needed */
+  margin-right: 8px; /* Adjust margin as needed */
 }
