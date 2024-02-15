@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./Markers.css";
-import { Tooltip, Polygon, useMapEvents, useMap } from "react-leaflet";
+import { Tooltip, Polygon, useMap } from "react-leaflet";
 import MajorStar from "./components/MajorStar.js";
 import MidStar from "./components/MidStar.js";
 import MinorStarLeft from "./components/MinorStarLeft.js";
@@ -43,13 +43,13 @@ export default function Markers() {
       <MidStar position={[-123.17, 148.45]} name={"Corellia"} />
       <MinorStarLeft position={[-127.08, 131.48]} name={"Dybrin"} />
       <MinorStarRight position={[-121.93, 96.9]} name={"Byss"} />
-      <MinorStarRight position={[-103.47, 111.19]} name={"Tsoss Beacon"} />
+      <MinorStarRightLegends position={[-103.47, 111.19]} name={"Tsoss Beacon"} />
       <MinorStarRight position={[-99.66, 97.96]} name={"Prakith"} />
       <MinorStarRight position={[-90.78, 109.08]} name={"Empress Teta"} />
-      <MinorStarRight position={[-84.02, 108.97]} name={"Jerrilek"} />
+      <MinorStarRightLegends position={[-84.02, 108.97]} name={"Jerrilek"} />
       <MinorStarLeftLegends position={[-104.43, 90.09]} name={"Odik"} />
-      <MinorStarLeft position={[-92.2, 106.73]} name={"Keeara Major"} />
-      <MinorStarLeft position={[-90.52, 105.94]} name={"Symbia"} />
+      <MinorStarLeftLegends position={[-92.2, 106.73]} name={"Keeara Major"} />
+      <MinorStarLeftLegends position={[-90.52, 105.94]} name={"Symbia"} />
       <MinorStarRight position={[-90.78, 109.08]} name={"Empress Teta"} />
       <MinorStarRight position={[-96.96875, 108.75]} name={"Typhon"} />
 

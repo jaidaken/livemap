@@ -29,15 +29,9 @@
   border: 1px solid #ccc;
   padding: 10px;
   border-radius: 5px;
-  width: 200px; /* Adjust width as needed */
-  position: relative; /* Add position relative */
-}
-.key-container {
-  background-color: white;
-  border: 1px solid #ccc;
-  padding: 10px;
-  border-radius: 5px;
   width: 100%; /* Adjust width as needed */
+  position: relative; /* Add position relative */
+	margin: 0px;
 }
 
 /* Key item styles */
