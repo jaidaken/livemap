@@ -4,7 +4,7 @@ import "./App.css";
 import { MapContainer, TileLayer, useMapEvents } from "react-leaflet";
 import { CRS } from "leaflet";
 import Markers from "./Markers.js";
-import GridLayer from "./components/GeoGrid.js";
+import GridLayer from "./components/GridLayer.js";
 import Key from "./components/Key.js";
 
 const MapEvents = () => {
