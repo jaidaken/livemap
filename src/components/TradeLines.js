@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Polyline, Polygon, Tooltip, useMapEvents } from "react-leaflet";
 
 export default function TradeLines() {
-  let [ZoomLevel, setZoomLevel] = useState(3);
+  let [ZoomLevel, setZoomLevel] = useState(5);
 
   const mapEvents = useMapEvents({
     zoomend: () => {
@@ -11,35 +11,33 @@ export default function TradeLines() {
   });
 
   const lineStyle = {
-    weight: ZoomLevel <= 4 ? 5 : ZoomLevel === 5 ? 10 : ZoomLevel === 6 ? 30 : ZoomLevel === 7 ? 50 : 20,
+    weight: ZoomLevel <= 3 ? 2 : ZoomLevel === 4 ? 3 : ZoomLevel === 5 ? 4 : ZoomLevel === 6 ? 8 : 15,
     opacity: 1,
     color: "white",
   };
 
   const byssRunStyle = {
     color: "white",
-		fontSize: ZoomLevel === 4 ? 20 : ZoomLevel === 5 ? 30 : ZoomLevel === 6 ? 100 : ZoomLevel === 7 ? 180 : 0,
-		marginLeft: ZoomLevel === 4 ? 0 : ZoomLevel === 5 ? 0 : ZoomLevel === 6 ? -90 : ZoomLevel === 7 ? -120 : 0,
-		marginBottom: ZoomLevel === 4 ? 0 : ZoomLevel === 5 ? 20 : ZoomLevel === 6 ? 100 : ZoomLevel === 7 ? 300 : 0,
+		fontSize: ZoomLevel === 5 ? 20 : ZoomLevel === 6 ? 30 : ZoomLevel === 7 ? 50 : ZoomLevel === 8 ? 80 : 0,
+		marginLeft: ZoomLevel === 5 ? -5 : ZoomLevel === 6 ? -10 : ZoomLevel === 7 ? -10 : ZoomLevel === 8 ? -10 : 0,
+		marginBottom: ZoomLevel === 5 ? 10 : ZoomLevel === 6 ? 20 : ZoomLevel === 7 ? 80 : ZoomLevel === 8 ? 200 : 0,
 		transform: "rotate(-40deg)"
 	};
 
-	const byssCords = [-102.25, 91.9375]
+	const byssCords = [-125.40625, 123.453125]
 
   const byssRun = [
     [
-      [-121.93, 96.9],
-      [-117.40625, 92.65625],
-      [-113.0625, 90],
-      [-108.90625, 89.78125],
-      [-104.90625, 91],
-      [-101.6875, 93.875],
-      [-99.66, 97.96],
-      [-94.9375, 101.1875],
-      [-93.671875, 103.328125],
-      [-92.2, 106.73],
-      [-91.65625, 108.15625],
-      [-90.78, 109.08],
+			[-130.53125, 124.8828125],
+			[-128.3203125, 123.1015625],
+			[-127.265625, 122.9921875],
+			[-126.234375, 123.28125],
+			[-125.328125, 124.0078125],
+			[-124.6796875, 125.109375],
+			[-123.4140625, 126.0703125],
+			[-122.78125, 127.4609375],
+			[-122.6171875, 127.859375],
+      [-122.3671875, 128.078125],
     ],
   ];
 
@@ -56,7 +54,7 @@ export default function TradeLines() {
             [byssCords],
           ]}
 					>
-						{ZoomLevel >= 4 ? (
+						{ZoomLevel >= 5 ? (
         <Tooltip direction="right" offset={[-10, -20]} opacity={1} permanent>
             <div style={byssRunStyle}>Byss Run</div>
 							</Tooltip>

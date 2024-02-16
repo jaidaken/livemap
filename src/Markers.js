@@ -24,58 +24,57 @@ export default function Markers() {
 
   return (
     <div>
-      <MajorStar
-        ZoomLevel={ZoomLevel}
-        position={[-112.22, 108.75]}
-        name={"Galactic Center"}
-      />
-      <MajorStar position={[-76.31, 108.39]} name={"Coruscant"} />
-      <MidStar position={[-123.17, 148.45]} name={"Corellia"} />
-      <MinorStarLeft position={[-127.08, 131.48]} name={"Dybrin"} />
-      <MinorStarRight position={[-121.93, 96.9]} name={"Byss"} />
-      <MinorStarRightLegends position={[-103.47, 111.19]} name={"Tsoss Beacon"} />
-      <MinorStarRight position={[-99.66, 97.96]} name={"Prakith"} />
-      <MinorStarRight position={[-90.78, 109.08]} name={"Empress Teta"} />
-      <MinorStarRightLegends position={[-84.02, 108.97]} name={"Jerrilek"} />
-      <MinorStarLeftLegends position={[-104.43, 90.09]} name={"Odik"} />
-      <MinorStarLeftLegends position={[-92.2, 106.73]} name={"Keeara Major"} />
-      <MinorStarLeftLegends position={[-90.52, 105.94]} name={"Symbia"} />
-      <MinorStarRight position={[-90.78, 109.08]} name={"Empress Teta"} />
-      <MinorStarRight position={[-96.96875, 108.75]} name={"Typhon"} />
+      <MajorStar ZoomLevel={ZoomLevel} position={[-128, 128]} name={"Galactic Center"} />
+      <MajorStar position={[-118.578125, 127.8984375]} name={"Coruscant"} />
+      <MidStar position={[-130.828125, 138.40625]} name={"Corellia"} />
+      <MinorStarLeft position={[-131.859375, 133.953125]} name={"Dybrin"} />
+      <MinorStarRight position={[-130.53125, 124.8828125]} name={"Byss"} />
+      <MinorStarRightLegends position={[-125.7109375, 128.6328125]} name={"Tsoss Beacon"} />
+      <MinorStarRight position={[-124.6796875, 125.109375]} name={"Prakith"} />
+      <MinorStarRight position={[-122.3671875, 128.078125]} name={"Empress Teta"} />
+      <MinorStarRightLegends position={[-120.5859375, 128.046875]} name={"Jerrilek"} />
+      <MinorStarLeftLegends position={[-125.9453125, 123.1015625]} name={"Odik"} />
+      <MinorStarLeftLegends position={[-122.78125, 127.4609375]} name={"Keeara Major"} />
+      <MinorStarLeftLegends position={[-122.296875, 127.2578125]} name={"Symbia"} />
+      <MinorStarRight position={[-123.984375, 128.0078125]} name={"Typhon"} />
 
 
 			<PolygonObject
       positions={"innerRim"}
       color="#1B609F"
-      opacity={1}
+      opacity={0.1}
 			/>
 
 			<CircleObject
-        center={[-112.22, 108.75]}
-        radius={68.55}
+        center={[-128, 128]}
+        radius={17.98}
 				color="#006CB5"
-				opacity={1}
+				opacity={0.1}
       />
       <CircleObject
-        center={[-112.22, 108.75]}
-        radius={51.35}
+        center={[-128, 128]}
+        radius={13.4}
 				color="#0073BB"
-				opacity={1}
+				opacity={0.1}
       />
       <CircleObject
-        center={[-112.22, 108.75]}
-        radius={29.57}
+        center={[-128, 128]}
+        radius={7.78}
 				color="#0079C0"
-				opacity={1}
+				opacity={0.1}
       />
 
       <TradeLines />
 
-			<TitleObject color="" coords={[-110, 93]} text={`D E E P\nC O R E`} />
-			<TitleObject color="" coords={[-131.6875, 65.96875]} text={`C O R E\nW O R L D S`} />
-			<TitleObject color="" coords={[-145.6875, 48.4375]} text={`C O L O N I E S`} />
-			<TitleObject color="" coords={[-168.5625, 40.125]} text={`I N N E R\nR I M`} />
-			<TitleObject color="" coords={[-195.75, 28.625]} text={`E X P A N S I O N\nR E G I O N`} />
+			<TitleObject color="" coords={[-127.625, 125.625]} text={`D E E P\nC O R E`} />
+			<TitleObject color="" coords={[-133.1875, 119.0625]} text={`C O R E\nW O R L D S`} />
+			<TitleObject color="" coords={[-136.875, 114.78125]} text={`C O L O N I E S`} />
+			<TitleObject color="" coords={[-142.5625, 111.4375]} text={`I N N E R\nR I M`} />
+			<TitleObject color="" coords={[-147.1875, 108.5625]} text={`E X P A N S I O N\nR E G I O N`} />
+			<TitleObject color="" coords={[-154, 107.0625]} text={`M I D\nR I M`} />
+			<TitleObject color="" coords={[-160.1875, 101.125]} text={`O U T E R\nR I M`} />
+			<TitleObject color="" coords={[-133.75, 89.1875]} text={`U N K N O W N\nR E G I O N S`} />
+			<TitleObject color="" coords={[-122.375, 179.625]} text={`H U T T\nS P A C E`} />
 
 
     </div>

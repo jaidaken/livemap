@@ -9,7 +9,7 @@ import { Icon } from "leaflet";
 
 export default function MidStar(props) {
 
-	let [ZoomLevel, setZoomLevel] = useState(3);
+	let [ZoomLevel, setZoomLevel] = useState(5);
 
 	const mapEvents = useMapEvents({
 		zoomend: () => {
@@ -21,10 +21,13 @@ export default function MidStar(props) {
 	const position = props.position
 	const name = props.name
 
+	const iconSize = ZoomLevel <= 4 ? [20, 20] : ZoomLevel === 5 ? [25, 25] : [40, 40];
+  const iconAnchor = iconSize.map(dim => dim / 2); // Calculate anchor as half of size
+
 	const midIcon = new Icon({
     iconUrl: "/images/marker-icon-mid.svg",
-    iconSize: [40, 40],
-    iconAnchor: [20, 20],
+    iconSize: iconSize,
+    iconAnchor: iconAnchor,
     popupAnchor: [7, -10],
 	});
 
@@ -35,12 +38,12 @@ export default function MidStar(props) {
 		WebkitTextStroke: "1px black",
 		textAlign: "left",
 		position: "relative",
-		marginLeft: "20px"
+		marginLeft: ZoomLevel <= 4 ? "6px" : ZoomLevel === 5  ? "10px" : "16px",
 	};
 
   return (
     <div>
-      {ZoomLevel >= 3 ? (
+      {ZoomLevel >= 4 ? (
         <Marker position={position} icon={midIcon}>
           <Tooltip direction="right" opacity={1} permanent>
             <div className="major-popup" style={midStyle}>

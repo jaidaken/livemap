@@ -55,3 +55,7 @@
 .title-span {
 	text-align: center;
 }
+
+.grid-label div{
+	margin-left: 3px;
+}

@@ -4,7 +4,7 @@ import L from 'leaflet';
 
 const GridLayer = ({
   gridSpacing,
-  topLeftCoord,
+  bottomLeftCoord,
   backgroundColor,
   lineColor,
   lineOpacity,
@@ -30,8 +30,8 @@ const GridLayer = ({
         for (let j = 0; j < 26; j++) {
           // Calculate the bounds of the current grid square
           const squareBounds = [
-            [topLeftCoord[0] + i * stepSize, topLeftCoord[1] + j * stepSize],
-            [topLeftCoord[0] + (i + 1) * stepSize, topLeftCoord[1] + (j + 1) * stepSize],
+            [bottomLeftCoord[0] + i * stepSize, bottomLeftCoord[1] + j * stepSize],
+            [bottomLeftCoord[0] + (i + 1) * stepSize, bottomLeftCoord[1] + (j + 1) * stepSize],
           ];
 
           // Add the grid background to the map
@@ -44,24 +44,24 @@ const GridLayer = ({
           let labelLat, labelLng;
           switch (labelPosition) {
             case 'topLeft':
-              labelLat = topLeftCoord[0] + i * stepSize;
-              labelLng = topLeftCoord[1] + j * stepSize;
+              labelLat = bottomLeftCoord[0] + i * stepSize;
+              labelLng = bottomLeftCoord[1] + j * stepSize;
               break;
             case 'topRight':
-              labelLat = topLeftCoord[0] + i * stepSize;
-              labelLng = topLeftCoord[1] + (j + 1) * stepSize;
+              labelLat = bottomLeftCoord[0] + i * stepSize;
+              labelLng = bottomLeftCoord[1] + (j + 1) * stepSize;
               break;
             case 'bottomLeft':
-              labelLat = topLeftCoord[0] + (i + 1) * stepSize;
-              labelLng = topLeftCoord[1] + j * stepSize;
+              labelLat = bottomLeftCoord[0] + (i + 1) * stepSize;
+              labelLng = bottomLeftCoord[1] + j * stepSize;
               break;
             case 'bottomRight':
-              labelLat = topLeftCoord[0] + (i + 1) * stepSize;
-              labelLng = topLeftCoord[1] + (j + 1) * stepSize;
+              labelLat = bottomLeftCoord[0] + (i + 1) * stepSize;
+              labelLng = bottomLeftCoord[1] + (j + 1) * stepSize;
               break;
             default:
-              labelLat = topLeftCoord[0] + i * stepSize;
-              labelLng = topLeftCoord[1] + j * stepSize;
+              labelLat = bottomLeftCoord[0] + i * stepSize;
+              labelLng = bottomLeftCoord[1] + j * stepSize;
           }
 
           // Calculate the label for the current grid square
@@ -87,7 +87,7 @@ const GridLayer = ({
     return () => {
       gridLayer.remove();
     };
-  }, [map, gridSpacing, topLeftCoord, backgroundColor, lineColor, lineOpacity, backgroundOpacity, labelPosition, labelFont, labelColor, labelOpacity]);
+  }, [map, gridSpacing, bottomLeftCoord, backgroundColor, lineColor, lineOpacity, backgroundOpacity, labelPosition, labelFont, labelColor, labelOpacity]);
 
   return null;
 };

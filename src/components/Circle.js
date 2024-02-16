@@ -17,7 +17,7 @@ export default function CircleObject(props) {
       fillOpacity: opacity || 1,
       color: '#202933',
       dashArray: ZoomLevel <= 3 ? '12 12' : '24 24',
-      weight: ZoomLevel <= 3 ? 5 : ZoomLevel <= 5 ? 10 : 15,
+      weight: ZoomLevel <= 3 ? 1 : ZoomLevel === 4 ? 2 : ZoomLevel === 5 ? 3 : ZoomLevel >= 6 ? 4 : 6,
       lineCap: 'square'
     }
 
