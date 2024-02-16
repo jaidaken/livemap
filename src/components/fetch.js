@@ -8,7 +8,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 export const fetchSystems = async () => {
   try {
     const { data, error } = await supabase.from('systems').select('*');
-
+		
     if (error) {
       throw error;
     }

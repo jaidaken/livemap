@@ -1,28 +1,24 @@
-import React, { useState } from 'react';
-import { Polygon, Tooltip, useMap } from 'react-leaflet';
+import React from 'react';
+import { Polygon, Tooltip } from 'react-leaflet';
+import { useZoom } from './ZoomContext'
 
 export default function TitleObject(props) {
-  const [ZoomLevel, setZoomLevel] = useState(5);
-  const map = useMap();
-
-  map.on('zoomend', () => {
-    setZoomLevel(map.getZoom());
-  });
+  const { zoomLevel } = useZoom()
 
   const { text, coords, color  } = props;
 
 	const Style = {
 		color: color || "#231F20",
 		fontSize:
-			ZoomLevel <= 3 ? 20 : ZoomLevel === 4 ? 25 : ZoomLevel === 5 ? 40 : ZoomLevel === 6 ? 70 : 120,
+			zoomLevel <= 3 ? 20 : zoomLevel === 4 ? 25 : zoomLevel === 5 ? 40 : zoomLevel === 6 ? 70 : 120,
 		lineHeight:
-			ZoomLevel <= 3
+			zoomLevel <= 3
 				? "15px"
-				: ZoomLevel === 4
+				: zoomLevel === 4
 				? "20px"
-				: ZoomLevel === 5
+				: zoomLevel === 5
 				? "30px"
-				: ZoomLevel === 6
+				: zoomLevel === 6
 				? "55px"
 				: "90px",
 		transform: "translate(-53.5%, -5%)",

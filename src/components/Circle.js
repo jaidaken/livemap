@@ -1,37 +1,55 @@
-import React, { useState } from 'react';
-import { Circle, useMap } from 'react-leaflet';
+import React from 'react'
+import { Circle } from 'react-leaflet'
+import { useZoom } from './ZoomContext'
 
 export default function CircleObject(props) {
-  const [ZoomLevel, setZoomLevel] = useState(3);
-  const map = useMap();
+  const { zoomLevel } = useZoom()
 
-  map.on('zoomend', () => {
-    setZoomLevel(map.getZoom());
-  });
+  const { radius, center, color, opacity } = props
 
-  const { radius, center, color, opacity  } = props; // Destructure the props
+  const calculateDashArray = (radius, zoomLevel) => {
+    const circumference = 2 * Math.PI * radius
 
-  // Define your styles within the component
-  const Style = {
-      fillColor: color || '#0079C0', // Use the provided color prop or default to '#0079C0'
-      fillOpacity: opacity || 1,
-      color: '#202933',
-      dashArray: ZoomLevel <= 3 ? '12 12' : '24 24',
-      weight: ZoomLevel <= 3 ? 1 : ZoomLevel === 4 ? 2 : ZoomLevel === 5 ? 3 : ZoomLevel >= 6 ? 4 : 6,
-      lineCap: 'square'
+    // Adjust dashCount based on zoom level
+    const baseDashCount = 4 // Adjust the base number of dashes
+    let zoomAdjustedDashCount = baseDashCount - zoomLevel
+
+    // Limit the dashCount to avoid too many dashes
+    const maxDashCount = 8 // You can adjust this value based on your preference
+
+    if (zoomAdjustedDashCount < 1) {
+      zoomAdjustedDashCount = 1
+    } else if (zoomAdjustedDashCount > maxDashCount) {
+      zoomAdjustedDashCount = maxDashCount
     }
 
+    const dashLength = circumference / zoomAdjustedDashCount
 
-  // Select the appropriate style based on the prop
-  // const selectedStyle = styles[style] || styles.deepCoreStyle; // Default to deepCoreStyle if not specified
+    return `${dashLength} `.repeat(zoomAdjustedDashCount).trim()
+  }
+
+  const dashArray = calculateDashArray(radius, zoomLevel)
+
+  const calculateWeight = () => {
+    if (zoomLevel <= 3) return 1
+    if (zoomLevel === 4) return 2
+    if (zoomLevel === 5) return 3
+    if (zoomLevel === 6) return 4
+    return 6
+  }
+
+  const Style = {
+    fillColor: color || '#0079C0',
+    fillOpacity: opacity || 1,
+    color: '#202933',
+    dashArray: dashArray,
+    weight: calculateWeight(),
+    lineCap: 'square',
+  }
 
   return (
     <div>
-      <Circle
-        center={center}
-        pathOptions={Style} // Use the selected style
-        radius={radius}
-      />
+      <Circle center={center} pathOptions={Style} radius={radius} />
     </div>
-  );
+  )
 }

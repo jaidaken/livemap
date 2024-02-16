@@ -1,26 +1,21 @@
-import React, { useState } from "react";
-import { Polyline, Polygon, Tooltip, useMapEvents } from "react-leaflet";
+import React from "react";
+import { Polyline, Polygon, Tooltip } from "react-leaflet";
+import { useZoom } from './ZoomContext'
 
 export default function TradeLines() {
-  let [ZoomLevel, setZoomLevel] = useState(5);
-
-  const mapEvents = useMapEvents({
-    zoomend: () => {
-      setZoomLevel(mapEvents.getZoom());
-    },
-  });
+  const { zoomLevel } = useZoom()
 
   const lineStyle = {
-    weight: ZoomLevel <= 3 ? 2 : ZoomLevel === 4 ? 3 : ZoomLevel === 5 ? 4 : ZoomLevel === 6 ? 8 : 15,
+    weight: zoomLevel <= 3 ? 2 : zoomLevel === 4 ? 3 : zoomLevel === 5 ? 4 : zoomLevel === 6 ? 8 : 15,
     opacity: 1,
     color: "white",
   };
 
   const byssRunStyle = {
     color: "white",
-		fontSize: ZoomLevel === 5 ? 20 : ZoomLevel === 6 ? 30 : ZoomLevel === 7 ? 50 : ZoomLevel === 8 ? 80 : 0,
-		marginLeft: ZoomLevel === 5 ? -5 : ZoomLevel === 6 ? -10 : ZoomLevel === 7 ? -10 : ZoomLevel === 8 ? -10 : 0,
-		marginBottom: ZoomLevel === 5 ? 10 : ZoomLevel === 6 ? 20 : ZoomLevel === 7 ? 80 : ZoomLevel === 8 ? 200 : 0,
+		fontSize: zoomLevel === 5 ? 20 : zoomLevel === 6 ? 30 : zoomLevel === 7 ? 50 : zoomLevel === 8 ? 80 : 0,
+		marginLeft: zoomLevel === 5 ? -5 : zoomLevel === 6 ? -10 : zoomLevel === 7 ? -10 : zoomLevel === 8 ? -10 : 0,
+		marginBottom: zoomLevel === 5 ? 10 : zoomLevel === 6 ? 20 : zoomLevel === 7 ? 80 : zoomLevel === 8 ? 200 : 0,
 		transform: "rotate(-40deg)"
 	};
 
@@ -43,7 +38,7 @@ export default function TradeLines() {
 
   return (
 		<div>
-			{ZoomLevel >= 3 ? (
+			{zoomLevel >= 3 ? (
       <div className="ByssRun">
         <Polyline pathOptions={lineStyle} positions={byssRun} />
         <Polygon
@@ -54,7 +49,7 @@ export default function TradeLines() {
             [byssCords],
           ]}
 					>
-						{ZoomLevel >= 5 ? (
+						{zoomLevel >= 5 ? (
         <Tooltip direction="right" offset={[-10, -20]} opacity={1} permanent>
             <div style={byssRunStyle}>Byss Run</div>
 							</Tooltip>
