@@ -1,29 +1,62 @@
 import React from 'react'
 import { Polygon } from 'react-leaflet'
-import { innerRim } from './plots/innerRim'
-import { useZoom } from '../functions/ZoomContext'
+import { useZoom } from '../functions/ZoomContext';
+import {innerRim} from './plots/innerRim'
+import {outerRim} from './plots/outerRim'
+import {huttSpace} from './plots/huttSpace'
 
 export default function PolygonObject(props) {
   const { zoomLevel } = useZoom()
 
-  const { color, opacity } = props // Destructure the props
+  const { color, line, lineOpacity, opacity, dash, plot } = props
 
-  // Define your styles within the component
-  const Style = {
-    fillColor: color || '#0079C0', // Use the provided color prop or default to '#0079C0'
-    fillOpacity: opacity || 1,
-    color: '#202933',
-    dashArray: zoomLevel <= 3 ? '12 12' : '24 24',
-    weight: zoomLevel <= 3 ? 5 : zoomLevel <= 5 ? 10 : 15,
-    lineCap: 'square',
+  const getPositions = (plot) => {
+    switch (plot) {
+      case 'innerRim':
+        return innerRim
+      case 'outerRim':
+        return outerRim
+      case 'huttSpace':
+        return huttSpace
+      default:
+        return []
+    }
   }
 
-  // Select the appropriate style based on the prop
-  // const selectedStyle = styles[style] || styles.deepCoreStyle; // Default to deepCoreStyle if not specified
+  const positions = getPositions(plot) || []
+
+  const calculateWeight = () => {
+    if (zoomLevel <= 3) return 1
+    if (zoomLevel === 4) return 2
+    if (zoomLevel === 5) return 3
+    if (zoomLevel === 6) return 4
+    return 6
+  }
+
+  const calculateDashArray = () => {
+    if (zoomLevel <= 3) return [25, 25]
+    if (zoomLevel === 4) return [28, 28]
+    if (zoomLevel === 5) return [32, 32]
+    if (zoomLevel === 6) return [37, 37]
+    return [45, 45]
+  }
+
+  // Define your styles within the component
+
+	const Style = {
+		fillColor: color || '#0079C0',
+		fillOpacity: opacity || 1,
+		color: line || '#202933',
+		opacity: lineOpacity || 1,
+		dashArray: dash || calculateDashArray(),
+		weight: calculateWeight(),
+		lineCap: 'square',
+	}
 
   return (
     <div>
-      <Polygon positions={innerRim} pathOptions={Style} />
+      <Polygon positions={positions} pathOptions={Style} />
     </div>
   )
 }
+

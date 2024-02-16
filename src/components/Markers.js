@@ -100,7 +100,8 @@ export default function Markers() {
           )
         })}
 
-      <PolygonObject positions={'innerRim'} color="#1B609F" opacity={0.1} />
+			<PolygonObject plot="innerRim" color="#0079C0" opacity={0.5} />
+			<PolygonObject plot="huttSpace" color="#2C446C" line="#FF7200" opacity={0.1} lineOpacity={0.5} dash={1} />
 
       <CircleObject
         center={[-128, 128]}
