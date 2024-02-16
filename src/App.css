@@ -1,21 +1,20 @@
 @import url("https://fonts.cdnfonts.com/css/myriad-pro?styles=947,949,948,20533,946,945,952,953,950,951");
 @import url("https://use.typekit.net/noa6bvc.css");
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.leaflet-container {
+	width: 100vw;
+	height: 100vh;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
 
 .map-container {
   width: 100vw;
   height: 100vh;
-	z-index: 1;
+}
+
+.map-wrapper {
+  width: 100vw;
+  height: 100vh;
 }
 
 .leaflet-container {
@@ -31,7 +30,7 @@
   border-radius: 5px;
   width: 100%; /* Adjust width as needed */
   position: relative; /* Add position relative */
-	margin: 0px;
+  margin: 0px;
 }
 
 /* Key item styles */
@@ -53,9 +52,14 @@
 }
 
 .title-span {
-	text-align: center;
+  text-align: center;
 }
 
-.grid-label div{
-	margin-left: 3px;
+.grid-label div {
+  margin-left: 3px;
+}
+
+.leaflet-control-attribution {
+  display: none;
+  visibility: hidden;
 }

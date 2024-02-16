@@ -20,7 +20,7 @@ export default function MajorStar(props) {
 	const position = props.position
 	const name = props.name
 
-	const iconSize = ZoomLevel <= 4 ? [20, 20] : ZoomLevel === 5 ? [35, 35] : [40, 40];
+	const iconSize = ZoomLevel <= 4 ? [20, 20] : ZoomLevel === 5 ? [30, 30] : [40, 40];
   const iconAnchor = iconSize.map(dim => dim / 2); // Calculate anchor as half of size
 
 	const majorIcon = new Icon({
@@ -31,13 +31,13 @@ export default function MajorStar(props) {
 	});
 
 	const majorStyle = {
-    fontSize: ZoomLevel <=3 ? 25 : ZoomLevel === 4 ? 30 : ZoomLevel === 5 ? 35 : ZoomLevel === 6 ? 40 : 55,
+    fontSize: ZoomLevel === 4 ? 25 : ZoomLevel === 5 ? 30 : ZoomLevel === 6 ? 40 : 55,
     fontWeight: "bold",
     color: "#B56327",
 		WebkitTextStroke: "1px black",
 		textAlign: "left",
 		position: "relative",
-		marginLeft: ZoomLevel <= 4 ? "6px" : ZoomLevel === 5  ? "10px" : "16px",
+		marginLeft: ZoomLevel <= 4 ? "6px" : ZoomLevel === 5  ? "12px" : "16px",
 	};
 
   return (
