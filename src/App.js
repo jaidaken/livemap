@@ -45,8 +45,8 @@ function App() {
             maxZoom={8}
             scrollWheelZoom={true}
           >
-					<TileLayer attribution="" url="/images/{z}/{x}/{y}.jpg" />
-					{/* <TileLayer attribution="" url="" /> */}
+					{/* <TileLayer attribution="" url="/images/{z}/{x}/{y}.jpg" /> */}
+					<TileLayer attribution="" url="" />
 					<Key />
             <Markers />
             <MapEvents />

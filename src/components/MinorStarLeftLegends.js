@@ -34,7 +34,7 @@ export default function MinorStarLeft(props) {
   const minorStyleLeft = {
     fontSize: ZoomLevel <= 5 ? 15 : ZoomLevel ===6  ? 20 : 30,
     fontWeight: "bold",
-    color: "#E3B687",
+    color: "#67ACD7",
 		WebkitTextStroke: ZoomLevel <= 5 ? "0.3px black" : ZoomLevel === 6 ? "0.5px black" : "1px black",
 		textAlign: "right",
 		marginTop: "-4px",
