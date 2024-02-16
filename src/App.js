@@ -36,35 +36,34 @@ console.log(bounds);
 function App() {
   return (
     <div className="App">
-        <div className="map-container">
-          <MapContainer
-            crs={CRS.Simple}
-            center={[-128, 128]}
-            zoom={5}
-            minZoom={3}
-            maxZoom={8}
-            scrollWheelZoom={true}
-          >
-					{/* <TileLayer attribution="" url="/images/{z}/{x}/{y}.jpg" /> */}
-					<TileLayer attribution="" url="" />
-					<Key />
-            <Markers />
-            <MapEvents />
-            <GridLayer
-              gridSpacing={6.5}
-              bottomLeftCoord={[-216.08, 56.4]}
-              backgroundColor="#ffffff"
-              lineColor="#000000"
-              lineOpacity={0.028}
-              backgroundOpacity={0}
-              labelPosition="topLeft"
-              labelFont="Arial, sans-serif"
-              labelColor="#000000"
-              labelOpacity={0.2}
-            />
-          </MapContainer>
-
-        </div>
+      <div className="map-container">
+        <MapContainer
+          crs={CRS.Simple}
+          center={[-128, 128]}
+          zoom={5}
+          minZoom={3}
+          maxZoom={8}
+          scrollWheelZoom={true}
+        >
+          <TileLayer attribution="" url="/images/{z}/{x}/{y}.jpg" />
+          {/* <TileLayer attribution="" url="" /> */}
+          <Key />
+          <Markers />
+          <MapEvents />
+          <GridLayer
+            gridSpacing={6.7}
+            bottomLeftCoord={[-219.08, 54.197]}
+            backgroundColor="#ffffff"
+            lineColor="#000000"
+            lineOpacity={0.028}
+            backgroundOpacity={0}
+            labelPosition="topLeft"
+            labelFont="Arial, sans-serif"
+            labelColor="#000000"
+            labelOpacity={0.2}
+          />
+        </MapContainer>
+      </div>
     </div>
   );
 }

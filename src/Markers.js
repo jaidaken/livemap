@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Markers.css";
-import { useMap } from "react-leaflet";
+import { useMap, Marker, Popup } from "react-leaflet";
+import { Icon } from "leaflet";
 import MajorStar from "./components/MajorStar.js";
 import MidStar from "./components/MidStar.js";
 import MinorStarLeft from "./components/MinorStarLeft.js";
@@ -11,6 +12,8 @@ import CircleObject from "./components/Circle.js";
 import TradeLines from "./components/TradeLines.js";
 import TitleObject from "./components/Title.js";
 import PolygonObject from "./components/Polygon.js";
+import { fetchSystems } from "./components/fetch.js";
+
 
 export default function Markers() {
   const [ZoomLevel, setZoomLevel] = useState(3);
@@ -20,16 +23,32 @@ export default function Markers() {
     setZoomLevel(map.getZoom());
 	});
 
+  const [starSystems, setStarSystems] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      const data = await fetchSystems();
+      setStarSystems(data);
+    }
+
+    fetchData();
+	}, []);
+
+	const majorIcon = new Icon({
+    iconUrl: "/images/marker-icon-major.svg",
+    iconSize: [30, 30],
+    iconAnchor: [15, 15],
+    popupAnchor: [7, -10],
+	});
 
 
   return (
     <div>
-      <MajorStar ZoomLevel={ZoomLevel} position={[-128, 128]} name={"Galactic Center"} />
+      {/* 
 			<MajorStar position={[-118.578125, 127.8984375]} name={"Coruscant"} />
 
 			<MidStar position={[-130.828125, 138.40625]} name={"Corellia"} />
 
-			<MinorStarLeft position={[-131.859375, 133.953125]} name={"Dybrin"} />
 			<MinorStarLeft position={[-132.2421875, 134.328125]} name={"Fex"} />
 			<MinorStarLeft position={[-129.46875, 134.7421875]} name={"Ojom"} />
 			<MinorStarLeft position={[-128.7890625, 133.828125]} name={"Cosia"} />
@@ -45,15 +64,7 @@ export default function Markers() {
 			<MinorStarRight position={[-134.1796875, 127.109375]} name={"Constancia"} />
 			<MinorStarRight position={[-120.9765625, 128.7578125]} name={"Lope"} />
 			<MinorStarRight position={[-122.359375, 131.25]} name={"Vulpter"} />
-
-			<MinorStarRightLegends position={[-125.7109375, 128.6328125]} name={"Tsoss Beacon"} />
-			<MinorStarRightLegends position={[-120.5859375, 128.046875]} name={"Jerrilek"} />
-			<MinorStarRightLegends position={[-132.5078125, 127.046875]} name={"Zamael"} />
-			<MinorStarRightLegends position={[-133.3359375, 126.8515625]} name={"Lialic"} />
-			<MinorStarRightLegends position={[-134.6328125, 128.7421875]} name={"Crystan"} />
-			<MinorStarRightLegends position={[-121.3671875, 131.078125]} name={"Besero"} />
-			<MinorStarRightLegends position={[-121.5859375, 129.859375]} name={"Primus Goluud"} />
-			<MinorStarRightLegends position={[-121.34375, 128.6328125]} name={"Starswarm Cluster"} />
+			<MinorStarRight position={[-119.078125, 127.890625]} name={"Foerost"} />
 
       <MinorStarLeftLegends position={[-125.9453125, 123.1015625]} name={"Odik"} />
       <MinorStarLeftLegends position={[-122.78125, 127.4609375]} name={"Keeara Major"} />
@@ -70,7 +81,29 @@ export default function Markers() {
       <MinorStarLeftLegends position={[-122.875, 133.609375]} name={"Cambria"} />
       <MinorStarLeftLegends position={[-121.59375, 128.1484375]} name={"Kuar"} />
 
+			<MinorStarRightLegends position={[-125.7109375, 128.6328125]} name={"Tsoss Beacon"} />
+			<MinorStarRightLegends position={[-120.5859375, 128.046875]} name={"Jerrilek"} />
+			<MinorStarRightLegends position={[-132.5078125, 127.046875]} name={"Zamael"} />
+			<MinorStarRightLegends position={[-133.3359375, 126.8515625]} name={"Lialic"} />
+			<MinorStarRightLegends position={[-134.6328125, 128.7421875]} name={"Crystan"} />
+			<MinorStarRightLegends position={[-121.3671875, 131.078125]} name={"Besero"} />
+			<MinorStarRightLegends position={[-121.5859375, 129.859375]} name={"Primus Goluud"} />
+			<MinorStarRightLegends position={[-121.34375, 128.6328125]} name={"Starswarm Cluster"} />
+			<MinorStarRightLegends position={[-119.5, 127.8984375]} name={"Ruan"} />
+			<MinorStarRightLegends position={[-119.9140625, 127.953125]} name={"Kaikielius"} /> */}
 
+      {starSystems.map(({ id, name, latitude, longitude, starType }) => {
+        // Dynamically import the corresponding star component
+        const StarComponent = React.lazy(() =>
+          import(`./components/${starType}`)
+        );
+
+        return (
+          <React.Suspense key={id} fallback={<div>Loading...</div>}>
+            <StarComponent position={[latitude, longitude]} name={name} />
+          </React.Suspense>
+        );
+      })}
 
 			<PolygonObject
       positions={"innerRim"}
