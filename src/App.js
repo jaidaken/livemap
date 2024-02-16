@@ -10,43 +10,32 @@ import Key from "./components/Key.js";
 const MapEvents = () => {
   useMapEvents({
     click(e) {
-      console.log(`[${e.latlng.lat}, ${e.latlng.lng}]`);
+      console.log(`[${e.latlng.lat} ${e.latlng.lng}]`);
     },
   });
   return false;
 };
 
-const imageWidth = 18688; // Width of the background image in pixels
-const imageHeight = 18688; // Height of the background image in pixels
-const centerX = -76.31; // Longitude of the center of the map
-const centerY = 108.39; // Latitude of the center of the map
-
-// Calculate half width and half height of the image
-const halfWidth = imageWidth / 2;
-const halfHeight = imageHeight / 2;
-
-// Calculate the bounds
-const bounds = [
-  [centerY - halfHeight, centerX - halfWidth], // Bottom-left corner
-  [centerY + halfHeight, centerX + halfWidth], // Top-right corner
-];
-
-console.log(bounds);
+// Constants for initial map configuration
+const initialCenter = [-128, 128];
+const initialZoom = 5;
+const minZoom = 3;
+const maxZoom = 8;
 
 function App() {
+
   return (
     <div className="App">
       <div className="map-container">
         <MapContainer
           crs={CRS.Simple}
-          center={[-128, 128]}
-          zoom={5}
-          minZoom={3}
-          maxZoom={8}
+          center={initialCenter}
+          zoom={initialZoom}
+          minZoom={minZoom}
+          maxZoom={maxZoom}
           scrollWheelZoom={true}
         >
           <TileLayer attribution="" url="/images/{z}/{x}/{y}.jpg" />
-          {/* <TileLayer attribution="" url="" /> */}
           <Key />
           <Markers />
           <MapEvents />
