@@ -1,6 +1,6 @@
 import React from 'react'
 import { Circle } from 'react-leaflet'
-import { useZoom } from './ZoomContext'
+import { useZoom } from '../functions/ZoomContext'
 
 export default function CircleObject(props) {
   const { zoomLevel } = useZoom()

@@ -1,23 +1,23 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import './Markers.css'
-import CircleObject from './components/Circle.js'
-import TradeLines from './components/TradeLines.js'
-import TitleObject from './components/Title.js'
-import PolygonObject from './components/Polygon.js'
-import { fetchSystems } from './components/fetch.js'
+import CircleObject from './shapes/Circle.js'
+import TradeLines from './shapes/TradeLines.js'
+import TitleObject from './shapes/Title.js'
+import PolygonObject from './shapes/Polygon.js'
+import { fetchSystems } from './functions/fetch.js'
 import { useMap } from 'react-leaflet'
-import { useZoom } from './components/ZoomContext'
+import { useZoom } from './functions/ZoomContext.js'
 
 const starComponents = {
-  MajorStar: React.lazy(() => import('./components/MajorStar.js')),
-  MidStar: React.lazy(() => import('./components/MidStar.js')),
-  MinorStarLeft: React.lazy(() => import('./components/MinorStarLeft.js')),
+  MajorStar: React.lazy(() => import('./starTypes/MajorStar.js')),
+  MidStar: React.lazy(() => import('./starTypes/MidStar.js')),
+  MinorStarLeft: React.lazy(() => import('./starTypes/MinorStarLeft.js')),
   MinorStarLeftLegends: React.lazy(() =>
-    import('./components/MinorStarLeftLegends.js'),
+    import('./starTypes/MinorStarLeftLegends.js'),
   ),
-  MinorStarRight: React.lazy(() => import('./components/MinorStarRight.js')),
+  MinorStarRight: React.lazy(() => import('./starTypes/MinorStarRight.js')),
   MinorStarRightLegends: React.lazy(() =>
-    import('./components/MinorStarRightLegends.js'),
+    import('./starTypes/MinorStarRightLegends.js'),
   ),
   // Add more star types as needed
 }
@@ -99,8 +99,6 @@ export default function Markers() {
             </React.Suspense>
           )
         })}
-
-      {/* Rest of the components */}
 
       <PolygonObject positions={'innerRim'} color="#1B609F" opacity={0.1} />
 

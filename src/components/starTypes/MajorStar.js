@@ -1,53 +1,62 @@
 import React from 'react'
 import { Marker, Tooltip, Popup } from 'react-leaflet'
 import { Icon } from 'leaflet'
-import { useZoom } from './ZoomContext'
+import { useZoom } from '../functions/ZoomContext'
 
-export default function MidStar(props) {
+export default function MajorStar(props) {
   const { zoomLevel } = useZoom()
 
-  const position = props.position
-  const name = props.name
+  const { position, name } = props
+
 
   const calculateIconSize = () => {
     if (zoomLevel <= 4) return [20, 20]
-    if (zoomLevel === 5) return [25, 25]
-    if (zoomLevel === 6) return [30, 30]
-    return 55
+    if (zoomLevel === 5) return [30, 30]
+    if (zoomLevel === 6) return [40, 40]
+		return [55, 55];
   }
 
   const iconSize = calculateIconSize()
-  const iconAnchor = [iconSize[0] / 2, iconSize[1] / 2]
+  const iconAnchor = [iconSize[0] / 2, iconSize[1] / 2] // Calculate anchor as half of size
 
-  const calculateMarginLeft = () => {
-    if (zoomLevel <= 4) return '6px'
-    if (zoomLevel === 5) return '10px'
-    return '16px'
-  }
-
-  const midIcon = new Icon({
-    iconUrl: '/images/marker-icon-mid.svg',
+  const majorIcon = new Icon({
+    iconUrl: '/images/marker-icon-major.svg',
     iconSize: calculateIconSize(),
     iconAnchor: iconAnchor,
     popupAnchor: [7, -10],
-  })
+	})
 
-  const midStyle = {
-    fontSize: 30,
+	const calculateFontSize = () => {
+    if (zoomLevel === 4) return 25
+    if (zoomLevel === 5) return 30
+    if (zoomLevel === 6) return 40
+    return 55
+  }
+
+	const calculateMarginSize = () => {
+    if (zoomLevel <= 4) return '6px'
+    if (zoomLevel === 5) return '12px'
+    if (zoomLevel === 6) return '16px'
+		return '24px';
+  }
+
+  const majorStyle = {
+    fontSize: calculateFontSize(),
     fontWeight: 'bold',
-    color: '#CC8A46',
+    color: '#B56327',
     WebkitTextStroke: '1px black',
     textAlign: 'left',
     position: 'relative',
-    marginLeft: calculateMarginLeft(),
-  }
+    marginLeft: calculateMarginSize(),
+	}
+
 
   return (
     <div>
       {zoomLevel >= 4 ? (
-        <Marker position={position} icon={midIcon}>
+        <Marker position={position} icon={majorIcon}>
           <Tooltip direction="right" opacity={1} permanent>
-            <div className="major-popup" style={midStyle}>
+            <div className="major-popup" style={majorStyle}>
               {name}
             </div>
           </Tooltip>
@@ -60,6 +69,7 @@ export default function MidStar(props) {
               target="_blank"
               rel="noreferrer"
             >
+              {' '}
               {name} wiki page
             </a>
           </Popup>

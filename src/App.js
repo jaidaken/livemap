@@ -1,42 +1,41 @@
-import React from "react";
-import "leaflet/dist/leaflet.css";
-import "./App.css";
-import { MapContainer, TileLayer, useMapEvents } from "react-leaflet";
-import { CRS } from "leaflet";
-import Markers from "./Markers.js";
-import GridLayer from "./components/GridLayer.js";
-import Key from "./components/Key.js";
-import { ZoomProvider } from "./components/ZoomContext";
+import React from 'react'
+import 'leaflet/dist/leaflet.css'
+import './App.css'
+import { MapContainer, TileLayer, useMapEvents } from 'react-leaflet'
+import { CRS } from 'leaflet'
+import Markers from './components/Markers.js'
+import GridLayer from './components/shapes/GridLayer.js'
+import Key from './components/shapes/Key.js'
+import { ZoomProvider } from './components/functions/ZoomContext.js'
 
 const MapEvents = () => {
   useMapEvents({
     click(e) {
-      console.log(`${e.latlng.lat}, ${e.latlng.lng}`);
+      console.log(`${e.latlng.lat}, ${e.latlng.lng}`)
     },
-  });
-  return false;
-};
+  })
+  return false
+}
 
 // Constants for initial map configuration
-const initialCenter = [-128, 128];
-const initialZoom = 5;
-const minZoom = 3;
-const maxZoom = 8;
+const initialCenter = [-128, 128]
+const initialZoom = 5
+const minZoom = 3
+const maxZoom = 8
 
 function App() {
   return (
     <div className="App">
       <div className="map-container">
-
-          <MapContainer
-            crs={CRS.Simple}
-            center={initialCenter}
-            zoom={initialZoom}
-            minZoom={minZoom}
-            maxZoom={maxZoom}
-            scrollWheelZoom={true}
-				>
-						<ZoomProvider>
+        <MapContainer
+          crs={CRS.Simple}
+          center={initialCenter}
+          zoom={initialZoom}
+          minZoom={minZoom}
+          maxZoom={maxZoom}
+          scrollWheelZoom={true}
+        >
+          <ZoomProvider>
             <TileLayer attribution="" url="/images/{z}/{x}/{y}.jpg" />
             <Key />
             <Markers />
@@ -52,12 +51,12 @@ function App() {
               labelFont="Arial, sans-serif"
               labelColor="#000000"
               labelOpacity={0.2}
-					/>
-					</ZoomProvider>
-          </MapContainer>
+            />
+          </ZoomProvider>
+        </MapContainer>
       </div>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

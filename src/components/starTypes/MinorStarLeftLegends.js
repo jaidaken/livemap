@@ -1,10 +1,11 @@
 import React from 'react'
 import { Marker, Tooltip, Popup } from 'react-leaflet'
 import { Icon } from 'leaflet'
-import { useZoom } from './ZoomContext'
+import { useZoom } from '../functions/ZoomContext'
 
-export default function MinorStarRight(props) {
+export default function MinorStarLeft(props) {
   const { zoomLevel } = useZoom()
+
   const position = props.position
   const name = props.name
 
@@ -15,7 +16,7 @@ export default function MinorStarRight(props) {
   }
 
   const iconSize = calculateIconSize()
-	const iconAnchor = iconSize.map((dim) => dim / 2)
+  const iconAnchor = iconSize.map((dim) => dim / 2)
 
   const minorIcon = new Icon({
     iconUrl: '/images/marker-legend.svg',
@@ -24,7 +25,7 @@ export default function MinorStarRight(props) {
     popupAnchor: [7, -10],
   })
 
-	const calculateFontSize = () => {
+  const calculateFontSize = () => {
     if (zoomLevel <= 5) return 15
     if (zoomLevel === 6) return 20
     return 30
@@ -36,31 +37,31 @@ export default function MinorStarRight(props) {
     return '1px black'
   }
 
-  const calculateMarginLeft = () => {
+  const calculateMarginRight = () => {
     if (zoomLevel <= 5) return '2px'
     if (zoomLevel === 6) return '4px'
     return '8px'
-	}
+  }
 
-  const minorStyleRight = {
+  const minorStyleLeft = {
     fontSize: calculateFontSize(),
     fontWeight: 'bold',
     color: '#67ACD7',
     WebkitTextStroke: calculateStroke(),
-    textAlign: 'left',
+    textAlign: 'right',
+    marginTop: '-4px',
+    marginRight: calculateMarginRight(),
     position: 'relative',
-    marginLeft: calculateMarginLeft(),
   }
 
-
-//67ACD7
+  //67ACD7
 
   return (
     <div>
       {zoomLevel >= 5 ? (
         <Marker position={position} icon={minorIcon}>
-          <Tooltip direction="right" opacity={1} permanent>
-            <div className="major-popup" style={minorStyleRight}>
+          <Tooltip direction="left" opacity={1} permanent>
+            <div className="major-popup" style={minorStyleLeft}>
               {name}
             </div>
           </Tooltip>

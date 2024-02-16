@@ -1,11 +1,10 @@
 import React from 'react'
 import { Marker, Tooltip, Popup } from 'react-leaflet'
 import { Icon } from 'leaflet'
-import { useZoom } from './ZoomContext'
+import { useZoom } from '../functions/ZoomContext'
 
-export default function MinorStarLeft(props) {
+export default function MinorStarRight(props) {
   const { zoomLevel } = useZoom()
-
   const position = props.position
   const name = props.name
 
@@ -16,10 +15,10 @@ export default function MinorStarLeft(props) {
   }
 
   const iconSize = calculateIconSize()
-	const iconAnchor = iconSize.map((dim) => dim / 2)
+  const iconAnchor = iconSize.map((dim) => dim / 2)
 
   const minorIcon = new Icon({
-    iconUrl: '/images/marker-icon.svg',
+    iconUrl: '/images/marker-legend.svg',
     iconSize: iconSize,
     iconAnchor: iconAnchor,
     popupAnchor: [7, -10],
@@ -37,29 +36,30 @@ export default function MinorStarLeft(props) {
     return '1px black'
   }
 
-  const calculateMarginRight = () => {
+  const calculateMarginLeft = () => {
     if (zoomLevel <= 5) return '2px'
     if (zoomLevel === 6) return '4px'
     return '8px'
   }
 
-  const minorStyleLeft = {
+  const minorStyleRight = {
     fontSize: calculateFontSize(),
     fontWeight: 'bold',
-    color: '#E3B687',
+    color: '#67ACD7',
     WebkitTextStroke: calculateStroke(),
-    textAlign: 'right',
-    marginTop: '-4px',
-    marginRight: calculateMarginRight(),
+    textAlign: 'left',
     position: 'relative',
+    marginLeft: calculateMarginLeft(),
   }
+
+  //67ACD7
 
   return (
     <div>
       {zoomLevel >= 5 ? (
         <Marker position={position} icon={minorIcon}>
-          <Tooltip direction="left" opacity={1} permanent>
-            <div className="major-popup" style={minorStyleLeft}>
+          <Tooltip direction="right" opacity={1} permanent>
+            <div className="major-popup" style={minorStyleRight}>
               {name}
             </div>
           </Tooltip>

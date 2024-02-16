@@ -1,53 +1,53 @@
 import React from 'react'
 import { Marker, Tooltip, Popup } from 'react-leaflet'
 import { Icon } from 'leaflet'
-import { useZoom } from './ZoomContext'
+import { useZoom } from '../functions/ZoomContext'
 
-export default function MajorStar(props) {
+export default function MidStar(props) {
   const { zoomLevel } = useZoom()
 
-  const { position, name } = props
-
-  const calculateFontSize = () => {
-    if (zoomLevel === 4) return 25
-    if (zoomLevel === 5) return 30
-    if (zoomLevel === 6) return 40
-    return 55
-  }
+  const position = props.position
+  const name = props.name
 
   const calculateIconSize = () => {
     if (zoomLevel <= 4) return [20, 20]
-    if (zoomLevel === 5) return [30, 30]
-    if (zoomLevel === 6) return [40, 40]
+    if (zoomLevel === 5) return [25, 25]
+    if (zoomLevel === 6) return [30, 30]
     return 55
   }
 
   const iconSize = calculateIconSize()
-  const iconAnchor = [iconSize[0] / 2, iconSize[1] / 2] // Calculate anchor as half of size
+  const iconAnchor = [iconSize[0] / 2, iconSize[1] / 2]
 
-  const majorIcon = new Icon({
-    iconUrl: '/images/marker-icon-major.svg',
+  const calculateMarginLeft = () => {
+    if (zoomLevel <= 4) return '6px'
+    if (zoomLevel === 5) return '10px'
+    return '16px'
+  }
+
+  const midIcon = new Icon({
+    iconUrl: '/images/marker-icon-mid.svg',
     iconSize: calculateIconSize(),
     iconAnchor: iconAnchor,
     popupAnchor: [7, -10],
   })
 
-  const majorStyle = {
-    fontSize: calculateFontSize(),
+  const midStyle = {
+    fontSize: 30,
     fontWeight: 'bold',
-    color: '#B56327',
+    color: '#CC8A46',
     WebkitTextStroke: '1px black',
     textAlign: 'left',
     position: 'relative',
-    marginLeft: zoomLevel <= 4 ? '6px' : zoomLevel === 5 ? '12px' : '16px',
+    marginLeft: calculateMarginLeft(),
   }
 
   return (
     <div>
       {zoomLevel >= 4 ? (
-        <Marker position={position} icon={majorIcon}>
+        <Marker position={position} icon={midIcon}>
           <Tooltip direction="right" opacity={1} permanent>
-            <div className="major-popup" style={majorStyle}>
+            <div className="major-popup" style={midStyle}>
               {name}
             </div>
           </Tooltip>
@@ -60,7 +60,6 @@ export default function MajorStar(props) {
               target="_blank"
               rel="noreferrer"
             >
-              {' '}
               {name} wiki page
             </a>
           </Popup>

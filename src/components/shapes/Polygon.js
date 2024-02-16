@@ -1,7 +1,7 @@
 import React from 'react'
 import { Polygon } from 'react-leaflet'
 import { innerRim } from './plots/innerRim'
-import { useZoom } from './ZoomContext'
+import { useZoom } from '../functions/ZoomContext'
 
 export default function PolygonObject(props) {
   const { zoomLevel } = useZoom()
