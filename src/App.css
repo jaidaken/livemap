@@ -47,6 +47,23 @@
   margin-right: 8px; /* Adjust margin as needed */
 }
 
+.patreon-container {
+	display: flex;
+	flex-direction: row;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  position: relative;
+  margin: 0px;
+}
+.patreon-item {
+  align-items: center;
+	font-weight: normal;
+	font-size: 15px;
+  margin-bottom: 0px;
+}
+
 .tooltip-content {
   white-space: pre-wrap;
 }

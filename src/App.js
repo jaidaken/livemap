@@ -7,6 +7,7 @@ import Markers from './components/Markers.js'
 import GridLayer from './components/shapes/GridLayer.js'
 import Key from './components/shapes/Key.js'
 import { ZoomProvider } from './components/functions/ZoomContext.js'
+import Patreon from './components/shapes/Patreon.js'
 
 const MapEvents = () => {
   useMapEvents({
@@ -38,7 +39,8 @@ function App() {
         >
           <ZoomProvider>
             {/* <TileLayer attribution="" url="/images/{z}/{x}/{y}.jpg" /> */}
-            <TileLayer attribution="" url="" />
+						<TileLayer attribution="" url="" />
+						<Patreon />
             <Key />
             <Markers />
             <MapEvents />

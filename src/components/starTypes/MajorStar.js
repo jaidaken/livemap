@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef, useEffect } from 'react'
 import { Marker, Tooltip, Popup } from 'react-leaflet'
 import { Icon } from 'leaflet'
 import { useZoom } from '../functions/ZoomContext'
@@ -6,11 +6,21 @@ import { useZoom } from '../functions/ZoomContext'
 export default function MajorStar(props) {
   const { zoomLevel } = useZoom()
 
+	const major = useRef();
+
+  useEffect(() => {
+    // You can set a different zIndex for the marker after it has been added to the map
+    if (major.current) {
+      major.current.setZIndexOffset(1600);
+    }
+	}, []);
+
   const { position, name } = props
 
 
   const calculateIconSize = () => {
-    if (zoomLevel <= 4) return [20, 20]
+    if (zoomLevel <= 3) return [15, 15]
+    if (zoomLevel === 4) return [20, 20]
     if (zoomLevel === 5) return [30, 30]
     if (zoomLevel === 6) return [40, 40]
 		return [55, 55];
@@ -54,19 +64,22 @@ export default function MajorStar(props) {
     WebkitTextStroke: calculateStroke(),
     textAlign: 'left',
     position: 'relative',
-    marginLeft: calculateMarginSize(),
+		marginLeft: calculateMarginSize(),
+		zIndex: 610,
 	}
 
 
   return (
     <div>
-      {zoomLevel >= 4 ? (
-        <Marker position={position} icon={majorIcon}>
+      {zoomLevel >= 3 ? (
+				<Marker ref={major} position={position} icon={majorIcon}>
+					{zoomLevel >= 4 ? (
           <Tooltip direction="right" opacity={1} permanent>
             <div className="major-popup" style={majorStyle}>
               {name}
             </div>
           </Tooltip>
+						) : null}
           <Popup>
             <a
               href={`https://starwars.fandom.com/wiki/${name.replace(

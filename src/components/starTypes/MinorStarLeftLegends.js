@@ -51,14 +51,15 @@ export default function MinorStarLeft(props) {
     textAlign: 'right',
     marginTop: '-4px',
     marginRight: calculateMarginRight(),
-    position: 'relative',
+		position: 'relative',
+		zIndex: 1,
   }
 
   //67ACD7
 
   return (
     <div>
-      {zoomLevel >= 5 ? (
+      {zoomLevel >= 3 ? (
         <Marker position={position} icon={minorIcon}>
           {zoomLevel >= 6 ? (
             <Tooltip direction="left" opacity={1} permanent>

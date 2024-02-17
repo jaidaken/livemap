@@ -49,12 +49,13 @@ export default function MinorStarRight(props) {
     WebkitTextStroke: calculateStroke(),
     textAlign: 'left',
     position: 'relative',
-    marginLeft: calculateMarginLeft(),
+		marginLeft: calculateMarginLeft(),
+		zIndex: 1,
   }
 
   return (
     <div>
-      {zoomLevel >= 5 ? (
+      {zoomLevel >= 3 ? (
         <Marker position={position} icon={minorIcon}>
           {zoomLevel >= 6 ? (
             <Tooltip direction="right" opacity={1} permanent>

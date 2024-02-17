@@ -3,7 +3,7 @@ import { Polygon, Tooltip } from 'react-leaflet'
 import { useZoom } from '../functions/ZoomContext'
 
 export default function TitleObject(props) {
-  const { zoomLevel } = useZoom()
+	const { zoomLevel } = useZoom()
 
   const { text, coords, color } = props
 
@@ -27,7 +27,8 @@ export default function TitleObject(props) {
     color: color || '#231F20',
     fontSize: calculateFontSize(),
     lineHeight: calculateLineHeight(),
-    transform: 'translate(-53.5%, -5%)',
+		transform: 'translate(-53.5%, -5%)',
+		zIndex: 1,
   }
 
   const lines = text.split('\n')
