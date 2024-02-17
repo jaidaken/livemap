@@ -37,7 +37,7 @@ function App() {
           scrollWheelZoom={true}
         >
           <ZoomProvider>
-            <TileLayer attribution="" url="/images/{z}/{x}/{y}.jpg" />
+            {/* <TileLayer attribution="" url="/images/{z}/{x}/{y}.jpg" /> */}
             <Key />
             <Markers />
             <MapEvents />

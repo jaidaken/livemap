@@ -123,7 +123,7 @@ export default function Markers() {
         center={[-128, 128]}
         radius={7.78}
         color="#0079C0"
-        opacity={0.2}
+        opacity={1}
       />
 			      <TradeNames
         color="white"
