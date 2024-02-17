@@ -100,26 +100,29 @@ export default function Markers() {
           )
         })}
 
-			<PolygonObject plot="innerRim" color="#0079C0" opacity={0.5} />
-			<PolygonObject plot="huttSpace" color="#2C446C" line="#FF7200" opacity={0.1} lineOpacity={0.5} dash={1} />
+			<PolygonObject plot="innerRim" color="#1B609F" opacity={0.2} />
+			<PolygonObject plot="expansionRegion" color="#25538A" opacity={0.2} />
+			<PolygonObject plot="midRim" color="#264476" opacity={0.2} />
+			<PolygonObject plot="outerRim" color="#2D3E6E" opacity={0.2} />
+			<PolygonObject plot="huttSpace" color="#2C446C" line="#FF7200" opacity={1} lineOpacity={1} dash={1} />
 
       <CircleObject
         center={[-128, 128]}
         radius={17.98}
         color="#006CB5"
-        opacity={0.1}
+        opacity={1}
       />
       <CircleObject
         center={[-128, 128]}
         radius={13.4}
         color="#0073BB"
-        opacity={0.1}
+        opacity={1}
       />
       <CircleObject
         center={[-128, 128]}
         radius={7.78}
         color="#0079C0"
-        opacity={0.3}
+        opacity={1}
       />
 
       <TradeLines />

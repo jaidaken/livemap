@@ -1,9 +1,11 @@
 import React from 'react'
 import { Polygon } from 'react-leaflet'
-import { useZoom } from '../functions/ZoomContext';
-import {innerRim} from './plots/innerRim'
-import {outerRim} from './plots/outerRim'
-import {huttSpace} from './plots/huttSpace'
+import { useZoom } from '../functions/ZoomContext'
+import { innerRim } from './plots/innerRim'
+import { outerRim } from './plots/outerRim'
+import { huttSpace } from './plots/huttSpace'
+import { expansionRegion } from './plots/expansionRegion'
+import { midRim } from './plots/midRim'
 
 export default function PolygonObject(props) {
   const { zoomLevel } = useZoom()
@@ -14,6 +16,10 @@ export default function PolygonObject(props) {
     switch (plot) {
       case 'innerRim':
         return innerRim
+      case 'expansionRegion':
+        return expansionRegion
+      case 'midRim':
+        return midRim
       case 'outerRim':
         return outerRim
       case 'huttSpace':
@@ -43,15 +49,15 @@ export default function PolygonObject(props) {
 
   // Define your styles within the component
 
-	const Style = {
-		fillColor: color || '#0079C0',
-		fillOpacity: opacity || 1,
-		color: line || '#202933',
-		opacity: lineOpacity || 1,
-		dashArray: dash || calculateDashArray(),
-		weight: calculateWeight(),
-		lineCap: 'square',
-	}
+  const Style = {
+    fillColor: color || '#0079C0',
+    fillOpacity: opacity || 1,
+    color: line || '#202933',
+    opacity: lineOpacity || 1,
+    dashArray: dash || calculateDashArray(),
+    weight: calculateWeight(),
+    lineCap: 'square',
+  }
 
   return (
     <div>
@@ -59,4 +65,3 @@ export default function PolygonObject(props) {
     </div>
   )
 }
-
