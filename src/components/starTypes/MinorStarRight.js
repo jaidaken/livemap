@@ -56,11 +56,13 @@ export default function MinorStarRight(props) {
     <div>
       {zoomLevel >= 5 ? (
         <Marker position={position} icon={minorIcon}>
-          <Tooltip direction="right" opacity={1} permanent>
-            <div className="major-popup" style={minorStyleRight}>
-              {name}
-            </div>
-          </Tooltip>
+          {zoomLevel >= 6 ? (
+            <Tooltip direction="right" opacity={1} permanent>
+              <div className="major-popup" style={minorStyleRight}>
+                {name}
+              </div>
+            </Tooltip>
+          ) : null}
           <Popup>
             <a
               href={`https://starwars.fandom.com/wiki/${name.replace(

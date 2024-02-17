@@ -10,10 +10,11 @@ export default function MidStar(props) {
   const name = props.name
 
   const calculateIconSize = () => {
-    if (zoomLevel <= 4) return [20, 20]
-    if (zoomLevel === 5) return [25, 25]
-    if (zoomLevel === 6) return [30, 30]
-    return 55
+    if (zoomLevel <= 4) return [18, 18]
+    if (zoomLevel === 5) return [22, 22]
+		if (zoomLevel === 6) return [30, 30]
+		if (zoomLevel === 7) return [40, 40]
+    return [55, 55]
   }
 
   const iconSize = calculateIconSize()
@@ -22,7 +23,9 @@ export default function MidStar(props) {
   const calculateMarginLeft = () => {
     if (zoomLevel <= 4) return '6px'
     if (zoomLevel === 5) return '10px'
-    return '16px'
+    if (zoomLevel === 6) return '12px'
+    if (zoomLevel === 7) return '18px'
+    return '26px'
 	}
 
 	const calculateStroke= () => {
@@ -39,8 +42,17 @@ export default function MidStar(props) {
     popupAnchor: [7, -10],
   })
 
+
+	const calculateFontSize = () => {
+    if (zoomLevel === 4) return 18
+    if (zoomLevel === 5) return 22
+    if (zoomLevel === 6) return 30
+    if (zoomLevel === 7) return 40
+    return 55
+	}
+
   const midStyle = {
-    fontSize: 30,
+    fontSize: calculateFontSize(),
     fontWeight: 'bold',
     color: '#CC8A46',
     WebkitTextStroke: calculateStroke(),
