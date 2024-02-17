@@ -23,6 +23,13 @@ export default function MidStar(props) {
     if (zoomLevel <= 4) return '6px'
     if (zoomLevel === 5) return '10px'
     return '16px'
+	}
+
+	const calculateStroke= () => {
+    if (zoomLevel <= 4) return '0.6px black'
+    if (zoomLevel === 5) return '0.7px black'
+    if (zoomLevel === 6) return '0.8px black'
+		return '1px black';
   }
 
   const midIcon = new Icon({
@@ -36,7 +43,7 @@ export default function MidStar(props) {
     fontSize: 30,
     fontWeight: 'bold',
     color: '#CC8A46',
-    WebkitTextStroke: '1px black',
+    WebkitTextStroke: calculateStroke(),
     textAlign: 'left',
     position: 'relative',
     marginLeft: calculateMarginLeft(),

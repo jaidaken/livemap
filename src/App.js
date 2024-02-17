@@ -11,8 +11,8 @@ import { ZoomProvider } from './components/functions/ZoomContext.js'
 const MapEvents = () => {
   useMapEvents({
     click(e) {
-			console.log(`[${e.latlng.lat}, ${e.latlng.lng}],`)
-			navigator.clipboard.writeText(`[${e.latlng.lat}, ${e.latlng.lng}],`)
+      console.log(`[${e.latlng.lat}, ${e.latlng.lng}],`)
+      navigator.clipboard.writeText(`[${e.latlng.lat}, ${e.latlng.lng}],`)
     },
   })
   return false

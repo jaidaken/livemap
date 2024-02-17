@@ -38,13 +38,20 @@ export default function MajorStar(props) {
     if (zoomLevel === 5) return '12px'
     if (zoomLevel === 6) return '16px'
 		return '24px';
+	}
+
+	const calculateStroke= () => {
+    if (zoomLevel <= 4) return '0.6px black'
+    if (zoomLevel === 5) return '0.7px black'
+    if (zoomLevel === 6) return '0.8px black'
+		return '1px black';
   }
 
   const majorStyle = {
     fontSize: calculateFontSize(),
     fontWeight: 'bold',
     color: '#B56327',
-    WebkitTextStroke: '1px black',
+    WebkitTextStroke: calculateStroke(),
     textAlign: 'left',
     position: 'relative',
     marginLeft: calculateMarginSize(),

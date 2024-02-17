@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import './Markers.css'
 import CircleObject from './shapes/Circle.js'
-import TradeLines from './shapes/TradeLines.js'
+import TradeLine from './shapes/TradeLine.js'
 import TitleObject from './shapes/Title.js'
 import PolygonObject from './shapes/Polygon.js'
 import { fetchSystems } from './functions/fetch.js'
 import { useMap } from 'react-leaflet'
 import { useZoom } from './functions/ZoomContext.js'
+import TradeNames from './shapes/TradeNames.js'
 
 const starComponents = {
   MajorStar: React.lazy(() => import('./starTypes/MajorStar.js')),
@@ -110,22 +111,55 @@ export default function Markers() {
         center={[-128, 128]}
         radius={17.98}
         color="#006CB5"
-        opacity={1}
+        opacity={0.2}
       />
       <CircleObject
         center={[-128, 128]}
         radius={13.4}
         color="#0073BB"
-        opacity={1}
+        opacity={0.2}
       />
       <CircleObject
         center={[-128, 128]}
         radius={7.78}
         color="#0079C0"
-        opacity={1}
+        opacity={0.2}
       />
+			      <TradeNames
+        color="white"
+        coords={[-124.875, 124.140625]}
+				text={`Byss Run`}
+				rotation={"-35deg"}
+				textStyle="majStyle"
+      />
+			<TradeLine plot="byssRun" lineStyle="majStyle" />
 
-      <TradeLines />
+			<TradeNames
+        color="white"
+        coords={[-119.84375, 127.703125]}
+				text={`Koros Trunk Line`}
+				rotation={"-96deg"}
+				textStyle="minStyle"
+      />
+			<TradeLine plot="korosTrunk" lineStyle="majStyle" color={""} />
+
+			<TradeNames
+        color="white"
+        coords={[-121.875, 128.9140625]}
+				text={`Goluud Corridor`}
+				rotation={"-23deg"}
+				textStyle="minStyle"
+      />
+			<TradeLine plot="goluud" lineStyle="minStyle" />
+
+			<TradeNames
+        color="#CC8A46"
+        coords={[-122.08203125, 130.3984375]}
+				text={`Carbonite Run`}
+				rotation={"29deg"}
+				textStyle="minStyle"
+      />
+			<TradeLine plot="carbonite" lineStyle="dashStyle" color={"#CC8A46"}/>
 
       <TitleObject
         color=""
