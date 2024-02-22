@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import "leaflet/dist/leaflet.css";
 import "./App.css";
 import { MapContainer, TileLayer, useMapEvents } from "react-leaflet";
@@ -11,7 +11,6 @@ import Patreon from "./components/shapes/Patreon.jsx";
 import AddSystemForm from "./components/AddSystem.jsx";
 import { SystemProvider } from "./components/functions/SystemContext.jsx";
 import usePatreonAuth from "./components/login.jsx";
-import { useMap } from "react-leaflet";
 
 const MapEvents = () => {
   useMapEvents({
@@ -42,19 +41,25 @@ function App() {
       console.log("Authenticated user clicked on the map.");
     }
   }, [isAuthenticated, login]);
+
+  const handleLogout = () => {
+    // Call the logout function when the logout button is clicked
+    logout();
+  };
+
   return (
     <div className="App">
       <div className="map-container">
         <MapContainer
-					crs={CRS.Simple}
-					center={initialCenter}
-					zoom={initialZoom}
-					minZoom={minZoom}
-					maxZoom={maxZoom}
-					scrollWheelZoom={true}
-					whenCreated={map => {
-						map.on("click", handleMapClick);
-					}}
+          crs={CRS.Simple}
+          center={initialCenter}
+          zoom={initialZoom}
+          minZoom={minZoom}
+          maxZoom={maxZoom}
+          scrollWheelZoom={true}
+          whenCreated={(map) => {
+            map.on("click", handleMapClick);
+          }}
         >
           <ZoomProvider>
             <SystemProvider>
@@ -84,6 +89,8 @@ function App() {
           </ZoomProvider>
         </MapContainer>
       </div>
+      {/* Logout Button */}
+      {isAuthenticated && <button onClick={handleLogout}>Logout</button>}
     </div>
   );
 }
