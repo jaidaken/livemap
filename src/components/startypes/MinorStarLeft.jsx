@@ -1,59 +1,64 @@
-import React from 'react'
-import { Marker, Tooltip, Popup } from 'react-leaflet'
-import { Icon } from 'leaflet'
-import { useZoom } from '../functions/ZoomContext'
+import { Marker, Tooltip, Popup } from "react-leaflet";
+import { Icon } from "leaflet";
+import { useZoom } from "../functions/ZoomContext";
+import PropTypes from "prop-types";
+
+MinorStarLeft.propTypes = {
+	position: PropTypes.array,
+	name: PropTypes.string,
+};
 
 export default function MinorStarLeft(props) {
-  const { zoomLevel } = useZoom()
+  const { zoomLevel } = useZoom();
 
-  const position = props.position
-  const name = props.name
+  const position = props.position;
+  const name = props.name;
 
   const calculateIconSize = () => {
-    if (zoomLevel <= 5) return [10, 10]
-    if (zoomLevel === 6) return [15, 15]
-    return [20, 20]
-  }
+    if (zoomLevel <= 5) return [10, 10];
+    if (zoomLevel === 6) return [15, 15];
+    return [20, 20];
+  };
 
-  const iconSize = calculateIconSize()
-  const iconAnchor = iconSize.map((dim) => dim / 2)
+  const iconSize = calculateIconSize();
+  const iconAnchor = iconSize.map((dim) => dim / 2);
 
   const minorIcon = new Icon({
-    iconUrl: '/images/marker-icon.svg',
+    iconUrl: "/src/assets/marker-icon.svg",
     iconSize: iconSize,
     iconAnchor: iconAnchor,
     popupAnchor: [7, -10],
-  })
+  });
 
   const calculateFontSize = () => {
-    if (zoomLevel <= 5) return 15
-    if (zoomLevel === 6) return 20
-    return 30
-  }
+    if (zoomLevel <= 5) return 15;
+    if (zoomLevel === 6) return 20;
+    return 30;
+  };
 
   const calculateStroke = () => {
-    if (zoomLevel <= 5) return '0.3px black'
-    if (zoomLevel === 6) return '0.5px black'
-    return '1px black'
-  }
+    if (zoomLevel <= 5) return "0.3px black";
+    if (zoomLevel === 6) return "0.5px black";
+    return "1px black";
+  };
 
   const calculateMarginRight = () => {
-    if (zoomLevel <= 5) return '2px'
-    if (zoomLevel === 6) return '4px'
-    return '8px'
-  }
+    if (zoomLevel <= 5) return "2px";
+    if (zoomLevel === 6) return "4px";
+    return "8px";
+  };
 
   const minorStyleLeft = {
     fontSize: calculateFontSize(),
-    fontWeight: 'bold',
-    color: '#E3B687',
+    fontWeight: "bold",
+    color: "#E3B687",
     WebkitTextStroke: calculateStroke(),
-    textAlign: 'right',
-    marginTop: '-4px',
+    textAlign: "right",
+    marginTop: "-4px",
     marginRight: calculateMarginRight(),
-		position: 'relative',
-		zIndex: 1,
-  }
+    position: "relative",
+    zIndex: 1,
+  };
 
   return (
     <div>
@@ -70,7 +75,7 @@ export default function MinorStarLeft(props) {
             <a
               href={`https://starwars.fandom.com/wiki/${name.replace(
                 / /g,
-                '_',
+                "_"
               )}`}
               target="_blank"
               rel="noreferrer"
@@ -81,5 +86,5 @@ export default function MinorStarLeft(props) {
         </Marker>
       ) : null}
     </div>
-  )
+  );
 }

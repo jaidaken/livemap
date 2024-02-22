@@ -1,6 +1,7 @@
-import { useEffect } from 'react';
-import { useMap } from 'react-leaflet';
-import L from 'leaflet';
+import { useEffect } from "react";
+import { useMap } from "react-leaflet";
+import L from "leaflet";
+import PropTypes from "prop-types";
 
 const GridLayer = ({
   gridSpacing,
@@ -12,8 +13,21 @@ const GridLayer = ({
   labelPosition,
   labelFont,
   labelColor,
-  labelOpacity
+  labelOpacity,
 }) => {
+  GridLayer.propTypes = {
+    gridSpacing: PropTypes.number,
+    bottomLeftCoord: PropTypes.array,
+    backgroundColor: PropTypes.string,
+    lineColor: PropTypes.string,
+    lineOpacity: PropTypes.number,
+    backgroundOpacity: PropTypes.number,
+    labelPosition: PropTypes.string,
+    labelFont: PropTypes.string,
+    labelColor: PropTypes.string,
+    labelOpacity: PropTypes.number,
+  };
+
   const map = useMap();
 
   useEffect(() => {
@@ -26,36 +40,52 @@ const GridLayer = ({
       const stepSize = gridSpacing;
 
       // Iterate over rows and columns to create grid squares and labels
-      for (let i = 25; i >= 0; i--) { // Reverse the loop for rows
+      for (let i = 25; i >= 0; i--) {
+        // Reverse the loop for rows
         for (let j = 0; j < 26; j++) {
           // Calculate the bounds of the current grid square
           const squareBounds = [
-            [bottomLeftCoord[0] + i * stepSize, bottomLeftCoord[1] + j * stepSize],
-            [bottomLeftCoord[0] + (i + 1) * stepSize, bottomLeftCoord[1] + (j + 1) * stepSize],
+            [
+              bottomLeftCoord[0] + i * stepSize,
+              bottomLeftCoord[1] + j * stepSize,
+            ],
+            [
+              bottomLeftCoord[0] + (i + 1) * stepSize,
+              bottomLeftCoord[1] + (j + 1) * stepSize,
+            ],
           ];
 
           // Add the grid background to the map
-          L.rectangle(squareBounds, { color: backgroundColor, weight: 0, fillOpacity: backgroundOpacity }).addTo(gridLayer);
+          L.rectangle(squareBounds, {
+            color: backgroundColor,
+            weight: 0,
+            fillOpacity: backgroundOpacity,
+          }).addTo(gridLayer);
 
           // Add the grid lines to the map
-          L.rectangle(squareBounds, { color: lineColor, weight: 1, opacity: lineOpacity, fillOpacity: 0 }).addTo(gridLayer);
+          L.rectangle(squareBounds, {
+            color: lineColor,
+            weight: 1,
+            opacity: lineOpacity,
+            fillOpacity: 0,
+          }).addTo(gridLayer);
 
           // Calculate the label position based on labelPosition prop
           let labelLat, labelLng;
           switch (labelPosition) {
-            case 'topLeft':
+            case "topLeft":
               labelLat = bottomLeftCoord[0] + i * stepSize;
               labelLng = bottomLeftCoord[1] + j * stepSize;
               break;
-            case 'topRight':
+            case "topRight":
               labelLat = bottomLeftCoord[0] + i * stepSize;
               labelLng = bottomLeftCoord[1] + (j + 1) * stepSize;
               break;
-            case 'bottomLeft':
+            case "bottomLeft":
               labelLat = bottomLeftCoord[0] + (i + 1) * stepSize;
               labelLng = bottomLeftCoord[1] + j * stepSize;
               break;
-            case 'bottomRight':
+            case "bottomRight":
               labelLat = bottomLeftCoord[0] + (i + 1) * stepSize;
               labelLng = bottomLeftCoord[1] + (j + 1) * stepSize;
               break;
@@ -70,7 +100,7 @@ const GridLayer = ({
           // Add the label marker to the specified position
           L.marker([labelLat, labelLng], {
             icon: L.divIcon({
-              className: 'grid-label',
+              className: "grid-label",
               html: `<div style="color: ${labelColor}; font-family: ${labelFont}; opacity: ${labelOpacity};">${label.toUpperCase()}</div>`,
               iconAnchor: [0, 0],
             }),
@@ -87,7 +117,19 @@ const GridLayer = ({
     return () => {
       gridLayer.remove();
     };
-  }, [map, gridSpacing, bottomLeftCoord, backgroundColor, lineColor, lineOpacity, backgroundOpacity, labelPosition, labelFont, labelColor, labelOpacity]);
+  }, [
+    map,
+    gridSpacing,
+    bottomLeftCoord,
+    backgroundColor,
+    lineColor,
+    lineOpacity,
+    backgroundOpacity,
+    labelPosition,
+    labelFont,
+    labelColor,
+    labelOpacity,
+  ]);
 
   return null;
 };

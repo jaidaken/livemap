@@ -1,13 +1,12 @@
-import React from 'react'
 import 'leaflet/dist/leaflet.css'
 import './App.css'
 import { MapContainer, TileLayer, useMapEvents } from 'react-leaflet'
 import { CRS } from 'leaflet'
-import Markers from './components/Markers.js'
-import GridLayer from './components/shapes/GridLayer.js'
-import Key from './components/shapes/Key.js'
-import { ZoomProvider } from './components/functions/ZoomContext.js'
-import Patreon from './components/shapes/Patreon.js'
+import Markers from './components/Markers.jsx'
+import GridLayer from './components/shapes/GridLayer.jsx'
+import Key from './components/shapes/Key.jsx'
+import { ZoomProvider } from './components/functions/ZoomContext.jsx'
+import Patreon from './components/shapes/Patreon.jsx'
 
 const MapEvents = () => {
   useMapEvents({
@@ -38,7 +37,7 @@ function App() {
           scrollWheelZoom={true}
         >
           <ZoomProvider>
-            {/* <TileLayer attribution="" url="/images/{z}/{x}/{y}.jpg" /> */}
+            {/* <TileLayer attribution="" url="/src/assets/images/{z}/{x}/{y}.jpg" /> */}
 						<TileLayer attribution="" url="" />
 						<Patreon />
             <Key />
