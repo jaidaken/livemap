@@ -1,6 +1,8 @@
 import React from 'react';
 import { useMap } from 'react-leaflet';
 import L, { Control } from 'leaflet';
+import markerIcon from '../../assets/marker-icon.svg'
+import markerLegend from '../../assets/marker-legend.svg'
 
 const Key = () => {
   const map = useMap();
@@ -12,11 +14,11 @@ const Key = () => {
       // Customize the content of the key
       div.innerHTML = `
         <div class="key-item">
-          <img src="assets\marker-icon.svg" alt="Canon" style="width: 24px; height: 24px; margin-right: 8px;" />
+          <img src=${markerIcon} alt="Canon" style="width: 24px; height: 24px; margin-right: 8px;" />
           <span style="font-size: 14px;">Canon</span>
         </div>
         <div class="key-item">
-          <img src="assets\marker-legend.svg" alt="Legends" style="width: 24px; height: 24px; margin-right: 8px;" />
+          <img src=${markerLegend} alt="Legends" style="width: 24px; height: 24px; margin-right: 8px;" />
           <span style="font-size: 14px;">Legends</span>
         </div>
       `;

@@ -3,6 +3,7 @@ import { Marker, Tooltip, Popup } from "react-leaflet";
 import { Icon } from "leaflet";
 import { useZoom } from "../functions/ZoomContext";
 import PropTypes from "prop-types";
+import markerIcon from '../../assets/marker-icon-major.svg'
 
 MajorStar.propTypes = {
   position: PropTypes.array,
@@ -35,7 +36,7 @@ export default function MajorStar(props) {
   const iconAnchor = [iconSize[0] / 2, iconSize[1] / 2]; // Calculate anchor as half of size
 
   const majorIcon = new Icon({
-    iconUrl: "/src/assets/marker-icon-major.svg",
+    iconUrl: markerIcon,
     iconSize: calculateIconSize(),
     iconAnchor: iconAnchor,
     popupAnchor: [7, -10],

@@ -3,6 +3,7 @@ import { Marker, Tooltip, Popup } from "react-leaflet";
 import { Icon } from "leaflet";
 import { useZoom } from "../functions/ZoomContext";
 import PropTypes from "prop-types";
+import markerIcon from '../../assets/marker-icon-mid.svg'
 
 MidStar.propTypes = {
 	position: PropTypes.array,
@@ -51,7 +52,7 @@ export default function MidStar(props) {
   };
 
   const midIcon = new Icon({
-    iconUrl: "/src/assets/marker-icon-mid.svg",
+    iconUrl: markerIcon,
     iconSize: calculateIconSize(),
     iconAnchor: iconAnchor,
     popupAnchor: [7, -10],

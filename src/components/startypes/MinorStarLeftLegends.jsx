@@ -2,6 +2,7 @@ import { Marker, Tooltip, Popup } from "react-leaflet";
 import { Icon } from "leaflet";
 import { useZoom } from "../functions/ZoomContext";
 import PropTypes from "prop-types";
+import markerIcon from '../../assets/marker-legend.svg'
 
 MinorStarLeftLegends.propTypes = {
 	position: PropTypes.array,
@@ -24,7 +25,7 @@ export default function MinorStarLeftLegends(props) {
   const iconAnchor = iconSize.map((dim) => dim / 2);
 
   const minorIcon = new Icon({
-    iconUrl: "/src/assets/marker-legend.svg",
+    iconUrl: markerIcon,
     iconSize: iconSize,
     iconAnchor: iconAnchor,
     popupAnchor: [7, -10],
