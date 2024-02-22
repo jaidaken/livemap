@@ -12,11 +12,11 @@ const Key = () => {
       // Customize the content of the key
       div.innerHTML = `
         <div class="key-item">
-          <img src="/images/marker-icon.svg" alt="Canon" style="width: 24px; height: 24px; margin-right: 8px;" />
+          <img src="assets\marker-icon.svg" alt="Canon" style="width: 24px; height: 24px; margin-right: 8px;" />
           <span style="font-size: 14px;">Canon</span>
         </div>
         <div class="key-item">
-          <img src="/images/marker-legend.svg" alt="Legends" style="width: 24px; height: 24px; margin-right: 8px;" />
+          <img src="assets\marker-legend.svg" alt="Legends" style="width: 24px; height: 24px; margin-right: 8px;" />
           <span style="font-size: 14px;">Legends</span>
         </div>
       `;
