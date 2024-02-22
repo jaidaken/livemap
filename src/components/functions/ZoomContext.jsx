@@ -1,8 +1,11 @@
-// ZoomContext.js
-import React, { useContext, createContext, useState } from 'react';
+/* eslint-disable react-refresh/only-export-components */
+import { useContext, createContext, useState } from 'react';
 import { useMapEvents } from 'react-leaflet'
+import PropTypes from 'prop-types';
 
 const ZoomContext = createContext();
+
+
 
 export const ZoomProvider = ({ children }) => {
 
@@ -21,6 +24,10 @@ export const ZoomProvider = ({ children }) => {
   );
 };
 
+ZoomProvider.propTypes = {
+	children: PropTypes.node,
+};
+
 export const useZoom = () => {
   const context = useContext(ZoomContext);
   if (!context) {
@@ -28,3 +35,4 @@ export const useZoom = () => {
   }
   return context;
 };
+

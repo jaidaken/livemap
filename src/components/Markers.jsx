@@ -8,6 +8,7 @@ import { fetchSystems } from "./functions/fetch.jsx";
 import { useMap } from "react-leaflet";
 import { useZoom } from "./functions/ZoomContext.jsx";
 import TradeNames from "./shapes/TradeNames.jsx";
+import { useSystemContext } from "./functions/SystemContext.jsx";
 
 const starComponents = {
   MajorStar: React.lazy(() => import("./startypes/MajorStar.jsx")),
@@ -91,7 +92,26 @@ export default function Markers() {
     if (!loading) {
       updateVisibleMarkers();
     }
-  }, [loading, zoomLevel, updateVisibleMarkers]);
+	}, [loading, zoomLevel, updateVisibleMarkers]);
+
+	// Listen for changes in newSystemAdded and trigger actions accordingly
+
+	const { newSystemAdded, handleAddSystem } = useSystemContext();
+	
+  useEffect(() => {
+    if (newSystemAdded) {
+      // Reset the state
+      handleAddSystem();
+
+      // Fetch the updated data
+      fetchData();
+
+      // Update visible markers after fetching data
+      updateVisibleMarkers();
+    }
+  }, [newSystemAdded, fetchData, updateVisibleMarkers, handleAddSystem]);
+
+
 
   return (
     <div>

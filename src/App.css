@@ -33,6 +33,26 @@
   margin: 0px;
 }
 
+.add-container {
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  width: auto; /* Adjust width as needed */
+  position: relative; /* Add position relative */
+  margin: 0px;
+}
+
+.leaflet-control-custom.add-container {
+  position: absolute;
+  top: 7%;
+  right: 0%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 16px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
 /* Key item styles */
 .key-item {
   display: flex;
