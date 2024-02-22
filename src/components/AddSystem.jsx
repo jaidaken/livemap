@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useMap } from "react-leaflet";
 import { createClient } from "@supabase/supabase-js";
 import { useSystemContext } from "./functions/SystemContext";
@@ -66,13 +66,13 @@ const AddSystemForm = () => {
 
   const map = useMap();
 
-  const handleMapClick = (e) => {
+  const handleMapClick = useCallback((e) => {
     // Autofill latitude and longitude only when the form is not active
     if (!formActive) {
       handleInputChange("latitude", e.latlng.lat);
       handleInputChange("longitude", e.latlng.lng);
     }
-  };
+  }, [formActive, handleInputChange]);
 
   useEffect(() => {
     const formElement = document.getElementById("addSystemForm");
@@ -95,15 +95,15 @@ const AddSystemForm = () => {
     };
   }, []);
 
-  useEffect(() => {
-    // Attach the map click event listener
-    map.addEventListener("click", handleMapClick);
+	useEffect(() => {
+		// Attach the map click event listener
+		map.addEventListener("click", handleMapClick);
 
-    // Cleanup the map click event listener
-    return () => {
-      map.removeEventListener("click", handleMapClick);
-    };
-  }, [map, formActive]);
+		// Cleanup the map click event listener
+		return () => {
+			map.removeEventListener("click", handleMapClick);
+		};
+	}, [map, formActive, handleMapClick]);
 
 
   return (

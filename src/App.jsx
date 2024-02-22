@@ -47,7 +47,7 @@ function App() {
             {/* <TileLayer attribution="" url="" /> */}
             <Patreon />
             <Key />
-            <AddSystemForm />
+            {/* <AddSystemForm /> */}
             <Markers />
             <MapEvents />
             <GridLayer
