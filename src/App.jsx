@@ -1,4 +1,3 @@
-import { useCallback } from "react";
 import "leaflet/dist/leaflet.css";
 import "./App.css";
 import { MapContainer, TileLayer, useMapEvents } from "react-leaflet";
@@ -10,7 +9,6 @@ import { ZoomProvider } from "./components/functions/ZoomContext.jsx";
 import Patreon from "./components/shapes/Patreon.jsx";
 import AddSystemForm from "./components/AddSystem.jsx";
 import { SystemProvider } from "./components/functions/SystemContext.jsx";
-import usePatreonAuth from "./components/login.jsx";
 
 const MapEvents = () => {
   useMapEvents({
@@ -29,24 +27,6 @@ const minZoom = 3;
 const maxZoom = 8;
 
 function App() {
-  const { isAuthenticated, login, logout } = usePatreonAuth();
-
-  // Use useCallback to memoize the function and prevent unnecessary re-renders
-  const handleMapClick = useCallback(() => {
-    // Example: If the user is not authenticated, prompt them to log in
-    if (!isAuthenticated) {
-      login();
-    } else {
-      // Your logic for authenticated actions
-      console.log("Authenticated user clicked on the map.");
-    }
-  }, [isAuthenticated, login]);
-
-  const handleLogout = () => {
-    // Call the logout function when the logout button is clicked
-    logout();
-  };
-
   return (
     <div className="App">
       <div className="map-container">
@@ -57,9 +37,6 @@ function App() {
           minZoom={minZoom}
           maxZoom={maxZoom}
           scrollWheelZoom={true}
-          whenCreated={(map) => {
-            map.on("click", handleMapClick);
-          }}
         >
           <ZoomProvider>
             <SystemProvider>
@@ -89,8 +66,6 @@ function App() {
           </ZoomProvider>
         </MapContainer>
       </div>
-      {/* Logout Button */}
-      {isAuthenticated && <button onClick={handleLogout}>Logout</button>}
     </div>
   );
 }

@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@auth0/auth0-react": "^2.2.4",
     "@supabase/supabase-js": "^2.39.7",
     "patreon": "^0.4.1",
     "prop-types": "^15.8.1",
