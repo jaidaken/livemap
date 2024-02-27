@@ -19,9 +19,12 @@ const AddSystemForm = () => {
 
 	const { handleAddSystem } = useSystemContext();
 
-  const handleInputChange = (field, value) => {
-    setFormData((prevFormData) => ({ ...prevFormData, [field]: value }));
-  };
+	const handleInputChange = useCallback(
+		(field, value) => {
+			setFormData((prevFormData) => ({ ...prevFormData, [field]: value }));
+		},
+		[]
+	);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -48,7 +51,6 @@ const AddSystemForm = () => {
         starType: "",
       });
 
-      // Signal that a new system has been added using the context
       handleAddSystem();
     } catch (error) {
       console.error("Error adding system:", error.message);
@@ -66,44 +68,35 @@ const AddSystemForm = () => {
 
   const map = useMap();
 
-  const handleMapClick = useCallback((e) => {
-    // Autofill latitude and longitude only when the form is not active
-    if (!formActive) {
-      handleInputChange("latitude", e.latlng.lat);
-      handleInputChange("longitude", e.latlng.lng);
-    }
-  }, [formActive, handleInputChange]);
-
-  useEffect(() => {
-    const formElement = document.getElementById("addSystemForm");
-
-    const activateForm = () => {
-      setFormActive(true);
-    };
-
-    const deactivateForm = () => {
-      setFormActive(false);
-    };
-
-    formElement.addEventListener("mouseenter", activateForm);
-    formElement.addEventListener("mouseleave", deactivateForm);
-
-    // Cleanup event listeners
-    return () => {
-      formElement.removeEventListener("mouseenter", activateForm);
-      formElement.removeEventListener("mouseleave", deactivateForm);
-    };
-  }, []);
-
 	useEffect(() => {
-		// Attach the map click event listener
+		const handleMapClick = (e) => {
+			if (!formActive) {
+				handleInputChange("latitude", e.latlng.lat);
+				handleInputChange("longitude", e.latlng.lng);
+			}
+		};
+
+		const formElement = document.getElementById("addSystemForm");
+
+		const activateForm = () => {
+			setFormActive(true);
+		};
+
+		const deactivateForm = () => {
+			setFormActive(false);
+		};
+
+		formElement.addEventListener("mouseenter", activateForm);
+		formElement.addEventListener("mouseleave", deactivateForm);
+
 		map.addEventListener("click", handleMapClick);
 
-		// Cleanup the map click event listener
 		return () => {
 			map.removeEventListener("click", handleMapClick);
+			formElement.removeEventListener("mouseenter", activateForm);
+			formElement.removeEventListener("mouseleave", deactivateForm);
 		};
-	}, [map, formActive, handleMapClick]);
+	}, [map, formActive, handleInputChange]);
 
 
   return (

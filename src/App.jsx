@@ -4,10 +4,10 @@ import { MapContainer, TileLayer, useMapEvents } from "react-leaflet";
 import { CRS } from "leaflet";
 import Markers from "./components/Markers.jsx";
 import GridLayer from "./components/shapes/GridLayer.jsx";
-import Key from "./components/shapes/Key.jsx";
+import Key from "./components/ui/Key.jsx";
 import { ZoomProvider } from "./components/functions/ZoomContext.jsx";
-import Patreon from "./components/shapes/Patreon.jsx";
-import AddSystemForm from "./components/AddSystem.jsx";
+import Patreon from "./components/ui/Patreon.jsx";
+// import AddSystemForm from "./components/AddSystem.jsx";
 import { SystemProvider } from "./components/functions/SystemContext.jsx";
 
 const MapEvents = () => {
@@ -46,8 +46,8 @@ function App() {
               />
               {/* <TileLayer attribution="" url="" /> */}
               <Patreon />
-              <Key />
-              <AddSystemForm />
+							<Key />
+              {/* <AddSystemForm /> */}
               <Markers />
               <MapEvents />
               <GridLayer

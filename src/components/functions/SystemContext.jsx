@@ -15,9 +15,9 @@ export const useSystemContext = () => {
 export const SystemProvider = ({ children }) => {
   const [newSystemAdded, setNewSystemAdded] = useState(false);
 
-  const handleAddSystem = () => {
-    setNewSystemAdded(true);
-  };
+	const handleAddSystem = () => {
+		setNewSystemAdded(prev => !prev);
+	};
 
   const contextValue = {
     newSystemAdded,

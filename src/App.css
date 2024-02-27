@@ -22,6 +22,43 @@
   background-color: #26244a;
 }
 
+.search-container {
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 10px 16px 10px 10px;
+  border-radius: 5px;
+  width: 100%;
+  margin: 0px;
+}
+
+.search-bar {
+  display: flex;
+  flex-direction: column;
+}
+
+.search-bar input {
+  width: 100%;
+  font-family: "Myriad Pro", sans-serif;
+  font-size: 1.3rem;
+  list-style-type: none;
+}
+
+.search-bar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.search-bar li {
+  cursor: pointer;
+  margin: 4px 0 4px 2px;
+  font-family: "Myriad Pro", sans-serif;
+  font-size: 1.3rem;
+}
+
+.search-bar li:hover {
+  background-color: #e0e0e0; /* Add a hover effect or adjust as needed */
+}
 .key-container {
   background-color: white;
   border: 1px solid #ccc;

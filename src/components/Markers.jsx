@@ -9,6 +9,7 @@ import { useMap } from "react-leaflet";
 import { useZoom } from "./functions/ZoomContext.jsx";
 import TradeNames from "./shapes/TradeNames.jsx";
 import { useSystemContext } from "./functions/SystemContext.jsx";
+import SearchBarUI from "./ui/SearchBarUI.jsx";
 
 const starComponents = {
   MajorStar: React.lazy(() => import("./startypes/MajorStar.jsx")),
@@ -44,10 +45,6 @@ export default function Markers() {
     }
   }, []);
 
-  // useEffect(() => {
-  // 	console.log(starSystems);
-  // }, [starSystems, fetchData]);
-
   const updateVisibleMarkers = useCallback(() => {
     if (!map) {
       return;
@@ -77,7 +74,7 @@ export default function Markers() {
       if (!dataFetched) {
         fetchData();
       } else {
-        // If data is already fetched, update visible markers directly
+        // update visible markers
         updateVisibleMarkers();
       }
 
@@ -92,26 +89,30 @@ export default function Markers() {
     if (!loading) {
       updateVisibleMarkers();
     }
-	}, [loading, zoomLevel, updateVisibleMarkers]);
+  }, [loading, zoomLevel, updateVisibleMarkers]);
 
-	// Listen for changes in newSystemAdded and trigger actions accordingly
+  // Listen new system added and updates screen
 
-	const { newSystemAdded, handleAddSystem } = useSystemContext();
-	
+  const { newSystemAdded, handleAddSystem } = useSystemContext();
+
   useEffect(() => {
-    if (newSystemAdded) {
-      // Reset the state
-      handleAddSystem();
-
-      // Fetch the updated data
+    if (newSystemAdded === true) {
+      // Reset to false
+			handleAddSystem();
+      // Fetch the added data
       fetchData();
-
-      // Update visible markers after fetching data
+      // Update visible markers
       updateVisibleMarkers();
     }
   }, [newSystemAdded, fetchData, updateVisibleMarkers, handleAddSystem]);
 
-
+  const handleSystemSelect = useCallback(
+    (selectedSystem) => {
+      const { latitude, longitude } = selectedSystem;
+      map.flyTo([latitude, longitude], 10);
+    },
+    [map]
+  );
 
   return (
     <div>
@@ -130,7 +131,9 @@ export default function Markers() {
               <StarComponent position={[latitude, longitude]} name={name} />
             </React.Suspense>
           );
-        })}
+				})}
+
+			<SearchBarUI systems={starSystems} onSystemSelect={handleSystemSelect} />
 
       <PolygonObject plot="innerRim" color="#1B609F" opacity={0.2} />
       <PolygonObject plot="expansionRegion" color="#25538A" opacity={0.2} />
