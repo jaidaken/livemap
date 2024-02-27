@@ -10,6 +10,7 @@ import { useZoom } from "./functions/ZoomContext.jsx";
 import TradeNames from "./shapes/TradeNames.jsx";
 import { useSystemContext } from "./functions/SystemContext.jsx";
 import SearchBarUI from "./ui/SearchBarUI.jsx";
+import Filter from "./ui/filter.jsx";
 
 const starComponents = {
   MajorStar: React.lazy(() => import("./startypes/MajorStar.jsx")),
@@ -98,7 +99,7 @@ export default function Markers() {
   useEffect(() => {
     if (newSystemAdded === true) {
       // Reset to false
-			handleAddSystem();
+      handleAddSystem();
       // Fetch the added data
       fetchData();
       // Update visible markers
@@ -124,16 +125,29 @@ export default function Markers() {
           if (!StarComponent) {
             console.error(`Component not found for starType: ${starType}`);
             return null;
-          }
+					}
+
+          const idAttribute = starType === "MinorStarLeftLegends" || starType === "MinorStarRightLegends"
+            ? "legends"
+            : "canon";
 
           return (
+            // <React.Suspense key={id} fallback={<div>Loading...</div>}>
+            //   <StarComponent position={[latitude, longitude]} name={name} />
+						// </React.Suspense>
+
             <React.Suspense key={id} fallback={<div>Loading...</div>}>
-              <StarComponent position={[latitude, longitude]} name={name} />
+              <StarComponent
+                position={[latitude, longitude]}
+                name={name}
+                id={idAttribute}
+              />
             </React.Suspense>
           );
-				})}
+        })}
 
 			<SearchBarUI systems={starSystems} onSystemSelect={handleSystemSelect} />
+			<Filter />
 
       <PolygonObject plot="innerRim" color="#1B609F" opacity={0.2} />
       <PolygonObject plot="expansionRegion" color="#25538A" opacity={0.2} />

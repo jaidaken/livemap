@@ -62,10 +62,10 @@ export default function MinorStarRight(props) {
   return (
     <div>
       {zoomLevel >= 3 ? (
-        <Marker position={position} icon={minorIcon}>
+        <Marker id="canon" position={position} icon={minorIcon}>
           {zoomLevel >= 6 ? (
             <Tooltip direction="right" opacity={1} permanent>
-              <div className="major-popup" style={minorStyleRight}>
+              <div className="canon-popup" style={minorStyleRight}>
                 {name}
               </div>
             </Tooltip>

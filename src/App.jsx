@@ -13,7 +13,7 @@ import { SystemProvider } from "./components/functions/SystemContext.jsx";
 const MapEvents = () => {
   useMapEvents({
     click(e) {
-      console.log(`[${e.latlng.lat}, ${e.latlng.lng}],`);
+      // console.log(`[${e.latlng.lat}, ${e.latlng.lng}],`);
       navigator.clipboard.writeText(`[${e.latlng.lat}, ${e.latlng.lng}],`);
     },
   });
@@ -36,7 +36,8 @@ function App() {
           zoom={initialZoom}
           minZoom={minZoom}
           maxZoom={maxZoom}
-          scrollWheelZoom={true}
+					scrollWheelZoom={true}
+					doubleClickZoom = {false}
         >
           <ZoomProvider>
             <SystemProvider>

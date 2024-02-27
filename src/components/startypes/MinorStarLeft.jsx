@@ -64,10 +64,10 @@ export default function MinorStarLeft(props) {
   return (
     <div>
       {zoomLevel >= 3 ? (
-        <Marker position={position} icon={minorIcon}>
+        <Marker id="canon" position={position} icon={minorIcon}>
           {zoomLevel >= 6 ? (
             <Tooltip direction="left" opacity={1} permanent>
-              <div className="major-popup" style={minorStyleLeft}>
+              <div className="canon-popup" style={minorStyleLeft}>
                 {name}
               </div>
             </Tooltip>

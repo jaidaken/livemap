@@ -79,10 +79,10 @@ export default function MidStar(props) {
   return (
     <div>
       {zoomLevel >= 3 ? (
-        <Marker ref={minor} position={position} icon={midIcon}>
+        <Marker id="canon" ref={minor} position={position} icon={midIcon}>
           {zoomLevel >= 4 ? (
             <Tooltip direction="right" opacity={1} permanent>
-              <div className="major-popup" style={midStyle}>
+              <div className="canon-popup" style={midStyle}>
                 {name}
               </div>
             </Tooltip>

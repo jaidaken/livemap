@@ -17,11 +17,11 @@ const Key = () => {
         div.innerHTML = `
           <div class="key-item">
             <img src=${markerIcon} alt="Canon" style="width: 24px; height: 24px; margin-right: 8px;" />
-            <span style="font-size: 14px;">Canon</span>
+            <span>Canon</span>
           </div>
           <div class="key-item">
             <img src=${markerLegend} alt="Legends" style="width: 24px; height: 24px; margin-right: 8px;" />
-            <span style="font-size: 14px;">Legends</span>
+            <span>Legends</span>
           </div>
         `;
         return div;

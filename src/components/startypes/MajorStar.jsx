@@ -77,10 +77,10 @@ export default function MajorStar(props) {
   return (
     <div>
       {zoomLevel >= 3 ? (
-        <Marker ref={major} position={position} icon={majorIcon}>
+        <Marker id="canon" ref={major} position={position} icon={majorIcon}>
           {zoomLevel >= 4 ? (
             <Tooltip direction="right" opacity={1} permanent>
-              <div className="major-popup" style={majorStyle}>
+              <div className="canon-popup" style={majorStyle}>
                 {name}
               </div>
             </Tooltip>
