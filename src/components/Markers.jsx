@@ -32,7 +32,13 @@ export default function Markers() {
   const [starSystems, setStarSystems] = useState([]);
   const [visibleMarkers, setVisibleMarkers] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [dataFetched, setDataFetched] = useState(false);
+	const [dataFetched, setDataFetched] = useState(false);
+
+	const [activeFilters, setActiveFilters] = useState([
+		"legends",
+		"canon"
+	]);
+
 
   const fetchData = useCallback(async () => {
     try {
@@ -52,11 +58,31 @@ export default function Markers() {
     }
 
     const bounds = map.getBounds();
-    const markers = starSystems.filter(({ latitude, longitude }) =>
-      bounds.contains([latitude, longitude])
-    );
+    const markers = starSystems.filter(({ latitude, longitude, starType }) => {
+      const isLegendsVisible =
+        activeFilters.includes("legends") ||
+        !["MinorStarLeftLegends", "MinorStarRightLegends"].includes(starType);
+
+      const isCanonVisible =
+        activeFilters.includes("canon") || !["MinorStarLeft", "MinorStarRight", "MajorStar", "MidStar"].includes(starType);
+
+      const isVisible = bounds.contains([latitude, longitude]) && isLegendsVisible && isCanonVisible;
+
+      return isVisible;
+    });
+
     setVisibleMarkers(markers);
-  }, [map, starSystems]);
+  }, [map, starSystems, activeFilters]);
+
+	const handleFilterChange = useCallback((filter) => {
+    setActiveFilters((prevFilters) => {
+      if (prevFilters.includes(filter)) {
+        return prevFilters.filter((f) => f !== filter);
+      } else {
+        return [...prevFilters, filter];
+      }
+    });
+  }, []);
 
   useEffect(() => {
     const handleZoomEnd = () => {
@@ -127,27 +153,23 @@ export default function Markers() {
             return null;
 					}
 
-          const idAttribute = starType === "MinorStarLeftLegends" || starType === "MinorStarRightLegends"
-            ? "legends"
-            : "canon";
 
           return (
-            // <React.Suspense key={id} fallback={<div>Loading...</div>}>
-            //   <StarComponent position={[latitude, longitude]} name={name} />
-						// </React.Suspense>
-
             <React.Suspense key={id} fallback={<div>Loading...</div>}>
               <StarComponent
                 position={[latitude, longitude]}
                 name={name}
-                id={idAttribute}
               />
             </React.Suspense>
           );
         })}
 
 			<SearchBarUI systems={starSystems} onSystemSelect={handleSystemSelect} />
-			<Filter />
+
+			<Filter
+        activeFilters={activeFilters}
+        onFilterChange={handleFilterChange}
+      />
 
       <PolygonObject plot="innerRim" color="#1B609F" opacity={0.2} />
       <PolygonObject plot="expansionRegion" color="#25538A" opacity={0.2} />

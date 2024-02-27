@@ -116,6 +116,8 @@
 }
 
 .filter-container {
+	display: flex;
+  flex-direction: column;
   background-color: white;
   border: 1px solid #ccc;
   padding: 10px;
@@ -123,8 +125,21 @@
   position: relative;
   margin: 0px;
 	font-family: "Myriad Pro";
-	font-size: 1.2rem;
+
 	font-weight: bold;
+}
+
+.filter-title {
+	text-align: center;
+	font-size: 1.5rem;
+	margin-top: -5px;
+	margin-bottom: 5px;
+	padding: 0;
+}
+.filter-item {
+  align-items: center;
+  margin-bottom: 0px;
+	font-size: 1.2rem;
 }
 .patreon-container {
   display: flex;
