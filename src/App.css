@@ -4,21 +4,6 @@
 .leaflet-container {
   width: 100vw;
   height: 100vh;
-}
-
-.map-container {
-  width: 100vw;
-  height: 100vh;
-}
-
-.map-wrapper {
-  width: 100vw;
-  height: 100vh;
-}
-
-.leaflet-container {
-  width: 100vw;
-  height: 100vh;
   background-color: #26244a;
 }
 
@@ -67,9 +52,9 @@
   width: 100%; /* Adjust width as needed */
   position: relative; /* Add position relative */
   margin: 0px;
-	font-family: "Myriad Pro";
-	font-size: 1.2rem;
-	font-weight: bold;
+  font-family: "Myriad Pro";
+  font-size: 1.2rem;
+  font-weight: bold;
 }
 
 .add-container {
@@ -116,7 +101,7 @@
 }
 
 .filter-container {
-	display: flex;
+  display: flex;
   flex-direction: column;
   background-color: white;
   border: 1px solid #ccc;
@@ -124,22 +109,22 @@
   border-radius: 5px;
   position: relative;
   margin: 0px;
-	font-family: "Myriad Pro";
+  font-family: "Myriad Pro";
 
-	font-weight: bold;
+  font-weight: bold;
 }
 
 .filter-title {
-	text-align: center;
-	font-size: 1.5rem;
-	margin-top: -5px;
-	margin-bottom: 5px;
-	padding: 0;
+  text-align: center;
+  font-size: 1.5rem;
+  margin-top: -5px;
+  margin-bottom: 5px;
+  padding: 0;
 }
 .filter-item {
   align-items: center;
   margin-bottom: 0px;
-	font-size: 1.2rem;
+  font-size: 1.2rem;
 }
 .patreon-container {
   display: flex;
@@ -150,9 +135,9 @@
   border-radius: 5px;
   position: relative;
   margin: 0px;
-	font-family: "Myriad Pro";
-	font-size: 1.2rem;
-	font-weight: bold;
+  font-family: "Myriad Pro";
+  font-size: 1.2rem;
+  font-weight: bold;
 }
 .patreon-item {
   align-items: center;
@@ -173,5 +158,14 @@
 
 .leaflet-control-attribution {
   display: none;
-  visibility: hidden;
+  visibility: visible;
+}
+
+/* Safari specific styles */
+@media not all and (min-resolution: 0.001dpcm) {
+  @supports (-webkit-appearance: none) {
+    .leaflet-control {
+      display: block !important;
+    }
+  }
 }
