@@ -161,6 +161,11 @@
   visibility: visible;
 }
 
+.leaflet-bottom.leaflet-left .leaflet-control {
+  display: flex;
+  flex-direction: column;
+}
+
 /* Safari specific styles */
 @media not all and (min-resolution: 0.001dpcm) {
   @supports (-webkit-appearance: none) {
