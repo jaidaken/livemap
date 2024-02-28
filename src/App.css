@@ -164,15 +164,6 @@
   flex-direction: column;
 }
 
-@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 1) and (orientation: portrait) {
-  .leaflet-control {
-    display: block !important;
-  }
-
-  .leaflet-bottom {
-    margin-bottom: 20%;
-  }
-}
 @media only screen and (max-width: 768px) {
   .key-container {
     padding: 4px;
@@ -259,5 +250,21 @@
     width: 20px;
     height: 20px;
     font-size: 1.2rem;
+  }
+}
+
+@media not all and (min-resolution: 0.001dpcm) {
+  @supports (-webkit-appearance: none) {
+    .leaflet-control {
+      display: block !important;
+    }
+
+    .leaflet-bottom {
+      margin-bottom: 20%;
+    }
+
+    .search-container {
+      padding-right: 24px;
+    }
   }
 }
