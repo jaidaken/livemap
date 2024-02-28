@@ -139,14 +139,16 @@ export default function Markers() {
       map.flyTo([latitude, longitude], 10);
     },
     [map]
-  );
+	);
+
+
 
   return (
     <div>
       {loading && <div>Loading...</div>}
       {!loading &&
-        visibleMarkers.map(({ id, name, latitude, longitude, starType }) => {
-          const StarComponent = starComponents[starType];
+        visibleMarkers.map(({ id, name, latitude, longitude, starType, wiki }) => {
+					const StarComponent = starComponents[starType];
 
           if (!StarComponent) {
             console.error(`Component not found for starType: ${starType}`);
@@ -158,7 +160,8 @@ export default function Markers() {
             <React.Suspense key={id} fallback={<div>Loading...</div>}>
               <StarComponent
                 position={[latitude, longitude]}
-                name={name}
+								name={name}
+								wiki={wiki}
               />
             </React.Suspense>
           );

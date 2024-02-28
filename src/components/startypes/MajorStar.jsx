@@ -3,11 +3,12 @@ import { Marker, Tooltip, Popup } from "react-leaflet";
 import { Icon } from "leaflet";
 import { useZoom } from "../functions/ZoomContext";
 import PropTypes from "prop-types";
-import markerIcon from '../../assets/marker-icon-major.svg'
+import markerIcon from "../../assets/marker-icon-major.svg";
 
 MajorStar.propTypes = {
   position: PropTypes.array,
   name: PropTypes.string,
+  wiki: PropTypes.string,
 };
 
 export default function MajorStar(props) {
@@ -22,7 +23,7 @@ export default function MajorStar(props) {
     }
   }, []);
 
-  const { position, name } = props;
+  const { position, name, wiki } = props;
 
   const calculateIconSize = () => {
     if (zoomLevel <= 3) return [15, 15];
@@ -86,15 +87,7 @@ export default function MajorStar(props) {
             </Tooltip>
           ) : null}
           <Popup>
-            <a
-              href={`https://starwars.fandom.com/wiki/${name.replace(
-                / /g,
-                "_"
-              )}`}
-              target="_blank"
-              rel="noreferrer"
-            >
-              {" "}
+            <a href={`${wiki}`} target="_blank" rel="noreferrer">
               {name} wiki page
             </a>
           </Popup>

@@ -8,6 +8,7 @@ import markerIcon from '../../assets/marker-icon-mid.svg'
 MidStar.propTypes = {
 	position: PropTypes.array,
 	name: PropTypes.string,
+	wiki: PropTypes.string,
 };
 
 export default function MidStar(props) {
@@ -22,8 +23,7 @@ export default function MidStar(props) {
     }
   }, []);
 
-  const position = props.position;
-  const name = props.name;
+	const { position, name, wiki } = props;
 
   const calculateIconSize = () => {
     if (zoomLevel <= 4) return [18, 18];
@@ -88,14 +88,7 @@ export default function MidStar(props) {
             </Tooltip>
           ) : null}
           <Popup>
-            <a
-              href={`https://starwars.fandom.com/wiki/${name.replace(
-                / /g,
-                "_"
-              )}`}
-              target="_blank"
-              rel="noreferrer"
-            >
+					<a href={`${wiki}`} target="_blank" rel="noreferrer">
               {name} wiki page
             </a>
           </Popup>

@@ -7,13 +7,13 @@ import markerIcon from '../../assets/marker-icon.svg'
 MinorStarLeft.propTypes = {
 	position: PropTypes.array,
 	name: PropTypes.string,
+	wiki: PropTypes.string,
 };
 
 export default function MinorStarLeft(props) {
   const { zoomLevel } = useZoom();
 
-  const position = props.position;
-  const name = props.name;
+	const { position, name, wiki } = props;
 
   const calculateIconSize = () => {
     if (zoomLevel <= 5) return [10, 10];
@@ -73,14 +73,7 @@ export default function MinorStarLeft(props) {
             </Tooltip>
           ) : null}
           <Popup>
-            <a
-              href={`https://starwars.fandom.com/wiki/${name.replace(
-                / /g,
-                "_"
-              )}`}
-              target="_blank"
-              rel="noreferrer"
-            >
+					<a href={`${wiki}`} target="_blank" rel="noreferrer">
               {name} wiki page
             </a>
           </Popup>
