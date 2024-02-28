@@ -42,15 +42,15 @@
 }
 
 .search-bar li:hover {
-  background-color: #e0e0e0; /* Add a hover effect or adjust as needed */
+  background-color: #e0e0e0;
 }
 .key-container {
   background-color: white;
   border: 1px solid #ccc;
   padding: 10px;
   border-radius: 5px;
-  width: 100%; /* Adjust width as needed */
-  position: relative; /* Add position relative */
+  width: 100%;
+  position: relative;
   margin: 0px;
   font-family: "Myriad Pro";
   font-size: 1.2rem;
@@ -62,8 +62,8 @@
   border: 1px solid #ccc;
   padding: 10px;
   border-radius: 5px;
-  width: auto; /* Adjust width as needed */
-  position: relative; /* Add position relative */
+  width: auto;
+  position: relative;
   margin: 0px;
 }
 .login-modal {
@@ -86,18 +86,16 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Key item styles */
 .key-item {
   display: flex;
   align-items: center;
   margin-bottom: 8px;
 }
 
-/* Key marker styles */
 .key-item img {
-  width: 24px; /* Adjust width as needed */
-  height: 24px; /* Adjust height as needed */
-  margin-right: 8px; /* Adjust margin as needed */
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
 }
 
 .filter-container {
@@ -166,13 +164,17 @@
   flex-direction: column;
 }
 
-/* Safari specific styles */
-@media not all and (min-resolution: 0.001dpcm) {
-  @supports (-webkit-appearance: none) {
+
+@supports (-webkit-hyphens:none){
+	@content {
     .leaflet-control {
       display: block !important;
     }
-  }
+
+		.leaflet-bottom {
+			margin-bottom: 50px;
+		}
+	}
 }
 @media only screen and (max-width: 768px) {
   .key-container {
@@ -239,13 +241,11 @@
 	}
 
 	.leaflet-control-zoom-in {
-		/* font-size: 0.8rem; */
 		width: 20px !important;
 		height: 20px !important;
 	}
 
 	.leaflet-control-zoom-out {
-		/* font-size: 0.8rem; */
 		width: 20px !important;
 		height: 20px !important;
 	}
@@ -265,7 +265,4 @@
 		font-size: 1.2rem;
 	}
 
-	.leaflet-control-container {
-		height: 100vh;
-	}
 }
