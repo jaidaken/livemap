@@ -165,6 +165,11 @@
 }
 
 @media only screen and (max-width: 768px) {
+
+	.leaflet-container {
+		height: 100dvh;
+	}
+
   .key-container {
     padding: 4px;
     width: 80%;
