@@ -257,19 +257,3 @@
     font-size: 1.2rem;
   }
 }
-
-@media not all and (min-resolution: 0.001dpcm) {
-  @supports (-webkit-appearance: none) {
-    .leaflet-control {
-      display: block !important;
-    }
-
-    .leaflet-bottom {
-      margin-bottom: 20%;
-    }
-
-    .search-container {
-      padding-right: 24px;
-    }
-  }
-}
