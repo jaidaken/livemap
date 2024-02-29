@@ -10,7 +10,8 @@ const AddSystemForm = () => {
     longitude: "",
     starType: "MinorStar",
     wiki: "",
-    isCanon: false,
+		isCanon: false,
+		isLegends: false,
     alignRight: false,
   });
 
@@ -21,7 +22,7 @@ const AddSystemForm = () => {
 
   const handleInputChange = useCallback((field, value) => {
     setFormData((prevFormData) => {
-      if (field === "isCanon" || field === "alignRight") {
+      if (field === "isCanon" || field === "isLegends" || field === "alignRight") {
         return { ...prevFormData, [field]: value };
       }
       return { ...prevFormData, [field]: value !== undefined ? value : "" };
@@ -34,7 +35,8 @@ const AddSystemForm = () => {
     try {
       if (
         !formData.starType ||
-        formData.isCanon === undefined ||
+				formData.isCanon === undefined ||
+				formData.isLegends === undefined ||
         formData.alignRight === undefined
       ) {
         console.error(
@@ -55,7 +57,8 @@ const AddSystemForm = () => {
           longitude: parseFloat(formData.longitude),
           starType: formData.starType,
           wiki: formData.wiki,
-          isCanon: formData.isCanon,
+					isCanon: formData.isCanon,
+					isLegends: formData.isLegends,
           alignRight: formData.alignRight,
         },
       ]);
@@ -70,7 +73,8 @@ const AddSystemForm = () => {
         latitude: "",
         longitude: "",
         starType: "MinorStar",
-        isCanon: false,
+				isCanon: false,
+				isLegends: false,
         alignRight: false,
       });
 
@@ -113,7 +117,7 @@ const AddSystemForm = () => {
 	}, [map, formActive, handleInputChange]);
 
   return (
-    <div className="leaflet-control leaflet-control-custom add-container">
+    <div className="leaflet-control leaflet-control-custom add-system-container">
       <form id="addSystemForm" onSubmit={handleSubmit}>
         <h2>Add System</h2>
         <div>
@@ -167,16 +171,28 @@ const AddSystemForm = () => {
         <div>
           <label>Is Canon:</label>
           <input
-            type="checkbox"
+						type="checkbox"
+						id="checkbox"
             name="isCanon"
             checked={formData.isCanon}
             onChange={() => handleInputChange("isCanon", !formData.isCanon)}
+          />
+				</div>
+				<div>
+          <label>Is Legends:</label>
+          <input
+						type="checkbox"
+						id="checkbox"
+            name="isLegends"
+            checked={formData.isLegends}
+            onChange={() => handleInputChange("isLegends", !formData.isLegends)}
           />
         </div>
         <div>
           <label>Align Right:</label>
           <input
-            type="checkbox"
+						type="checkbox"
+						id="checkbox"
             name="alignRight"
             checked={formData.alignRight}
             onChange={() =>
