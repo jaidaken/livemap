@@ -17,8 +17,9 @@ export const fetchSystems = async () => {
       starType: system.starType,
       wiki: system.wiki || null,
 			isCanon: system.isCanon === true,
-			isLegends: system.isCanon === false,
-			hasError: system.isCanon === null || system.isCanon === undefined,
+			isLegends: system.isLegends === true,
+			isShared: system.isCanon === true && system.isLegends === true,
+			hasError: system.isCanon === null || system.isCanon === undefined || system.isLegends === null || system.isLegends === undefined,
 			alignRight: system.alignRight === true
     }));
 

@@ -11,12 +11,13 @@ import TradeNames from "./shapes/TradeNames.jsx";
 import { useSystemContext } from "./functions/SystemContext.jsx";
 import SearchBarUI from "./ui/SearchBarUI.jsx";
 import Filter from "./ui/filter.jsx";
+import Star from "./shapes/Star.jsx";
 
-const starComponents = {
-  MajorStar: React.lazy(() => import("./startypes/MajorStar.jsx")),
-  MidStar: React.lazy(() => import("./startypes/MidStar.jsx")),
-  MinorStar: React.lazy(() => import("./startypes/MinorStar.jsx")),
-};
+// const starComponents = {
+//   MajorStar: React.lazy(() => import("./startypes/MajorStar.jsx")),
+//   MidStar: React.lazy(() => import("./startypes/MidStar.jsx")),
+//   MinorStar: React.lazy(() => import("./startypes/MinorStar.jsx")),
+// };
 
 export default function Markers() {
   const map = useMap();
@@ -25,13 +26,13 @@ export default function Markers() {
   const [starSystems, setStarSystems] = useState([]);
   const [visibleMarkers, setVisibleMarkers] = useState([]);
   const [loading, setLoading] = useState(true);
-	const [dataFetched, setDataFetched] = useState(false);
+  const [dataFetched, setDataFetched] = useState(false);
 
-	const [activeFilters, setActiveFilters] = useState([
-		"legends",
-		"canon"
-	]);
-
+  const [activeFilters, setActiveFilters] = useState([
+    "legends",
+    "canon",
+    "shared",
+  ]);
 
   const fetchData = useCallback(async () => {
     try {
@@ -51,24 +52,29 @@ export default function Markers() {
 		}
 
 		const bounds = map.getBounds();
-		
-		const markers = starSystems.filter(({ latitude, longitude, isCanon, isLegends }) => {
-			const isCanonVisible = activeFilters.includes("canon");
-			const isLegendsVisible = activeFilters.includes("legends");
 
-			if (isCanon && isCanonVisible) {
-				return bounds.contains([latitude, longitude]);
-			} else if (!isCanon && isLegends && isLegendsVisible) {
-				return bounds.contains([latitude, longitude]);
-			} else {
-				return false;
+		const markers = starSystems.filter(
+			({ latitude, longitude, isCanon, isLegends, isShared }) => {
+				const isCanonVisible = activeFilters.includes("canon");
+				const isLegendsVisible = activeFilters.includes("legends");
+				const isSharedVisible = activeFilters.includes("shared");
+
+				if (
+					(isCanon && isCanonVisible && !isShared) ||
+					(isLegends && isLegendsVisible && !isShared) ||
+					(isShared && isSharedVisible)
+				) {
+					return bounds.contains([latitude, longitude]);
+				} else {
+					return false;
+				}
 			}
-		});
+		);
 
 		setVisibleMarkers(markers);
 	}, [map, starSystems, activeFilters]);
 
-	const handleFilterChange = useCallback((filter) => {
+  const handleFilterChange = useCallback((filter) => {
     setActiveFilters((prevFilters) => {
       if (prevFilters.includes(filter)) {
         return prevFilters.filter((f) => f !== filter);
@@ -133,41 +139,45 @@ export default function Markers() {
       map.flyTo([latitude, longitude], 10);
     },
     [map]
-	);
-
-
+  );
 
   return (
     <div>
       {loading && <div>Loading...</div>}
       {!loading &&
-        visibleMarkers.map(({ id, name, latitude, longitude, starType, wiki, isCanon, isLegends, hasError, alignRight }) => {
-					const StarComponent = starComponents[starType];
+        visibleMarkers.map(
+          ({
+            id,
+            name,
+            latitude,
+            longitude,
+            starType,
+            wiki,
+            isCanon,
+            isLegends,
+            hasError,
+            alignRight,
+          }) => {
+            return (
+              <React.Suspense key={id} fallback={<div>Loading...</div>}>
+                <Star
+                  position={[latitude, longitude]}
+                  name={name}
+                  wiki={wiki}
+                  isCanon={isCanon}
+                  isLegends={isLegends}
+                  hasError={hasError}
+                  alignRight={alignRight}
+                  starType={starType} // Pass the starType property
+                />
+              </React.Suspense>
+            );
+          }
+        )}
 
-          if (!StarComponent) {
-            console.error(`Component not found for starType: ${starType}`);
-            return null;
-					}
+      <SearchBarUI systems={starSystems} onSystemSelect={handleSystemSelect} />
 
-
-          return (
-            <React.Suspense key={id} fallback={<div>Loading...</div>}>
-              <StarComponent
-                position={[latitude, longitude]}
-								name={name}
-								wiki={wiki}
-								isCanon={isCanon}
-								isLegends={isLegends}
-								hasError={hasError}
-								alignRight={alignRight}
-              />
-            </React.Suspense>
-          );
-        })}
-
-			<SearchBarUI systems={starSystems} onSystemSelect={handleSystemSelect} />
-
-			<Filter
+      <Filter
         activeFilters={activeFilters}
         onFilterChange={handleFilterChange}
       />

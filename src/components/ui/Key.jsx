@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useMap } from "react-leaflet";
 import L from "leaflet";
 import markerIcon from "../../assets/marker-canon.svg";
+import markerShared from "../../assets/marker-shared.svg";
 import markerLegend from "../../assets/marker-legends.svg"
 
 const Key = () => {
@@ -17,11 +18,15 @@ const Key = () => {
         div.innerHTML = `
           <div class="key-item">
             <img src=${markerIcon} alt="Canon" />
-            <span>Canon</span>
+            <span>Canon Only</span>
           </div>
+					<div class="key-item">
+					<img src=${markerShared} alt="Shared" />
+					<span>Shared</span>
+				</div>
           <div class="key-item">
             <img src=${markerLegend} alt="Legends" />
-            <span>Legends</span>
+            <span>Legends Only</span>
           </div>
         `;
         return div;

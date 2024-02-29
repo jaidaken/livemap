@@ -16,9 +16,9 @@ const Filter = ({ activeFilters, onFilterChange }) => {
         const div = L.DomUtil.create(
           "div",
           "leaflet-control leaflet-control-custom filter-container"
-				);
+        );
 
-				const title = document.createElement("div");
+        const title = document.createElement("div");
         title.textContent = "Filters";
         title.classList.add("filter-title");
         div.appendChild(title);
@@ -31,18 +31,19 @@ const Filter = ({ activeFilters, onFilterChange }) => {
 
           const checkboxLabel = document.createElement("label");
           checkboxLabel.appendChild(checkbox);
-					checkboxLabel.appendChild(document.createTextNode(` ${label}`));
-					checkboxLabel.classList.add("filter-item");
+          checkboxLabel.appendChild(document.createTextNode(` ${label}`));
+          checkboxLabel.classList.add("filter-item");
 
           return checkboxLabel;
         };
 
-        const legendsCheckbox = createCheckbox("legends", "Legends");
-        const canonCheckbox = createCheckbox("canon", "Canon");
+        const legendsCheckbox = createCheckbox("legends", "Legends Only");
+        const sharedCheckbox = createCheckbox("shared", "Shared");
+        const canonCheckbox = createCheckbox("canon", "Canon Only");
 
-				div.appendChild(canonCheckbox);
+        div.appendChild(canonCheckbox);
+        div.appendChild(sharedCheckbox);
         div.appendChild(legendsCheckbox);
-
 
         return div;
       },
