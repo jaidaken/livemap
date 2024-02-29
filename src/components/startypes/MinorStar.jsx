@@ -2,18 +2,29 @@ import { Marker, Tooltip, Popup } from "react-leaflet";
 import { Icon } from "leaflet";
 import { useZoom } from "../functions/ZoomContext";
 import PropTypes from "prop-types";
-import markerIcon from '../../assets/marker-legend.svg'
+import markerIconCanon from '../../assets/marker-canon.svg';
+import markerIconLegends from '../../assets/marker-legends.svg';
+import markerIconError from '../../assets/marker-error.svg';
 
-MinorStarLeftLegends.propTypes = {
-	position: PropTypes.array,
-	name: PropTypes.string,
-	wiki: PropTypes.string,
+MinorStarLeft.propTypes = {
+  position: PropTypes.array,
+  name: PropTypes.string,
+  wiki: PropTypes.string,
+  isCanon: PropTypes.bool,
+	hasError: PropTypes.bool,
+	alignRight: PropTypes.bool
 };
 
-export default function MinorStarLeftLegends(props) {
+export default function MinorStarLeft(props) {
   const { zoomLevel } = useZoom();
 
-	const { position, name, wiki } = props;
+  const { position, name, wiki, isCanon, hasError, alignRight } = props;
+
+  const markerIcon = hasError
+    ? markerIconError
+    : isCanon === true
+    ? markerIconCanon
+    : markerIconLegends;
 
   const calculateIconSize = () => {
     if (zoomLevel <= 5) return [10, 10];
@@ -25,7 +36,7 @@ export default function MinorStarLeftLegends(props) {
   const iconAnchor = iconSize.map((dim) => dim / 2);
 
   const minorIcon = new Icon({
-    iconUrl: markerIcon,
+		iconUrl: markerIcon !== null ? markerIcon : markerIconError,
     iconSize: iconSize,
     iconAnchor: iconAnchor,
     popupAnchor: [7, -10],
@@ -47,29 +58,52 @@ export default function MinorStarLeftLegends(props) {
     if (zoomLevel <= 5) return "2px";
     if (zoomLevel === 6) return "4px";
     return "8px";
+	};
+
+	const calculateMarginLeft = () => {
+    if (zoomLevel <= 5) return "2px";
+    if (zoomLevel === 6) return "4px";
+    return "8px";
   };
 
   const minorStyleLeft = {
     fontSize: calculateFontSize(),
     fontWeight: "bold",
-    color: "#67ACD7",
+		color: hasError
+		? "red"
+		: isCanon
+		? "#E3B687"
+		: "#67ACD7",
     WebkitTextStroke: calculateStroke(),
     textAlign: "right",
     marginTop: "-4px",
     marginRight: calculateMarginRight(),
     position: "relative",
     zIndex: 1,
+	};
+
+	const minorStyleRight = {
+    fontSize: calculateFontSize(),
+    fontWeight: "bold",
+		color: hasError
+		? "red"
+		: isCanon
+		? "#E3B687"
+		: "#67ACD7",
+    WebkitTextStroke: calculateStroke(),
+    textAlign: "left",
+    position: "relative",
+    marginLeft: calculateMarginLeft(),
+    zIndex: 1,
   };
 
-  //67ACD7
-
   return (
-    <div id="legends"  >
+    <div>
       {zoomLevel >= 3 ? (
         <Marker position={position} icon={minorIcon}>
           {zoomLevel >= 6 ? (
-            <Tooltip direction="left" opacity={1} permanent>
-              <div className="legends-popup" style={minorStyleLeft}>
+            <Tooltip direction={alignRight === true ? "left" : "right"} opacity={1} permanent>
+              <div className="canon-popup" style={alignRight === true ? minorStyleLeft : minorStyleRight}>
                 {name}
               </div>
             </Tooltip>

@@ -1,25 +1,4 @@
-import { createClient } from '@supabase/supabase-js';
-
-const supabaseUrl = import.meta.env.VITE_APP_SUPABASE_URL;
-const supabaseKey = import.meta.env.VITE_APP_SUPABASE_KEY;
-
-const supabase = createClient(supabaseUrl, supabaseKey);
-
-// export const fetchSystems = async () => {
-//   try {
-//     const { data, error } = await supabase.from('systems').select('*');
-
-//     if (error) {
-//       console.error('Supabase error fetching systems:', error);
-//       throw error;
-//     }
-
-//     return data;
-//   } catch (error) {
-//     console.error('Error fetching systems:', error.message);
-//     throw error;
-//   }
-// };
+import { supabase } from './supabase';
 
 export const fetchSystems = async () => {
   try {
@@ -30,22 +9,25 @@ export const fetchSystems = async () => {
       throw error;
     }
 
-    const systemsWithWiki = data.map(system => ({
+    const systems = data.map(system => ({
       id: system.id,
       name: system.name,
       latitude: system.latitude,
       longitude: system.longitude,
       starType: system.starType,
-      wiki: system.wiki || null, // Assuming wiki is stored directly in the 'systems' table
+      wiki: system.wiki || null,
+      isCanon: system.isCanon === true,
+			hasError: system.isCanon === null || system.isCanon === undefined,
+			alignRight: system.alignRight === true
     }));
 
-    systemsWithWiki.forEach(system => {
+    systems.forEach(system => {
       if (system.wiki === null) {
         console.warn(`Warning: Wiki link is missing for system: ${system.name}`);
       }
     });
 
-    return systemsWithWiki;
+    return systems;
   } catch (error) {
     console.error('Error fetching systems:', error.message);
     throw error;

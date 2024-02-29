@@ -1,13 +1,13 @@
 import { useEffect } from "react";
 import { useMap } from "react-leaflet";
 import L from "leaflet";
-import markerIcon from "../../assets/marker-icon.svg";
-import markerLegend from "../../assets/marker-legend.svg";
+import markerIcon from "../../assets/marker-canon.svg";
+import markerLegend from "../../assets/marker-legends.svg"
 
 const Key = () => {
   const map = useMap();
 
-	useEffect(() => {
+  useEffect(() => {
     const KeyControl = L.Control.extend({
       onAdd: function () {
         const div = L.DomUtil.create(

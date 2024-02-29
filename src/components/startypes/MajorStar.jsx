@@ -3,12 +3,16 @@ import { Marker, Tooltip, Popup } from "react-leaflet";
 import { Icon } from "leaflet";
 import { useZoom } from "../functions/ZoomContext";
 import PropTypes from "prop-types";
-import markerIcon from "../../assets/marker-icon-major.svg";
+import markerIconCanon from "../../assets/marker-icon-major.svg";
+import markerIconLegends from "../../assets/marker-legends.svg";
+import markerIconError from "../../assets/marker-error.svg";
 
 MajorStar.propTypes = {
   position: PropTypes.array,
   name: PropTypes.string,
   wiki: PropTypes.string,
+  isCanon: PropTypes.bool,
+  hasError: PropTypes.bool,
 };
 
 export default function MajorStar(props) {
@@ -23,7 +27,13 @@ export default function MajorStar(props) {
     }
   }, []);
 
-  const { position, name, wiki } = props;
+  const { position, name, wiki, isCanon, hasError } = props;
+
+  const markerIcon = hasError
+    ? markerIconError
+    : isCanon === true
+    ? markerIconCanon
+    : markerIconLegends;
 
   const calculateIconSize = () => {
     if (zoomLevel <= 3) return [15, 15];
@@ -37,7 +47,7 @@ export default function MajorStar(props) {
   const iconAnchor = [iconSize[0] / 2, iconSize[1] / 2]; // Calculate anchor as half of size
 
   const majorIcon = new Icon({
-    iconUrl: markerIcon,
+    iconUrl: markerIcon !== null ? markerIcon : markerIconError,
     iconSize: calculateIconSize(),
     iconAnchor: iconAnchor,
     popupAnchor: [7, -10],
@@ -67,7 +77,11 @@ export default function MajorStar(props) {
   const majorStyle = {
     fontSize: calculateFontSize(),
     fontWeight: "bold",
-    color: "#B56327",
+    color: hasError
+  ? "red"
+  : isCanon
+  ? "#B56327"
+  : "#67ACD7",
     WebkitTextStroke: calculateStroke(),
     textAlign: "left",
     position: "relative",
@@ -78,7 +92,7 @@ export default function MajorStar(props) {
   return (
     <div>
       {zoomLevel >= 3 ? (
-        <Marker id="canon" ref={major} position={position} icon={majorIcon}>
+        <Marker ref={major} position={position} icon={majorIcon}>
           {zoomLevel >= 4 ? (
             <Tooltip direction="right" opacity={1} permanent>
               <div className="canon-popup" style={majorStyle}>

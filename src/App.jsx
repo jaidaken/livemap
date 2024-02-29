@@ -1,24 +1,24 @@
 import "leaflet/dist/leaflet.css";
 import "./App.css";
-import { MapContainer, TileLayer, useMapEvents } from "react-leaflet";
+import { MapContainer, TileLayer } from "react-leaflet";
 import { CRS } from "leaflet";
 import Markers from "./components/Markers.jsx";
 import GridLayer from "./components/shapes/GridLayer.jsx";
 import Key from "./components/ui/Key.jsx";
 import { ZoomProvider } from "./components/functions/ZoomContext.jsx";
 import Patreon from "./components/ui/Patreon.jsx";
-// import AddSystemForm from "./components/AddSystem.jsx";
+import AddSystemForm from "./components/AddSystem.jsx";
 import { SystemProvider } from "./components/functions/SystemContext.jsx";
 
-const MapEvents = () => {
-  useMapEvents({
-    click(e) {
-      // console.log(`[${e.latlng.lat}, ${e.latlng.lng}],`);
-      navigator.clipboard.writeText(`[${e.latlng.lat}, ${e.latlng.lng}],`);
-    },
-  });
-  return false;
-};
+// const MapEvents = () => {
+//   useMapEvents({
+//     click(e) {
+//       console.log(`[${e.latlng.lat}, ${e.latlng.lng}],`);
+//       navigator.clipboard.writeText(`[${e.latlng.lat}, ${e.latlng.lng}],`);
+//     },
+//   });
+//   return false;
+// };
 
 // Constants for initial map configuration
 const initialCenter = [-128, 128];
@@ -41,16 +41,13 @@ function App() {
         >
           <ZoomProvider>
             <SystemProvider>
-              <TileLayer
-                attribution=""
-                url="/src/assets/images/{z}/{x}/{y}.jpg"
-              />
+              <TileLayer attribution="" url="/src/assets/images/{z}/{x}/{y}.jpg" />
               {/* <TileLayer attribution="" url="" /> */}
               <Patreon />
 							<Key />
-              {/* <AddSystemForm /> */}
+              <AddSystemForm />
               <Markers />
-              <MapEvents />
+              {/* <MapEvents /> */}
               <GridLayer
                 gridSpacing={6.7}
                 bottomLeftCoord={[-219.08, 54.197]}

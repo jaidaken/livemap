@@ -3,12 +3,16 @@ import { Marker, Tooltip, Popup } from "react-leaflet";
 import { Icon } from "leaflet";
 import { useZoom } from "../functions/ZoomContext";
 import PropTypes from "prop-types";
-import markerIcon from '../../assets/marker-icon-mid.svg'
+import markerIconCanon from '../../assets/marker-canon.svg';
+import markerIconLegends from '../../assets/marker-legends.svg';
+import markerIconError from '../../assets/marker-error.svg';
 
 MidStar.propTypes = {
-	position: PropTypes.array,
-	name: PropTypes.string,
-	wiki: PropTypes.string,
+  position: PropTypes.array,
+  name: PropTypes.string,
+  wiki: PropTypes.string,
+  isCanon: PropTypes.bool,
+  hasError: PropTypes.bool,
 };
 
 export default function MidStar(props) {
@@ -23,7 +27,13 @@ export default function MidStar(props) {
     }
   }, []);
 
-	const { position, name, wiki } = props;
+  const { position, name, wiki, isCanon, hasError } = props;
+
+  const markerIcon = hasError
+    ? markerIconError
+    : isCanon === true
+    ? markerIconCanon
+    : markerIconLegends;
 
   const calculateIconSize = () => {
     if (zoomLevel <= 4) return [18, 18];
@@ -52,7 +62,7 @@ export default function MidStar(props) {
   };
 
   const midIcon = new Icon({
-    iconUrl: markerIcon,
+		iconUrl: markerIcon !== null ? markerIcon : markerIconError,
     iconSize: calculateIconSize(),
     iconAnchor: iconAnchor,
     popupAnchor: [7, -10],
@@ -69,7 +79,11 @@ export default function MidStar(props) {
   const midStyle = {
     fontSize: calculateFontSize(),
     fontWeight: "bold",
-    color: "#CC8A46",
+		color: hasError
+		? "red"
+		: isCanon
+		? "#CC8A46"
+		: "#67ACD7",
     WebkitTextStroke: calculateStroke(),
     textAlign: "left",
     position: "relative",
@@ -79,7 +93,7 @@ export default function MidStar(props) {
   return (
     <div>
       {zoomLevel >= 3 ? (
-        <Marker id="canon" ref={minor} position={position} icon={midIcon}>
+        <Marker ref={minor} position={position} icon={midIcon}>
           {zoomLevel >= 4 ? (
             <Tooltip direction="right" opacity={1} permanent>
               <div className="canon-popup" style={midStyle}>

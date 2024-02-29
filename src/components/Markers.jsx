@@ -15,14 +15,7 @@ import Filter from "./ui/filter.jsx";
 const starComponents = {
   MajorStar: React.lazy(() => import("./startypes/MajorStar.jsx")),
   MidStar: React.lazy(() => import("./startypes/MidStar.jsx")),
-  MinorStarLeft: React.lazy(() => import("./startypes/MinorStarLeft.jsx")),
-  MinorStarLeftLegends: React.lazy(() =>
-    import("./startypes/MinorStarLeftLegends.jsx")
-  ),
-  MinorStarRight: React.lazy(() => import("./startypes/MinorStarRight.jsx")),
-  MinorStarRightLegends: React.lazy(() =>
-    import("./startypes/MinorStarRightLegends.jsx")
-  ),
+  MinorStar: React.lazy(() => import("./startypes/MinorStar.jsx")),
 };
 
 export default function Markers() {
@@ -52,27 +45,27 @@ export default function Markers() {
     }
   }, []);
 
-  const updateVisibleMarkers = useCallback(() => {
-    if (!map) {
-      return;
-    }
+	const updateVisibleMarkers = useCallback(() => {
+		if (!map) {
+			return;
+		}
 
-    const bounds = map.getBounds();
-    const markers = starSystems.filter(({ latitude, longitude, starType }) => {
-      const isLegendsVisible =
-        activeFilters.includes("legends") ||
-        !["MinorStarLeftLegends", "MinorStarRightLegends"].includes(starType);
+		const bounds = map.getBounds();
+		const markers = starSystems.filter(({ latitude, longitude, isCanon }) => {
+			const isCanonVisible = activeFilters.includes("canon");
+			const isLegendsVisible = activeFilters.includes("legends");
 
-      const isCanonVisible =
-        activeFilters.includes("canon") || !["MinorStarLeft", "MinorStarRight", "MajorStar", "MidStar"].includes(starType);
+			if (isCanon === true) {
+				return bounds.contains([latitude, longitude]) && isCanonVisible;
+			} else if (isCanon === false) {
+				return bounds.contains([latitude, longitude]) && (isCanonVisible || isLegendsVisible);
+			} else {
+				return bounds.contains([latitude, longitude]) && isLegendsVisible;
+			}
+		});
 
-      const isVisible = bounds.contains([latitude, longitude]) && isLegendsVisible && isCanonVisible;
-
-      return isVisible;
-    });
-
-    setVisibleMarkers(markers);
-  }, [map, starSystems, activeFilters]);
+		setVisibleMarkers(markers);
+	}, [map, starSystems, activeFilters]);
 
 	const handleFilterChange = useCallback((filter) => {
     setActiveFilters((prevFilters) => {
@@ -147,7 +140,7 @@ export default function Markers() {
     <div>
       {loading && <div>Loading...</div>}
       {!loading &&
-        visibleMarkers.map(({ id, name, latitude, longitude, starType, wiki }) => {
+        visibleMarkers.map(({ id, name, latitude, longitude, starType, wiki, isCanon, hasError, alignRight }) => {
 					const StarComponent = starComponents[starType];
 
           if (!StarComponent) {
@@ -162,6 +155,9 @@ export default function Markers() {
                 position={[latitude, longitude]}
 								name={name}
 								wiki={wiki}
+								isCanon={isCanon}
+								hasError={hasError}
+								alignRight={alignRight}
               />
             </React.Suspense>
           );
