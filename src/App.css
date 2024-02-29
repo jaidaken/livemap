@@ -8,11 +8,9 @@
 }
 
 .leaflet-container img.leaflet-tile {
-	outline: 1px solid transparent;
-	mix-blend-mode:normal;
+  outline: 1px solid transparent;
+  mix-blend-mode: normal;
 }
-
-
 
 .leaflet-tooltip {
   background-color: transparent;
@@ -29,7 +27,7 @@
 }
 
 .leaflet-tooltip::before {
-	border-color: transparent;
+  border-color: transparent;
 }
 
 .leaflet-zoom-anim .leaflet-zoom-animated {
@@ -37,25 +35,24 @@
 }
 
 .leaflet-popup {
-	margin-left: -6.5px;
+  margin-left: -6.5px;
 }
 
 .leaflet-popup-content-wrapper {
-	width: 100%;
+  width: 100%;
 }
 
 .leaflet-popup-content-wrapper a {
-	font-family: "Myriad Pro", sans-serif;
-	font-weight: bold;
-	font-size: 25px;
+  font-family: "Myriad Pro", sans-serif;
+  font-weight: bold;
+  font-size: 25px;
 }
 
 .leaflet-popup-content {
-	overflow:visible;
-	width: 100% !important;
-	white-space: nowrap;
+  overflow: visible;
+  width: 100% !important;
+  white-space: nowrap;
 }
-
 
 .search-container {
   background-color: white;
@@ -148,6 +145,10 @@
   margin-right: 8px;
 }
 
+.leaflet-bottom .leaflet-left {
+  display: flex;
+  flex-direction: column;
+}
 .filter-container {
   display: flex;
   flex-direction: column;
@@ -158,7 +159,7 @@
   position: relative;
   margin: 0px;
   font-family: "Myriad Pro";
-
+  width: 100%;
   font-weight: bold;
 }
 
@@ -176,6 +177,8 @@
 }
 .patreon-container {
   display: flex;
+  width: 100%;
+  align-items: center;
   flex-direction: row;
   background-color: white;
   border: 1px solid #ccc;
@@ -215,10 +218,9 @@
 }
 
 @media only screen and (max-width: 768px) {
-
-	.leaflet-container {
-		height: 100dvh;
-	}
+  .leaflet-container {
+    height: 100dvh;
+  }
 
   .key-container {
     padding: 4px;
