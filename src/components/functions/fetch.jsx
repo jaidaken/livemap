@@ -16,7 +16,8 @@ export const fetchSystems = async () => {
       longitude: system.longitude,
       starType: system.starType,
       wiki: system.wiki || null,
-      isCanon: system.isCanon === true,
+			isCanon: system.isCanon === true,
+			isLegends: system.isCanon === false,
 			hasError: system.isCanon === null || system.isCanon === undefined,
 			alignRight: system.alignRight === true
     }));

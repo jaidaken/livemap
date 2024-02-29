@@ -10,7 +10,8 @@ MinorStarLeft.propTypes = {
   position: PropTypes.array,
   name: PropTypes.string,
   wiki: PropTypes.string,
-  isCanon: PropTypes.bool,
+	isCanon: PropTypes.bool,
+	isLegends: PropTypes.bool,
 	hasError: PropTypes.bool,
 	alignRight: PropTypes.bool
 };
@@ -18,13 +19,15 @@ MinorStarLeft.propTypes = {
 export default function MinorStarLeft(props) {
   const { zoomLevel } = useZoom();
 
-  const { position, name, wiki, isCanon, hasError, alignRight } = props;
+  const { position, name, wiki, isCanon, isLegends, hasError, alignRight } = props;
 
   const markerIcon = hasError
     ? markerIconError
-    : isCanon === true
+    : isCanon === true && isLegends === false
     ? markerIconCanon
-    : markerIconLegends;
+    : isLegends === true && isCanon === false
+    ? markerIconLegends
+    : markerIconError;
 
   const calculateIconSize = () => {
     if (zoomLevel <= 5) return [10, 10];

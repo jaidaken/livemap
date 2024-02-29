@@ -51,16 +51,17 @@ export default function Markers() {
 		}
 
 		const bounds = map.getBounds();
-		const markers = starSystems.filter(({ latitude, longitude, isCanon }) => {
+		
+		const markers = starSystems.filter(({ latitude, longitude, isCanon, isLegends }) => {
 			const isCanonVisible = activeFilters.includes("canon");
 			const isLegendsVisible = activeFilters.includes("legends");
 
-			if (isCanon === true) {
-				return bounds.contains([latitude, longitude]) && isCanonVisible;
-			} else if (isCanon === false) {
-				return bounds.contains([latitude, longitude]) && (isCanonVisible || isLegendsVisible);
+			if (isCanon && isCanonVisible) {
+				return bounds.contains([latitude, longitude]);
+			} else if (!isCanon && isLegends && isLegendsVisible) {
+				return bounds.contains([latitude, longitude]);
 			} else {
-				return bounds.contains([latitude, longitude]) && isLegendsVisible;
+				return false;
 			}
 		});
 
@@ -140,7 +141,7 @@ export default function Markers() {
     <div>
       {loading && <div>Loading...</div>}
       {!loading &&
-        visibleMarkers.map(({ id, name, latitude, longitude, starType, wiki, isCanon, hasError, alignRight }) => {
+        visibleMarkers.map(({ id, name, latitude, longitude, starType, wiki, isCanon, isLegends, hasError, alignRight }) => {
 					const StarComponent = starComponents[starType];
 
           if (!StarComponent) {
@@ -156,6 +157,7 @@ export default function Markers() {
 								name={name}
 								wiki={wiki}
 								isCanon={isCanon}
+								isLegends={isLegends}
 								hasError={hasError}
 								alignRight={alignRight}
               />
