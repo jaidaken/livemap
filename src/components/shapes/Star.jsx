@@ -1,4 +1,4 @@
-// import { useRef, useEffect } from "react";
+import { useRef } from "react";
 import { Marker, Tooltip, Popup } from "react-leaflet";
 import { Icon } from "leaflet";
 import { useZoom } from "../functions/ZoomContext";
@@ -22,7 +22,8 @@ Star.propTypes = {
 };
 
 export default function Star(props) {
-  const { zoomLevel } = useZoom();
+	const { zoomLevel } = useZoom();
+  const markerRef = useRef(null);
 
   const {
     position,
@@ -101,7 +102,7 @@ export default function Star(props) {
   const iconSize = calculateIconSize();
   const iconAnchor = iconSize.map((dim) => dim / 2);
 
-  const minorIcon = new Icon({
+  const icon = new Icon({
     iconUrl: markerIcon !== null ? markerIcon : markerIconError,
     iconSize: iconSize,
     iconAnchor: iconAnchor,
@@ -220,17 +221,25 @@ export default function Star(props) {
           zIndex: 1,
         };
 
+				const onTooltipClick = () => {
+					if (markerRef.current) {
+						markerRef.current.leafletElement.fireEvent("click");
+					}
+	};
+
   return (
     <div>
       {zoomLevel >= 3 ? (
-        <Marker position={position} icon={minorIcon}>
+				<Marker ref={markerRef} position={position} icon={icon}>
           {zoomLevel >= 6 ? (
             <Tooltip
+              interactive={true}
+              onClick={onTooltipClick}
               direction={alignRight === true ? "left" : "right"}
               opacity={1}
               permanent
             >
-              <div className="canon-popup" style={starStyle}>
+              <div className="marker-popup" style={starStyle}>
                 {name}
               </div>
             </Tooltip>

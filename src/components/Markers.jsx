@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback } from "react";
-import "./Markers.css";
 import CircleObject from "./shapes/Circle.jsx";
 import TradeLine from "./shapes/TradeLine.jsx";
 import TitleObject from "./shapes/Title.jsx";
