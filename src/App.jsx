@@ -41,11 +41,11 @@ function App() {
         >
           <ZoomProvider>
             <SystemProvider>
-              <TileLayer attribution="" url="/src/assets/images/{z}/{x}/{y}.jpg" />
-              {/* <TileLayer attribution="" url="" /> */}
+              {/* <TileLayer attribution="" url="/src/assets/images/{z}/{x}/{y}.jpg" /> */}
+              <TileLayer attribution="" url="" />
               <Patreon />
 							<Key />
-              <AddSystemForm />
+              {/* <AddSystemForm /> */}
               <Markers />
               {/* <MapEvents /> */}
               <GridLayer

@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useMap } from "react-leaflet";
 import { useSystemContext } from "./functions/SystemContext";
-import { supabase } from "./functions/supabase";
+import { supabase, authenticateSupabase } from "./functions/supabase";
 
 const AddSystemForm = () => {
   const [formData, setFormData] = useState({
@@ -15,6 +15,7 @@ const AddSystemForm = () => {
   });
 
   const [formActive, setFormActive] = useState(false);
+  const [authenticated, setAuthenticated] = useState(false);
 
   const { handleAddSystem } = useSystemContext();
 
@@ -40,6 +41,11 @@ const AddSystemForm = () => {
           "Star Type, Is Canon, and Align Right are required fields"
         );
         return;
+      }
+
+      if (!authenticated) {
+        await authenticateSupabase();
+        setAuthenticated(true);
       }
 
       const { error } = await supabase.from("systems").upsert([
@@ -104,7 +110,7 @@ const AddSystemForm = () => {
       formElement.removeEventListener("mouseenter", activateForm);
       formElement.removeEventListener("mouseleave", deactivateForm);
     };
-  }, [map, formActive, handleInputChange]);
+	}, [map, formActive, handleInputChange]);
 
   return (
     <div className="leaflet-control leaflet-control-custom add-container">
