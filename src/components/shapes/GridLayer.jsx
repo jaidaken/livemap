@@ -4,7 +4,6 @@ import L from "leaflet";
 import PropTypes from "prop-types";
 
 const GridLayer = ({
-  gridSpacing,
   bottomLeftCoord,
   backgroundColor,
   lineColor,
@@ -14,18 +13,19 @@ const GridLayer = ({
   labelFont,
   labelColor,
   labelOpacity,
+  squareSize, // New prop for square size
 }) => {
   GridLayer.propTypes = {
-    gridSpacing: PropTypes.number,
-    bottomLeftCoord: PropTypes.array,
-    backgroundColor: PropTypes.string,
-    lineColor: PropTypes.string,
-    lineOpacity: PropTypes.number,
-    backgroundOpacity: PropTypes.number,
-    labelPosition: PropTypes.string,
-    labelFont: PropTypes.string,
-    labelColor: PropTypes.string,
-    labelOpacity: PropTypes.number,
+    bottomLeftCoord: PropTypes.array.isRequired,
+    backgroundColor: PropTypes.string.isRequired,
+    lineColor: PropTypes.string.isRequired,
+    lineOpacity: PropTypes.number.isRequired,
+    backgroundOpacity: PropTypes.number.isRequired,
+    labelPosition: PropTypes.string.isRequired,
+    labelFont: PropTypes.string.isRequired,
+    labelColor: PropTypes.string.isRequired,
+    labelOpacity: PropTypes.number.isRequired,
+    squareSize: PropTypes.number.isRequired, // New prop validation
   };
 
   const map = useMap();
@@ -36,12 +36,11 @@ const GridLayer = ({
     const createGrid = () => {
       gridLayer.clearLayers(); // Clear previous grid
 
-      // Calculate the step size for the grid based on gridSpacing prop
-      const stepSize = gridSpacing;
+      // Calculate the step size for the grid based on squareSize prop
+      const stepSize = squareSize;
 
       // Iterate over rows and columns to create grid squares and labels
-      for (let i = 25; i >= 0; i--) {
-        // Reverse the loop for rows
+      for (let i = 0; i < 26; i++) {
         for (let j = 0; j < 26; j++) {
           // Calculate the bounds of the current grid square
           const squareBounds = [
@@ -70,32 +69,12 @@ const GridLayer = ({
             fillOpacity: 0,
           }).addTo(gridLayer);
 
-          // Calculate the label position based on labelPosition prop
-          let labelLat, labelLng;
-          switch (labelPosition) {
-            case "topLeft":
-              labelLat = bottomLeftCoord[0] + i * stepSize;
-              labelLng = bottomLeftCoord[1] + j * stepSize;
-              break;
-            case "topRight":
-              labelLat = bottomLeftCoord[0] + i * stepSize;
-              labelLng = bottomLeftCoord[1] + (j + 1) * stepSize;
-              break;
-            case "bottomLeft":
-              labelLat = bottomLeftCoord[0] + (i + 1) * stepSize;
-              labelLng = bottomLeftCoord[1] + j * stepSize;
-              break;
-            case "bottomRight":
-              labelLat = bottomLeftCoord[0] + (i + 1) * stepSize;
-              labelLng = bottomLeftCoord[1] + (j + 1) * stepSize;
-              break;
-            default:
-              labelLat = bottomLeftCoord[0] + i * stepSize;
-              labelLng = bottomLeftCoord[1] + j * stepSize;
-          }
+          // Calculate the label position at the top left corner of the current grid square
+          const labelLat = bottomLeftCoord[0] + i * stepSize;
+          const labelLng = bottomLeftCoord[1] + j * stepSize;
 
           // Calculate the label for the current grid square
-          const label = `${String.fromCharCode(65 + j)}${25 - i}`; // Adjust the label calculation
+          const label = `${String.fromCharCode(65 + j)}${25 - i}`;
 
           // Add the label marker to the specified position
           L.marker([labelLat, labelLng], {
@@ -119,7 +98,6 @@ const GridLayer = ({
     };
   }, [
     map,
-    gridSpacing,
     bottomLeftCoord,
     backgroundColor,
     lineColor,
@@ -129,6 +107,7 @@ const GridLayer = ({
     labelFont,
     labelColor,
     labelOpacity,
+    squareSize,
   ]);
 
   return null;

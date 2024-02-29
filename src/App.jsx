@@ -20,13 +20,19 @@ import { SystemProvider } from "./components/functions/SystemContext.jsx";
 //   return false;
 // };
 
-// Constants for initial map configuration
 const initialCenter = [-128, 128];
 const initialZoom = 5;
 const minZoom = 3;
 const maxZoom = 8;
+const desiredTopRightCorner = [-118.57063483391609, 127.89505963740459];
 
 function App() {
+  const  squareSize= 6.8;
+
+  const bottomLeftCoord = [
+    desiredTopRightCorner[0] - squareSize * 15,
+    desiredTopRightCorner[1] - squareSize * 11,
+  ];
   return (
     <div className="App">
       <div className="map-container">
@@ -36,29 +42,29 @@ function App() {
           zoom={initialZoom}
           minZoom={minZoom}
           maxZoom={maxZoom}
-					scrollWheelZoom={true}
-					doubleClickZoom = {false}
+          scrollWheelZoom={true}
+          doubleClickZoom={false}
         >
           <ZoomProvider>
             <SystemProvider>
               {/* <TileLayer attribution="" url="/src/assets/images/{z}/{x}/{y}.jpg" /> */}
               <TileLayer attribution="" url="" />
               <Patreon />
-							<Key />
+              <Key />
               {/* <AddSystemForm /> */}
               <Markers />
               {/* <MapEvents /> */}
               <GridLayer
-                gridSpacing={6.7}
-                bottomLeftCoord={[-219.08, 54.197]}
+                bottomLeftCoord={bottomLeftCoord}
                 backgroundColor="#ffffff"
                 lineColor="#000000"
-                lineOpacity={0.028}
+                lineOpacity={0.2}
                 backgroundOpacity={0}
                 labelPosition="topLeft"
                 labelFont="Arial, sans-serif"
                 labelColor="#000000"
-                labelOpacity={0.2}
+                labelOpacity={0.4}
+                squareSize={squareSize}
               />
             </SystemProvider>
           </ZoomProvider>
