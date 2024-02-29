@@ -7,7 +7,7 @@ import GridLayer from "./components/shapes/GridLayer.jsx";
 import Key from "./components/ui/Key.jsx";
 import { ZoomProvider } from "./components/functions/ZoomContext.jsx";
 import Patreon from "./components/ui/Patreon.jsx";
-import AddSystemForm from "./components/AddSystem.jsx";
+// import AddSystemForm from "./components/AddSystem.jsx";
 import { SystemProvider } from "./components/functions/SystemContext.jsx";
 
 // const MapEvents = () => {
