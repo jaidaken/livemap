@@ -45,33 +45,33 @@ export default function Markers() {
     }
   }, []);
 
-	const updateVisibleMarkers = useCallback(() => {
-		if (!map) {
-			return;
-		}
+  const updateVisibleMarkers = useCallback(() => {
+    if (!map) {
+      return;
+    }
 
-		const bounds = map.getBounds();
+    const bounds = map.getBounds();
 
-		const markers = starSystems.filter(
-			({ latitude, longitude, isCanon, isLegends, isShared }) => {
-				const isCanonVisible = activeFilters.includes("canon");
-				const isLegendsVisible = activeFilters.includes("legends");
-				const isSharedVisible = activeFilters.includes("shared");
+    const markers = starSystems.filter(
+      ({ latitude, longitude, isCanon, isLegends, isShared }) => {
+        const isCanonVisible = activeFilters.includes("canon");
+        const isLegendsVisible = activeFilters.includes("legends");
+        const isSharedVisible = activeFilters.includes("shared");
 
-				if (
-					(isCanon && isCanonVisible && !isShared) ||
-					(isLegends && isLegendsVisible && !isShared) ||
-					(isShared && isSharedVisible)
-				) {
-					return bounds.contains([latitude, longitude]);
-				} else {
-					return false;
-				}
-			}
-		);
+        if (
+          (isCanon && isCanonVisible && !isShared) ||
+          (isLegends && isLegendsVisible && !isShared) ||
+          (isShared && isSharedVisible)
+        ) {
+          return bounds.contains([latitude, longitude]);
+        } else {
+          return false;
+        }
+      }
+    );
 
-		setVisibleMarkers(markers);
-	}, [map, starSystems, activeFilters]);
+    setVisibleMarkers(markers);
+  }, [map, starSystems, activeFilters]);
 
   const handleFilterChange = useCallback((filter) => {
     setActiveFilters((prevFilters) => {
@@ -193,102 +193,161 @@ export default function Markers() {
         lineOpacity={1}
         dash={1}
       />
+      <div className="zone-circles">
+        <CircleObject
+          center={[-128, 128]}
+          radius={17.98}
+          color="#006CB5"
+          opacity={0.2}
+        />
+        <CircleObject
+          center={[-128, 128]}
+          radius={13.4}
+          color="#0073BB"
+          opacity={0.2}
+        />
+        <CircleObject
+          center={[-128, 128]}
+          radius={7.78}
+          color="#0079C0"
+          opacity={1}
+        />
+      </div>
+      <div className="trade-routes">
+        <TradeNames
+          color="white"
+          coords={[-124.875, 124.140625]}
+          text={`Byss Run`}
+          rotation={"-35deg"}
+          textStyle="minStyle"
+        />
+        <TradeLine plot="byssRun" lineStyle="majStyle" />
+        <TradeNames
+          color="white"
+          coords={[-122.17312791375292, 135.4041544548652]}
+          text={`Corellian Run`}
+          rotation={"50deg"}
+          textStyle="majStyle"
+        />
+        <TradeLine plot="corellian" lineStyle="majStyle" />
+        <TradeNames
+          color="white"
+          coords={[-117.37158423174048, 129.5150205158265]}
+          text={`Perlemian Trade Route`}
+          rotation={"-31deg"}
+          textStyle="minStyle"
+        />
+        <TradeLine plot="perlemian" lineStyle="majStyle" />
 
-      <CircleObject
-        center={[-128, 128]}
-        radius={17.98}
-        color="#006CB5"
-        opacity={0.2}
-      />
-      <CircleObject
-        center={[-128, 128]}
-        radius={13.4}
-        color="#0073BB"
-        opacity={0.2}
-      />
-      <CircleObject
-        center={[-128, 128]}
-        radius={7.78}
-        color="#0079C0"
-        opacity={1}
-      />
-      <TradeNames
-        color="white"
-        coords={[-124.875, 124.140625]}
-        text={`Byss Run`}
-        rotation={"-35deg"}
-        textStyle="majStyle"
-      />
-      <TradeLine plot="byssRun" lineStyle="majStyle" />
+        <TradeNames
+          color="white"
+          coords={[-119.84375, 127.703125]}
+          text={`Koros Trunk Line`}
+          rotation={"-96deg"}
+          textStyle="minStyle"
+        />
+        <TradeLine plot="korosTrunk" lineStyle="majStyle" color={""} />
 
-      <TradeNames
-        color="white"
-        coords={[-119.84375, 127.703125]}
-        text={`Koros Trunk Line`}
-        rotation={"-96deg"}
-        textStyle="minStyle"
-      />
-      <TradeLine plot="korosTrunk" lineStyle="majStyle" color={""} />
+        <TradeNames
+          color="white"
+          coords={[-121.875, 128.9140625]}
+          text={`Goluud Corridor`}
+          rotation={"-23deg"}
+          textStyle="minStyle"
+        />
+        <TradeLine plot="goluud" lineStyle="minStyle" />
 
-      <TradeNames
-        color="white"
-        coords={[-121.875, 128.9140625]}
-        text={`Goluud Corridor`}
-        rotation={"-23deg"}
-        textStyle="minStyle"
-      />
-      <TradeLine plot="goluud" lineStyle="minStyle" />
+        <TradeNames
+          color="#CC8A46"
+          coords={[-122.08203125, 130.3984375]}
+          text={`Carbonite Run`}
+          rotation={"29deg"}
+          textStyle="minStyle"
+        />
+        <TradeLine plot="carbonite" lineStyle="dashStyle" color={"#CC8A46"} />
 
-      <TradeNames
-        color="#CC8A46"
-        coords={[-122.08203125, 130.3984375]}
-        text={`Carbonite Run`}
-        rotation={"29deg"}
-        textStyle="minStyle"
-      />
-      <TradeLine plot="carbonite" lineStyle="dashStyle" color={"#CC8A46"} />
+        <TradeNames
+          color="white"
+          coords={[-120.43777619949495, 123.27304824882766]}
+          text={`Metellost Trade Route`}
+          rotation={"-43deg"}
+          textStyle="minStyle"
+        />
+        <TradeLine plot="metellost" lineStyle="minStyle" />
 
-      <TitleObject
-        color=""
-        coords={[-127.625, 125.625]}
-        text={`D E E P\nC O R E`}
-      />
-      <TitleObject
-        color=""
-        coords={[-133.1875, 119.0625]}
-        text={`C O R E\nW O R L D S`}
-      />
-      <TitleObject
-        color=""
-        coords={[-136.875, 114.78125]}
-        text={`C O L O N I E S`}
-      />
-      <TitleObject
-        color=""
-        coords={[-142.5625, 111.4375]}
-        text={`I N N E R\nR I M`}
-      />
-      <TitleObject
-        color=""
-        coords={[-147.1875, 108.5625]}
-        text={`E X P A N S I O N\nR E G I O N`}
-      />
-      <TitleObject color="" coords={[-154, 107.0625]} text={`M I D\nR I M`} />
-      <TitleObject
-        color=""
-        coords={[-160.1875, 101.125]}
-        text={`O U T E R\nR I M`}
-      />
-      <TitleObject
-        color=""
-        coords={[-133.75, 89.1875]}
-        text={`U N K N O W N\nR E G I O N S`}
-      />
-      <TitleObject
-        color=""
-        coords={[-122.375, 179.625]}
-        text={`H U T T\nS P A C E`}
-      />
+        <TradeNames
+          color="white"
+          coords={[-121.76593215811965, 120.3903264214537]}
+          text={`Widek Bypass`}
+          rotation={"-53deg"}
+          textStyle="minStyle"
+        />
+        <TradeLine plot="widek" lineStyle="minStyle" />
+
+        <TradeNames
+          color="white"
+          coords={[-119.60995168026417, 129.3428799091442]}
+          text={`Agricultural Circuit`}
+          rotation={"10deg"}
+          textStyle="minStyle"
+        />
+        <TradeLine plot="agri" lineStyle="minStyle" />
+
+        <TradeNames
+          color="white"
+          coords={[-112.91495726495727, 123.94416398007034]}
+          text={`Namadii Corridor`}
+          rotation={"52deg"}
+          textStyle="minStyle"
+        />
+        <TradeLine plot="Namadii" lineStyle="minStyle" />
+        <TradeLine plot="corkid" lineStyle="minStyle" />
+        <TradeLine plot="corwak" lineStyle="minStyle" />
+        <TradeLine plot="velhya" lineStyle="minStyle" />
+      </div>
+      <div className="zone-titles">
+        <TitleObject
+          color=""
+          coords={[-127.625, 125.625]}
+          text={`D E E P\nC O R E`}
+        />
+        <TitleObject
+          color=""
+          coords={[-133.1875, 119.0625]}
+          text={`C O R E\nW O R L D S`}
+        />
+        <TitleObject
+          color=""
+          coords={[-136.875, 114.78125]}
+          text={`C O L O N I E S`}
+        />
+        <TitleObject
+          color=""
+          coords={[-142.5625, 111.4375]}
+          text={`I N N E R\nR I M`}
+        />
+        <TitleObject
+          color=""
+          coords={[-147.1875, 108.5625]}
+          text={`E X P A N S I O N\nR E G I O N`}
+        />
+        <TitleObject color="" coords={[-154, 107.0625]} text={`M I D\nR I M`} />
+        <TitleObject
+          color=""
+          coords={[-160.1875, 101.125]}
+          text={`O U T E R\nR I M`}
+        />
+        <TitleObject
+          color=""
+          coords={[-133.75, 89.1875]}
+          text={`U N K N O W N\nR E G I O N S`}
+        />
+        <TitleObject
+          color=""
+          coords={[-122.375, 179.625]}
+          text={`H U T T\nS P A C E`}
+        />
+      </div>
     </div>
   );
 }

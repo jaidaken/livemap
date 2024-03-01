@@ -1,9 +1,6 @@
+import { useState, useEffect } from "react";
 import { Polyline } from "react-leaflet";
 import { useZoom } from "../functions/ZoomContext";
-import { byssRun } from "./tradelines/byssRun";
-import { goluud } from "./tradelines/goluud";
-import { korosTrunk } from "./tradelines/korosTrunk";
-import { carbonite } from "./tradelines/carbonite";
 import PropTypes from "prop-types";
 
 TradeLine.propTypes = {
@@ -15,6 +12,22 @@ TradeLine.propTypes = {
 export default function TradeLine(props) {
   const { zoomLevel } = useZoom();
   const { plot, lineStyle, color } = props;
+
+  const [positions, setPositions] = useState([]);
+
+  useEffect(() => {
+    const importTradeline = async () => {
+      try {
+        const tradelineModule = await import(`./tradelines/${plot}`);
+        setPositions(tradelineModule[plot] || []);
+      } catch (error) {
+        console.error(`Error importing tradeline "${plot}":`, error);
+        setPositions([]);
+      }
+    };
+
+    importTradeline();
+  }, [plot]);
 
   const calculateMajWeight = () => {
     if (zoomLevel <= 3) return 2;
@@ -61,21 +74,6 @@ export default function TradeLine(props) {
     color: color || "white",
   };
 
-  const getPositions = (plot) => {
-    switch (plot) {
-      case "byssRun":
-        return byssRun;
-      case "goluud":
-        return goluud;
-      case "korosTrunk":
-        return korosTrunk;
-      case "carbonite":
-        return carbonite;
-      default:
-        return [];
-    }
-  };
-
   const getStyle = (lineStyle) => {
     switch (lineStyle) {
       case "majStyle":
@@ -89,13 +87,13 @@ export default function TradeLine(props) {
     }
   };
 
-  const positions = getPositions(plot) || [];
+  // const positions = tradelines[plot] || [];
   const style = getStyle(lineStyle) || [];
 
   return (
     <div>
       {zoomLevel >= 3 ? (
-        <div className="ByssRun">
+        <div>
           <Polyline positions={positions} pathOptions={style} />
         </div>
       ) : null}
