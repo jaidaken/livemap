@@ -33,14 +33,16 @@ export default function TradeNames(props) {
     color: color || "#231F20",
     fontSize: calculateMajFontSize(),
     letterSpacing: ".15rem",
-    transform: `translate(-53.5%, -5%) rotate(${rotation}) `,
+		transform: `translate(-53.5%, -5%) rotate(${rotation}) `,
+		opacity: 0.8,
   };
 
   const minStyle = {
     color: color || "#231F20",
     fontSize: calculateMinFontSize(),
     letterSpacing: ".1rem",
-    transform: `translate(-53.5%, -5%) rotate(${rotation}) `,
+		transform: `translate(-53.5%, -5%) rotate(${rotation}) `,
+		opacity: 0.8,
   };
 
   const getStyle = (lineStyle) => {

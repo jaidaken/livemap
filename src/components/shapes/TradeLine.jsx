@@ -40,7 +40,7 @@ export default function TradeLine(props) {
 
   const majStyle = {
     weight: calculateMajWeight(),
-    opacity: 1,
+    opacity: 0.8,
     color: color || "white",
   };
 
@@ -55,7 +55,7 @@ export default function TradeLine(props) {
 
   const minStyle = {
     weight: calculateMinWeight(),
-    opacity: 1,
+    opacity: 0.5,
     color: color || "white",
   };
 
