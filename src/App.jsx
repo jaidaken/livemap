@@ -1,6 +1,7 @@
 import "leaflet/dist/leaflet.css";
 import "./App.css";
 import { MapContainer, TileLayer } from "react-leaflet";
+// import { MapContainer, TileLayer, useMapEvents } from "react-leaflet";
 import { CRS } from "leaflet";
 import Markers from "./components/Markers.jsx";
 import GridLayer from "./components/shapes/GridLayer.jsx";
@@ -51,8 +52,8 @@ function App() {
               <TileLayer attribution="" url="" />
               <Patreon />
               <Key />
-              {/* <AddSystemForm /> */}
-              <Markers />
+							<Markers />
+							{/* <AddSystemForm /> */}
               {/* <MapEvents /> */}
               <GridLayer
                 bottomLeftCoord={bottomLeftCoord}

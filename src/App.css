@@ -104,15 +104,7 @@
   font-weight: bold;
 }
 
-.add-container {
-  background-color: white;
-  border: 1px solid #ccc;
-  padding: 10px;
-  border-radius: 5px;
-  width: auto;
-  position: relative;
-  margin: 0px;
-}
+
 .login-modal {
   position: fixed;
   top: 50%;
@@ -122,15 +114,6 @@
   padding: 20px;
   border: 1px solid #ccc;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-}
-.leaflet-control-custom.add-container {
-  position: absolute;
-  top: 7%;
-  right: 0%;
-  transform: translate(-50%, -50%);
-  background-color: #fff;
-  padding: 16px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .key-item {
@@ -149,6 +132,46 @@
   display: flex;
   flex-direction: column;
 }
+
+.add-system-container  {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  padding: 10px;
+  border-radius: 5px;
+	font-family: "Myriad Pro", sans-serif;
+	font-weight: bold;
+	width: 150px;
+	position: absolute;
+	margin: 90px 0 0 10px;
+}
+#addSystemForm {
+	display: flex;
+	flex-direction: column;
+
+}
+
+#addSystemForm div{
+	font-size: 1.1rem;
+	margin-bottom: 5px;
+	line-height: 1;
+}
+
+#addSystemForm div input{
+	width: 100%;
+}
+#checkbox{
+	width: 20px !important;
+	height: 15px;
+}
+
+#addSystemForm h2{
+	align-self: center;
+	font-size: 1.3rem;
+	margin-top: 0;
+	margin-bottom: 5px;
+}
+
 .filter-container {
   display: flex;
   flex-direction: column;
