@@ -18,7 +18,7 @@ export default function TradeLine(props) {
   useEffect(() => {
     const importTradeline = async () => {
       try {
-        const tradelineModule = await import(`../../components/shapes/tradelines/${plot}`);
+        const tradelineModule = await import(`./tradelines/${plot}.jsx`);
         setPositions(tradelineModule[plot] || []);
       } catch (error) {
         console.error(`Error importing tradeline "${plot}":`, error);
