@@ -3,7 +3,7 @@ import { Polygon } from "react-leaflet";
 import { useZoom } from "../functions/ZoomContext";
 import PropTypes from "prop-types";
 
-PolygonObject.propTypes = {
+NebulaObject.propTypes = {
   color: PropTypes.string,
   line: PropTypes.string,
   lineOpacity: PropTypes.number,
@@ -12,17 +12,16 @@ PolygonObject.propTypes = {
   plot: PropTypes.string,
 };
 
-export default function PolygonObject(props) {
+export default function NebulaObject(props) {
   const { zoomLevel } = useZoom();
-
   const { color, line, lineOpacity, opacity, dash, plot } = props;
 
 	const [positions, setPositions] = useState([]);
 
   useEffect(() => {
-    const importPolygon = async () => {
+    const importNebula = async () => {
       try {
-        const tradelineModule = await import(`./plots/${plot}.jsx`);
+        const tradelineModule = await import(`./nebula/${plot}.jsx`);
         setPositions(tradelineModule[plot] || []);
       } catch (error) {
         console.error(`Error importing nebula "${plot}":`, error);
@@ -30,11 +29,8 @@ export default function PolygonObject(props) {
       }
     };
 
-    importPolygon();
+    importNebula();
 	}, [plot]);
-
-
-  // const positions = getPositions(plot) || [];
 
   const calculateWeight = () => {
     if (zoomLevel <= 3) return 1;

@@ -11,6 +11,7 @@ import { useSystemContext } from "./functions/SystemContext.jsx";
 import SearchBarUI from "./ui/SearchBarUI.jsx";
 import Filter from "./ui/filter.jsx";
 import Star from "./shapes/Star.jsx";
+import NebulaObject from "./shapes/Nebula.jsx";
 
 // const starComponents = {
 //   MajorStar: React.lazy(() => import("./startypes/MajorStar.jsx")),
@@ -181,19 +182,12 @@ export default function Markers() {
         onFilterChange={handleFilterChange}
       />
 
-      <PolygonObject plot="innerRim" color="#1B609F" opacity={0.2} />
-      <PolygonObject plot="expansionRegion" color="#25538A" opacity={0.2} />
-      <PolygonObject plot="midRim" color="#264476" opacity={0.2} />
-      <PolygonObject plot="outerRim" color="#2D3E6E" opacity={0.2} />
-      <PolygonObject
-        plot="huttSpace"
-        color="#2C446C"
-        line="#FF7200"
-        opacity={1}
-        lineOpacity={1}
-        dash={1}
-      />
       <div className="zone-circles">
+        <PolygonObject plot="innerRim" color="#1B609F" opacity={0.2} />
+        <PolygonObject plot="expansionRegion" color="#25538A" opacity={0.2} />
+        <PolygonObject plot="midRim" color="#264476" opacity={0.2} />
+        <PolygonObject plot="outerRim" color="#2D3E6E" opacity={0.2} />
+
         <CircleObject
           center={[-128, 128]}
           radius={17.98}
@@ -213,6 +207,38 @@ export default function Markers() {
           opacity={1}
         />
       </div>
+
+      <div className="nebula">
+        <NebulaObject
+          plot="koornacht"
+          color="#A080A2"
+          line="transparent"
+          opacity={1}
+          lineOpacity={1}
+          dash={1}
+				/>
+
+        <NebulaObject
+          plot="ringall"
+          color="#A080A2"
+          line="transparent"
+          opacity={1}
+          lineOpacity={1}
+          dash={1}
+        />
+      </div>
+
+      <div className="territory">
+        <PolygonObject
+          plot="huttSpace"
+          color="#2C446C"
+          line="#FF7200"
+          opacity={1}
+          lineOpacity={1}
+          dash={1}
+        />
+      </div>
+
       <div className="trade-routes">
         <TradeNames
           color="white"
