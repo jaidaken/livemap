@@ -83,15 +83,15 @@ function App() {
           }}
         >
             <SystemProvider>
-              <TileLayer
+              {/* <TileLayer
                 attribution=""
                 url="/src/assets/images/{z}/{x}/{y}.jpg"
-              />
+              /> */}
               <TileLayer attribution="" url="" />
               <Patreon />
               <Key />
               <Markers />
-              <AddSystemForm />
+              {/* <AddSystemForm /> */}
               <MapEvents />
               <GridLayer
                 bottomLeftCoord={bottomLeftCoord}
