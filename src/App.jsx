@@ -18,12 +18,13 @@ const MapEvents = () => {
     },
     zoomend: (event) => {
       const newZoomLevel = event.target.getZoom();
-      localStorage.setItem("zoomLevel", newZoomLevel.toString());
+			localStorage.setItem("zoomLevel", newZoomLevel.toString());
+			console.log("Zoom Level:", newZoomLevel);
 		},
 		moveend(e) {
       const { lat, lng } = e.target.getCenter();
       localStorage.setItem("mapCenter", JSON.stringify([lat, lng]));
-      console.log("Map center saved to local storage:", [lat, lng]);
+      // console.log("Map center saved to local storage:", [lat, lng]);
     }
   });
   return null;
@@ -55,13 +56,9 @@ function App() {
 		const savedZoom = localStorage.getItem("zoomLevel");
 		if (savedZoom) {
 			setInitialZoom(parseInt(savedZoom));
-			console.log("Initial zoom level set from local storage:", parseInt(savedZoom));
+			// console.log("Initial zoom level set from local storage:", parseInt(savedZoom));
 		}
 	}, []);
-
-	useEffect(() => {
-		console.log("Initial zoom level:", initialZoom);
-	}, [initialZoom]);
 
   const bottomLeftCoord = [
     desiredTopRightCorner[0] - squareSize * 15,
@@ -98,8 +95,6 @@ function App() {
                 lineColor="#ffffff"
                 lineOpacity={0.08}
                 lineWeight={3}
-                backgroundOpacity={0}
-                labelPosition="topLeft"
                 labelFont="Arial, sans-serif"
                 labelColor="#ffffff"
                 labelOpacity={0.3}
