@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import CircleObject from "./shapes/Circle.jsx";
 import TradeLine from "./shapes/TradeLine.jsx";
 import TitleObject from "./shapes/Title.jsx";
-import PolygonObject from "./shapes/Polygon.jsx";
+// import PolygonObject from "./shapes/Polygon.jsx";
 import { fetchSystems } from "./functions/fetch.jsx";
 import { useMap } from "react-leaflet";
 import { useZoom } from "./functions/ZoomContext.jsx";
@@ -183,28 +183,28 @@ export default function Markers() {
       />
 
       <div className="zone-circles">
-        <PolygonObject plot="innerRim" color="#1B609F" opacity={0.2} />
+        {/* <PolygonObject plot="innerRim" color="#1B609F" opacity={0.2} />
         <PolygonObject plot="expansionRegion" color="#25538A" opacity={0.2} />
         <PolygonObject plot="midRim" color="#264476" opacity={0.2} />
-        <PolygonObject plot="outerRim" color="#2D3E6E" opacity={0.2} />
+        <PolygonObject plot="outerRim" color="#2D3E6E" opacity={0.2} /> */}
 
         <CircleObject
-          center={[-128, 128]}
-          radius={17.98}
+          center={[-128.2, 128]}
+          radius={31.6}
           color="#006CB5"
-          opacity={0.2}
+          opacity={0.6}
         />
         <CircleObject
-          center={[-128, 128]}
-          radius={13.4}
+          center={[-128.2, 128]}
+          radius={23.9}
           color="#0073BB"
-          opacity={0.2}
+          opacity={0.6}
         />
         <CircleObject
-          center={[-128, 128]}
-          radius={7.78}
+          center={[-128.2, 128]}
+          radius={14.4}
           color="#0079C0"
-          opacity={1}
+          opacity={0.6}
         />
       </div>
 
@@ -216,7 +216,7 @@ export default function Markers() {
           opacity={1}
           lineOpacity={1}
           dash={1}
-				/>
+        />
 
         <NebulaObject
           plot="ringall"
@@ -228,7 +228,7 @@ export default function Markers() {
         />
       </div>
 
-      <div className="territory">
+      {/* <div className="territory">
         <PolygonObject
           plot="huttSpace"
           color="#2C446C"
@@ -237,46 +237,52 @@ export default function Markers() {
           lineOpacity={1}
           dash={1}
         />
-      </div>
+      </div> */}
 
       <div className="trade-routes">
         <TradeNames
           color="white"
-          coords={[-124.875, 124.140625]}
+          coords={[-122.48706536519038, 121.25]}
           text={`Byss Run`}
           rotation={"-35deg"}
           textStyle="minStyle"
         />
         <TradeLine plot="byssRun" lineStyle="majStyle" />
-        <TradeNames
-          color="white"
-          coords={[-122.17312791375292, 135.4041544548652]}
-          text={`Corellian Run`}
-          rotation={"50deg"}
-          textStyle="majStyle"
-        />
-        <TradeLine plot="corellian" lineStyle="majStyle" />
-        <TradeNames
-          color="white"
-          coords={[-117.37158423174048, 129.5150205158265]}
-          text={`Perlemian Trade Route`}
-          rotation={"-31deg"}
-          textStyle="minStyle"
-        />
-        <TradeLine plot="perlemian" lineStyle="majStyle" />
 
         <TradeNames
           color="white"
-          coords={[-119.84375, 127.703125]}
+          coords={[-113.41312524281274, 127.734375]}
           text={`Koros Trunk Line`}
           rotation={"-96deg"}
           textStyle="minStyle"
         />
-        <TradeLine plot="korosTrunk" lineStyle="majStyle" color={""} />
 
         <TradeNames
           color="white"
-          coords={[-121.875, 128.9140625]}
+          coords={[-117.90750291375292, 141.15625]}
+          text={`Corellian Run`}
+          rotation={"50deg"}
+          textStyle="majStyle"
+        />
+        <TradeNames
+          color="white"
+          coords={[-161.44152583527585, 167.921875]}
+          text={`Corellian Run`}
+          rotation={"45deg"}
+          textStyle="majStyle"
+        />
+        <TradeNames
+          color="white"
+          coords={[-192.45496794871795, 198.46875]}
+          text={`Corellian Run`}
+          rotation={"46deg"}
+          textStyle="majStyle"
+        />
+        <TradeLine plot="corellian" lineStyle="majStyle" />
+
+        <TradeNames
+          color="white"
+          coords={[-117.36744852369853, 129.64895833333333]}
           text={`Goluud Corridor`}
           rotation={"-23deg"}
           textStyle="minStyle"
@@ -284,17 +290,8 @@ export default function Markers() {
         <TradeLine plot="goluud" lineStyle="minStyle" />
 
         <TradeNames
-          color="#CC8A46"
-          coords={[-122.08203125, 130.3984375]}
-          text={`Carbonite Run`}
-          rotation={"29deg"}
-          textStyle="minStyle"
-        />
-        <TradeLine plot="carbonite" lineStyle="dashStyle" color={"#CC8A46"} />
-
-        <TradeNames
           color="white"
-          coords={[-120.43777619949495, 123.27304824882766]}
+          coords={[-114.71099820318571, 119.671875]}
           text={`Metellost Trade Route`}
           rotation={"-43deg"}
           textStyle="minStyle"
@@ -303,12 +300,31 @@ export default function Markers() {
 
         <TradeNames
           color="white"
-          coords={[-121.76593215811965, 120.3903264214537]}
+          coords={[-116.09460348679099, 115.4296875]}
           text={`Widek Bypass`}
           rotation={"-53deg"}
           textStyle="minStyle"
         />
         <TradeLine plot="widek" lineStyle="minStyle" />
+
+        <TradeNames
+          color="#CC8A46"
+          coords={[-117.31674983003109, 132.91486575704226]}
+          text={`Carbonite Run`}
+          rotation={"15deg"}
+          textStyle="minStyle"
+        />
+        <TradeLine plot="carbonite" lineStyle="dashStyle" color={"#CC8A46"} />
+
+        {/*
+        <TradeNames
+          color="white"
+          coords={[-117.37158423174048, 129.5150205158265]}
+          text={`Perlemian Trade Route`}
+          rotation={"-31deg"}
+          textStyle="minStyle"
+        />
+        <TradeLine plot="perlemian" lineStyle="majStyle" />
 
         <TradeNames
           color="white"
@@ -329,7 +345,7 @@ export default function Markers() {
         <TradeLine plot="Namadii" lineStyle="minStyle" />
         <TradeLine plot="corkid" lineStyle="minStyle" />
         <TradeLine plot="corwak" lineStyle="minStyle" />
-        <TradeLine plot="velhya" lineStyle="minStyle" />
+        <TradeLine plot="velhya" lineStyle="minStyle" /> */}
       </div>
       <div className="zone-titles">
         <TitleObject

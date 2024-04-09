@@ -10,8 +10,8 @@ const AddSystemForm = () => {
     longitude: "",
     starType: "MinorStar",
     wiki: "",
-		isCanon: false,
-		isLegends: false,
+    isCanon: false,
+    isLegends: false,
     alignRight: false,
   });
 
@@ -22,7 +22,11 @@ const AddSystemForm = () => {
 
   const handleInputChange = useCallback((field, value) => {
     setFormData((prevFormData) => {
-      if (field === "isCanon" || field === "isLegends" || field === "alignRight") {
+      if (
+        field === "isCanon" ||
+        field === "isLegends" ||
+        field === "alignRight"
+      ) {
         return { ...prevFormData, [field]: value };
       }
       return { ...prevFormData, [field]: value !== undefined ? value : "" };
@@ -35,8 +39,8 @@ const AddSystemForm = () => {
     try {
       if (
         !formData.starType ||
-				formData.isCanon === undefined ||
-				formData.isLegends === undefined ||
+        formData.isCanon === undefined ||
+        formData.isLegends === undefined ||
         formData.alignRight === undefined
       ) {
         console.error(
@@ -57,8 +61,8 @@ const AddSystemForm = () => {
           longitude: parseFloat(formData.longitude),
           starType: formData.starType,
           wiki: formData.wiki,
-					isCanon: formData.isCanon,
-					isLegends: formData.isLegends,
+          isCanon: formData.isCanon,
+          isLegends: formData.isLegends,
           alignRight: formData.alignRight,
         },
       ]);
@@ -73,8 +77,8 @@ const AddSystemForm = () => {
         latitude: "",
         longitude: "",
         starType: "MinorStar",
-				isCanon: false,
-				isLegends: false,
+        isCanon: false,
+        isLegends: false,
         alignRight: false,
       });
 
@@ -114,41 +118,46 @@ const AddSystemForm = () => {
       formElement.removeEventListener("mouseenter", activateForm);
       formElement.removeEventListener("mouseleave", deactivateForm);
     };
-	}, [map, formActive, handleInputChange]);
+  }, [map, formActive, handleInputChange]);
 
   return (
     <div className="leaflet-control leaflet-control-custom add-system-container">
       <form id="addSystemForm" onSubmit={handleSubmit}>
         <h2>Add System</h2>
         <div>
-          <label>Name:</label>
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={(e) => handleInputChange("name", e.target.value)}
-          />
+          <label>
+            Name:
+            <input
+              type="text"
+              name="name"
+              autoComplete="off"
+              value={formData.name}
+              onChange={(e) => handleInputChange("name", e.target.value)}
+            />
+          </label>
         </div>
         <div>
-          <label>Latitude:</label>
+          <label>Latitude:
           <input
             type="text"
             name="latitude"
             value={formData.latitude}
             onChange={(e) => handleInputChange("latitude", e.target.value)}
-          />
+						/>
+						</label>
         </div>
         <div>
-          <label>Longitude:</label>
+          <label>Longitude:
           <input
             type="text"
             name="longitude"
             value={formData.longitude}
             onChange={(e) => handleInputChange("longitude", e.target.value)}
-          />
+						/>
+						</label>
         </div>
         <div>
-          <label>Star Type:</label>
+          <label>Star Type:
           <select
             name="starType"
             onChange={(e) => handleInputChange("starType", e.target.value)}
@@ -157,48 +166,53 @@ const AddSystemForm = () => {
             <option value="MinorStar">MinorStar</option>
             <option value="MajorStar">MajorStar</option>
             <option value="MidStar">MidStar</option>
-          </select>
+						</select>
+						</label>
         </div>
         <div>
-          <label>Wiki:</label>
+          <label>Wiki:
           <input
             type="text"
             name="wiki"
             value={formData.wiki || ""}
             onChange={(e) => handleInputChange("wiki", e.target.value)}
-          />
+					/>
+					</label>
         </div>
         <div>
-          <label>Is Canon:</label>
+          <label>Is Canon:
           <input
-						type="checkbox"
-						id="checkbox"
+            type="checkbox"
+            className="checkbox"
             name="isCanon"
             checked={formData.isCanon}
             onChange={() => handleInputChange("isCanon", !formData.isCanon)}
-          />
-				</div>
-				<div>
-          <label>Is Legends:</label>
+						/>
+						</label>
+        </div>
+        <div>
+          <label>Is Legends:
           <input
-						type="checkbox"
-						id="checkbox"
+            type="checkbox"
+            className="checkbox"
             name="isLegends"
             checked={formData.isLegends}
             onChange={() => handleInputChange("isLegends", !formData.isLegends)}
-          />
+						/>
+						</label>
         </div>
         <div>
-          <label>Align Right:</label>
+          <label>Align Right:
           <input
-						type="checkbox"
-						id="checkbox"
+            type="checkbox"
+            className="checkbox"
             name="alignRight"
             checked={formData.alignRight}
             onChange={() =>
               handleInputChange("alignRight", !formData.alignRight)
             }
-          />
+						/>
+						</label>
         </div>
         <button type="submit" id="addSystemSubmit">
           Add System

@@ -1,34 +1,70 @@
 import "leaflet/dist/leaflet.css";
 import "./App.css";
-import { MapContainer, TileLayer } from "react-leaflet";
-// import { MapContainer, TileLayer, useMapEvents } from "react-leaflet";
+import { MapContainer, TileLayer, useMapEvents } from "react-leaflet";
 import { CRS } from "leaflet";
 import Markers from "./components/Markers.jsx";
 import GridLayer from "./components/shapes/GridLayer.jsx";
 import Key from "./components/ui/Key.jsx";
 import { ZoomProvider } from "./components/functions/ZoomContext.jsx";
 import Patreon from "./components/ui/Patreon.jsx";
-// import AddSystemForm from "./components/AddSystem.jsx";
+import AddSystemForm from "./components/AddSystem.jsx";
 import { SystemProvider } from "./components/functions/SystemContext.jsx";
+import { useEffect, useState } from "react";
 
-// const MapEvents = () => {
-//   useMapEvents({
-//     click(e) {
-//       console.log(`[${e.latlng.lat}, ${e.latlng.lng}],`);
-//       navigator.clipboard.writeText(`[${e.latlng.lat}, ${e.latlng.lng}],`);
-//     },
-//   });
-//   return false;
-// };
+const MapEvents = () => {
+  useMapEvents({
+    click: (e) => {
+      console.log(`[${e.latlng.lat}, ${e.latlng.lng}],`);
+      // navigator.clipboard.writeText(`[${e.latlng.lat}, ${e.latlng.lng}],`);
+    },
+    zoomend: (event) => {
+      const newZoomLevel = event.target.getZoom();
+      localStorage.setItem("zoomLevel", newZoomLevel.toString());
+		},
+		moveend(e) {
+      const { lat, lng } = e.target.getCenter();
+      localStorage.setItem("mapCenter", JSON.stringify([lat, lng]));
+      console.log("Map center saved to local storage:", [lat, lng]);
+    }
+  });
+  return null;
+};
 
-const initialCenter = [-128, 128];
-const initialZoom = 5;
-const minZoom = 3;
+// const initialCenter = [-128, 128];
+// const initialZoom = 5;
+const minZoom = 2;
 const maxZoom = 8;
-const desiredTopRightCorner = [-118.57063483391609, 127.89505963740459];
+const desiredTopRightCorner = [-111.508, 128.0];
 
 function App() {
-  const  squareSize= 6.8;
+	const squareSize = 11.616;
+
+	const [initialZoom, setInitialZoom] = useState(() => {
+		const savedZoom = localStorage.getItem("zoomLevel");
+		return savedZoom ? parseInt(savedZoom) : 5;
+	});
+
+	const [initialCenter, setInitialCenter] = useState(() => {
+		const savedCenter = localStorage.getItem("mapCenter");
+		return savedCenter ? JSON.parse(savedCenter) : [-128, 128]; // Initialize with default value if not found
+	});
+
+	const handleMapMoveEnd = (event) => {
+    const newCenter = event.target.getCenter();
+    setInitialCenter([newCenter.lat, newCenter.lng]);
+  };
+
+	useEffect(() => {
+		const savedZoom = localStorage.getItem("zoomLevel");
+		if (savedZoom) {
+			setInitialZoom(parseInt(savedZoom));
+			console.log("Initial zoom level set from local storage:", parseInt(savedZoom));
+		}
+	}, []);
+
+	useEffect(() => {
+		console.log("Initial zoom level:", initialZoom);
+	}, [initialZoom]);
 
   const bottomLeftCoord = [
     desiredTopRightCorner[0] - squareSize * 15,
@@ -44,27 +80,33 @@ function App() {
           minZoom={minZoom}
           maxZoom={maxZoom}
           scrollWheelZoom={true}
-          doubleClickZoom={false}
+					doubleClickZoom={false}
+					whenCreated={(map) => {
+            map.on("moveend", handleMapMoveEnd);
+          }}
         >
           <ZoomProvider>
             <SystemProvider>
-              {/* <TileLayer attribution="" url="/src/assets/images/{z}/{x}/{y}.jpg" /> */}
+              <TileLayer
+                attribution=""
+                url="/src/assets/images/{z}/{x}/{y}.jpg"
+              />
               <TileLayer attribution="" url="" />
               <Patreon />
               <Key />
-							<Markers />
-							{/* <AddSystemForm /> */}
-              {/* <MapEvents /> */}
+              <Markers />
+              <AddSystemForm />
+              <MapEvents />
               <GridLayer
                 bottomLeftCoord={bottomLeftCoord}
-                backgroundColor="#ffffff"
-                lineColor="#000000"
-                lineOpacity={0.2}
+                lineColor="#ffffff"
+                lineOpacity={0.08}
+                lineWeight={3}
                 backgroundOpacity={0}
                 labelPosition="topLeft"
                 labelFont="Arial, sans-serif"
-                labelColor="#000000"
-                labelOpacity={0.4}
+                labelColor="#ffffff"
+                labelOpacity={0.3}
                 squareSize={squareSize}
               />
             </SystemProvider>

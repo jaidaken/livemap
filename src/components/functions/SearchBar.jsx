@@ -18,7 +18,8 @@ const SearchBar = ({ systems, onSystemSelect }) => {
   return (
     <div className="search-bar">
       <input
-        type="text"
+				type="text"
+				id="search-bar"
         placeholder="Search for a system..."
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}

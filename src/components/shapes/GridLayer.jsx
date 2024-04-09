@@ -2,36 +2,49 @@ import { useEffect } from "react";
 import { useMap } from "react-leaflet";
 import L from "leaflet";
 import PropTypes from "prop-types";
+import { useZoom } from "../functions/ZoomContext";
 
 const GridLayer = ({
   bottomLeftCoord,
-  backgroundColor,
   lineColor,
-  lineOpacity,
+	lineOpacity,
+	lineWeight,
   backgroundOpacity,
   labelPosition,
-  labelFont,
+	labelFont,
   labelColor,
   labelOpacity,
   squareSize, // New prop for square size
 }) => {
   GridLayer.propTypes = {
     bottomLeftCoord: PropTypes.array.isRequired,
-    backgroundColor: PropTypes.string.isRequired,
     lineColor: PropTypes.string.isRequired,
-    lineOpacity: PropTypes.number.isRequired,
+		lineOpacity: PropTypes.number.isRequired,
+		lineWeight: PropTypes.number.isRequired,
     backgroundOpacity: PropTypes.number.isRequired,
     labelPosition: PropTypes.string.isRequired,
-    labelFont: PropTypes.string.isRequired,
+		labelFont: PropTypes.string.isRequired,
     labelColor: PropTypes.string.isRequired,
     labelOpacity: PropTypes.number.isRequired,
     squareSize: PropTypes.number.isRequired, // New prop validation
-  };
+	};
+	const { zoomLevel } = useZoom();
 
   const map = useMap();
 
   useEffect(() => {
     const gridLayer = L.layerGroup().addTo(map);
+
+		const labelFontSize = () => {
+			if (zoomLevel <= 2) return 12;
+			if (zoomLevel === 3) return 15;
+			if (zoomLevel === 4) return 18;
+			if (zoomLevel === 5) return 18;
+			if (zoomLevel === 6) return 22;
+			if (zoomLevel === 7) return 30;
+			if (zoomLevel >= 8) return 45;
+			return 30;
+		};
 
     const createGrid = () => {
       gridLayer.clearLayers(); // Clear previous grid
@@ -54,17 +67,10 @@ const GridLayer = ({
             ],
           ];
 
-          // Add the grid background to the map
-          L.rectangle(squareBounds, {
-            color: backgroundColor,
-            weight: 0,
-            fillOpacity: backgroundOpacity,
-          }).addTo(gridLayer);
-
           // Add the grid lines to the map
           L.rectangle(squareBounds, {
             color: lineColor,
-            weight: 1,
+            weight: lineWeight,
             opacity: lineOpacity,
             fillOpacity: 0,
           }).addTo(gridLayer);
@@ -80,7 +86,7 @@ const GridLayer = ({
           L.marker([labelLat, labelLng], {
             icon: L.divIcon({
               className: "grid-label",
-              html: `<div style="color: ${labelColor}; font-family: ${labelFont}; opacity: ${labelOpacity};">${label.toUpperCase()}</div>`,
+              html: `<div style="color: ${labelColor}; font-size: ${labelFontSize()}px; line-height: ${labelFontSize()}px; font-family: ${labelFont}; opacity: ${labelOpacity};">${label.toUpperCase()}</div>`,
               iconAnchor: [0, 0],
             }),
             interactive: false,
@@ -99,15 +105,16 @@ const GridLayer = ({
   }, [
     map,
     bottomLeftCoord,
-    backgroundColor,
     lineColor,
-    lineOpacity,
+		lineOpacity,
+		lineWeight,
     backgroundOpacity,
     labelPosition,
-    labelFont,
+		labelFont,
     labelColor,
     labelOpacity,
-    squareSize,
+		squareSize,
+    zoomLevel, // Added zoomLevel to dependency array
   ]);
 
   return null;

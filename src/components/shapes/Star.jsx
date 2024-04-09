@@ -22,7 +22,7 @@ Star.propTypes = {
 };
 
 export default function Star(props) {
-	const { zoomLevel } = useZoom();
+  const { zoomLevel } = useZoom();
   const markerRef = useRef(null);
 
   const {
@@ -92,7 +92,6 @@ export default function Star(props) {
     } else if (starType === "MidStar") {
       iconSize = calculateMidIconSize();
     } else {
-      // Use default size for other star types
       iconSize = calculateMinIconSize();
     }
 
@@ -110,39 +109,11 @@ export default function Star(props) {
   });
 
   const calculateMajorFontSize = () => {
-    if (zoomLevel === 4) return 25;
-    if (zoomLevel === 5) return 30;
+    if (zoomLevel === 3) return 30;
+    if (zoomLevel === 4) return 30;
+    if (zoomLevel === 5) return 35;
     if (zoomLevel === 6) return 40;
     return 55;
-  };
-
-  const calculateMajorMarginSize = () => {
-    if (zoomLevel <= 4) return "6px";
-    if (zoomLevel === 5) return "12px";
-    if (zoomLevel === 6) return "16px";
-    return "24px";
-  };
-
-  const calculateMajorStroke = () => {
-    if (zoomLevel <= 4) return "0.6px black";
-    if (zoomLevel === 5) return "0.7px black";
-    if (zoomLevel === 6) return "0.8px black";
-    return "1px black";
-  };
-
-  const calculateMidMargin = () => {
-    if (zoomLevel <= 4) return "6px";
-    if (zoomLevel === 5) return "10px";
-    if (zoomLevel === 6) return "12px";
-    if (zoomLevel === 7) return "18px";
-    return "26px";
-  };
-
-  const calculateMidStroke = () => {
-    if (zoomLevel <= 4) return "0.6px black";
-    if (zoomLevel === 5) return "0.7px black";
-    if (zoomLevel === 6) return "0.8px black";
-    return "1px black";
   };
 
   const calculateMidFontSize = () => {
@@ -154,27 +125,60 @@ export default function Star(props) {
   };
 
   const calculateFontSize = () => {
-    if (zoomLevel <= 5) return 15;
-    if (zoomLevel === 6) return 20;
+    if (zoomLevel === 5) return 21;
+    if (zoomLevel === 6) return 35;
+		if (zoomLevel === 7) return 40;
+		if (zoomLevel >= 8) return 45;
     return 30;
   };
 
-  const calculateStroke = () => {
-    if (zoomLevel <= 5) return "0.3px black";
-    if (zoomLevel === 6) return "0.5px black";
-    return "1px black";
+  const calculateMajorMarginSize = () => {
+    if (zoomLevel <= 4) return "6px";
+    if (zoomLevel === 5) return "12px";
+    if (zoomLevel === 6) return "16px";
+    return "24px";
+  };
+
+  const calculateMidMargin = () => {
+    if (zoomLevel <= 4) return "6px";
+    if (zoomLevel === 5) return "10px";
+    if (zoomLevel === 6) return "12px";
+    if (zoomLevel === 7) return "18px";
+    return "26px";
   };
 
   const calculateMarginRight = () => {
-    if (zoomLevel <= 5) return "2px";
+    if (zoomLevel <= 5) return "0px";
     if (zoomLevel === 6) return "4px";
     return "8px";
   };
 
   const calculateMarginLeft = () => {
-    if (zoomLevel <= 5) return "2px";
+    if (zoomLevel <= 5) return "0px";
     if (zoomLevel === 6) return "4px";
     return "8px";
+  };
+
+  const calculateMajorStroke = () => {
+    if (zoomLevel <= 4) return "0.6px black";
+    if (zoomLevel === 5) return "0.7px black";
+    if (zoomLevel === 6) return "0.8px black";
+    return "1px black";
+  };
+
+  const calculateMidStroke = () => {
+    if (zoomLevel <= 4) return "0.6px black";
+    if (zoomLevel === 5) return "0.7px black";
+    if (zoomLevel === 6) return "0.8px black";
+    return "1px black";
+  };
+
+  const calculateStroke = () => {
+    if (zoomLevel === 5) return "0.8px";
+		if (zoomLevel === 6) return "1px";
+		if (zoomLevel === 7) return "1.5px";
+		if (zoomLevel === 8) return "1.8px";
+    return "1px";
   };
 
   // Apply different styles based on starType
@@ -183,7 +187,7 @@ export default function Star(props) {
       ? {
           fontSize: calculateMajorFontSize(),
           fontWeight: "bold",
-          color: hasError ? "red" : isCanon ? "#B56327" : "#67ACD7",
+          color: hasError ? "#C7303A" : isCanon ? "#B56327" : "#67ACD7",
           WebkitTextStroke: calculateMajorStroke(),
           textAlign: "left",
           position: "relative",
@@ -194,7 +198,7 @@ export default function Star(props) {
       ? {
           fontSize: calculateMidFontSize(),
           fontWeight: "bold",
-          color: hasError ? "red" : isCanon ? "#CC8A46" : "#67ACD7",
+          color: hasError ? "#C7303A" : isCanon ? "#CC8A46" : "#67ACD7",
           WebkitTextStroke: calculateMidStroke(),
           textAlign: "left",
           position: "relative",
@@ -202,36 +206,61 @@ export default function Star(props) {
         }
       : {
           fontSize: calculateFontSize(),
-          fontWeight: "bold",
+					fontWeight: "bold",
           color: hasError
-            ? "lightgreen"
+            ? "#C7303A"
             : isCanon && !isLegends
-            ? "#EC6B82"
+            ? "#F6A6CA"
             : !isCanon && isLegends
-            ? "#67ACD7"
+            ? "#529DD4"
             : isCanon && isLegends
             ? "#E3B687"
-            : "red",
-          WebkitTextStroke: calculateStroke(),
-          textAlign: alignRight ? "right" : "left",
-          marginTop: "-4px",
+            : "#C7303A",
+					WebkitTextStroke: `${calculateStroke()} black`,
+
+					textAlign: alignRight ? "right" : "left",
+					marginTop: "-4px",
           marginRight: calculateMarginRight(),
           marginLeft: calculateMarginLeft(),
           position: "relative",
           zIndex: 1,
         };
 
-				const onTooltipClick = () => {
-					if (markerRef.current) {
-						markerRef.current.leafletElement.fireEvent("click");
-					}
-	};
+  const onTooltipClick = () => {
+    if (markerRef.current) {
+      markerRef.current.leafletElement.fireEvent("click");
+    }
+  };
 
   return (
     <div>
-      {zoomLevel >= 3 ? (
-				<Marker ref={markerRef} position={position} icon={icon}>
-          {zoomLevel >= 6 ? (
+      {zoomLevel >= 2 ? (
+        <Marker ref={markerRef} position={position} icon={icon}>
+          {zoomLevel >= 3 && starType === "MajorStar" ? (
+            <Tooltip
+              interactive={true}
+              onClick={onTooltipClick}
+              direction={alignRight === true ? "left" : "right"}
+              opacity={1}
+              permanent
+            >
+              <div className="marker-popup" style={starStyle}>
+                {name}
+              </div>
+            </Tooltip>
+          ) : zoomLevel >= 4 && starType === "MidStar" ? (
+            <Tooltip
+              interactive={true}
+              onClick={onTooltipClick}
+              direction={alignRight === true ? "left" : "right"}
+              opacity={1}
+              permanent
+            >
+              <div className="marker-popup" style={starStyle}>
+                {name}
+              </div>
+            </Tooltip>
+          ) : zoomLevel >= 5 ? (
             <Tooltip
               interactive={true}
               onClick={onTooltipClick}

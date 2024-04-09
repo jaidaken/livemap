@@ -26,7 +26,8 @@ const Filter = ({ activeFilters, onFilterChange }) => {
         const createCheckbox = (filter, label) => {
           const checkbox = document.createElement("input");
           checkbox.type = "checkbox";
-          checkbox.checked = activeFilters.includes(filter);
+					checkbox.checked = activeFilters.includes(filter);
+					checkbox.id = `${filter}-id`;
           checkbox.addEventListener("change", () => handleCheckboxChange(filter));
 
           const checkboxLabel = document.createElement("label");
