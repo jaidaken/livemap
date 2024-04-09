@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { Polyline } from "react-leaflet";
-import { useZoom } from "../functions/ZoomContext";
 import PropTypes from "prop-types";
 
 TradeLine.propTypes = {
@@ -10,7 +9,9 @@ TradeLine.propTypes = {
 };
 
 export default function TradeLine(props) {
-  const { zoomLevel } = useZoom();
+	const savedZoom = localStorage.getItem("zoomLevel");
+	const zoomLevel = savedZoom ? parseInt(savedZoom) : 5;
+
   const { plot, lineStyle, color } = props;
 
   const [positions, setPositions] = useState([]);

@@ -1,5 +1,4 @@
 import { Polygon, Tooltip } from "react-leaflet";
-import { useZoom } from "../functions/ZoomContext";
 import PropTypes from "prop-types";
 
 TradeNames.propTypes = {
@@ -11,7 +10,8 @@ TradeNames.propTypes = {
 };
 
 export default function TradeNames(props) {
-  const { zoomLevel } = useZoom();
+	const savedZoom = localStorage.getItem("zoomLevel");
+	const zoomLevel = savedZoom ? parseInt(savedZoom) : 5;
 
   const { text, coords, color, rotation, textStyle } = props;
 

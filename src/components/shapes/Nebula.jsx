@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { Polygon } from "react-leaflet";
-import { useZoom } from "../functions/ZoomContext";
 import PropTypes from "prop-types";
 
 NebulaObject.propTypes = {
@@ -13,7 +12,10 @@ NebulaObject.propTypes = {
 };
 
 export default function NebulaObject(props) {
-  const { zoomLevel } = useZoom();
+
+	const savedZoom = localStorage.getItem("zoomLevel");
+	const zoomLevel = savedZoom ? parseInt(savedZoom) : 5;
+
   const { color, line, lineOpacity, opacity, dash, plot } = props;
 
 	const [positions, setPositions] = useState([]);

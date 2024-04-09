@@ -1,5 +1,4 @@
 import { Circle } from "react-leaflet";
-import { useZoom } from "../functions/ZoomContext";
 import PropTypes from "prop-types";
 
 CircleObject.propTypes = {
@@ -10,7 +9,8 @@ CircleObject.propTypes = {
 }
 
 export default function CircleObject(props) {
-  const { zoomLevel } = useZoom();
+	const savedZoom = localStorage.getItem("zoomLevel");
+	const zoomLevel = savedZoom ? parseInt(savedZoom) : 5;
 
   const { radius, center, color, opacity } = props;
 

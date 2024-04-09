@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useMap } from "react-leaflet";
 import L from "leaflet";
 import PropTypes from "prop-types";
-import { useZoom } from "../functions/ZoomContext";
 
 const GridLayer = ({
   bottomLeftCoord,
@@ -28,7 +27,9 @@ const GridLayer = ({
     labelOpacity: PropTypes.number.isRequired,
     squareSize: PropTypes.number.isRequired, // New prop validation
 	};
-	const { zoomLevel } = useZoom();
+
+	const savedZoom = localStorage.getItem("zoomLevel");
+	const zoomLevel = savedZoom ? parseInt(savedZoom) : 5;
 
   const map = useMap();
 

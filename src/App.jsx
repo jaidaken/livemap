@@ -5,7 +5,6 @@ import { CRS } from "leaflet";
 import Markers from "./components/Markers.jsx";
 import GridLayer from "./components/shapes/GridLayer.jsx";
 import Key from "./components/ui/Key.jsx";
-import { ZoomProvider } from "./components/functions/ZoomContext.jsx";
 import Patreon from "./components/ui/Patreon.jsx";
 import AddSystemForm from "./components/AddSystem.jsx";
 import { SystemProvider } from "./components/functions/SystemContext.jsx";
@@ -30,8 +29,6 @@ const MapEvents = () => {
   return null;
 };
 
-// const initialCenter = [-128, 128];
-// const initialZoom = 5;
 const minZoom = 2;
 const maxZoom = 8;
 const desiredTopRightCorner = [-111.508, 128.0];
@@ -46,7 +43,7 @@ function App() {
 
 	const [initialCenter, setInitialCenter] = useState(() => {
 		const savedCenter = localStorage.getItem("mapCenter");
-		return savedCenter ? JSON.parse(savedCenter) : [-128, 128]; // Initialize with default value if not found
+		return savedCenter ? JSON.parse(savedCenter) : [-128, 128];
 	});
 
 	const handleMapMoveEnd = (event) => {
@@ -85,7 +82,6 @@ function App() {
             map.on("moveend", handleMapMoveEnd);
           }}
         >
-          <ZoomProvider>
             <SystemProvider>
               <TileLayer
                 attribution=""
@@ -110,7 +106,6 @@ function App() {
                 squareSize={squareSize}
               />
             </SystemProvider>
-          </ZoomProvider>
         </MapContainer>
       </div>
     </div>

@@ -1,7 +1,6 @@
 import { useRef } from "react";
 import { Marker, Tooltip, Popup } from "react-leaflet";
 import { Icon } from "leaflet";
-import { useZoom } from "../functions/ZoomContext";
 import PropTypes from "prop-types";
 import markerIconCanon from "../../assets/marker-canon.svg";
 import markerIconLegends from "../../assets/marker-legends.svg";
@@ -22,7 +21,11 @@ Star.propTypes = {
 };
 
 export default function Star(props) {
-  const { zoomLevel } = useZoom();
+	// const { zoomLevel } = useZoom();
+
+	const savedZoom = localStorage.getItem("zoomLevel");
+	const zoomLevel = savedZoom ? parseInt(savedZoom) : 5;
+
   const markerRef = useRef(null);
 
   const {

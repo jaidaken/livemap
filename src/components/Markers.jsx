@@ -5,7 +5,6 @@ import TitleObject from "./shapes/Title.jsx";
 // import PolygonObject from "./shapes/Polygon.jsx";
 import { fetchSystems } from "./functions/fetch.jsx";
 import { useMap } from "react-leaflet";
-import { useZoom } from "./functions/ZoomContext.jsx";
 import TradeNames from "./shapes/TradeNames.jsx";
 import { useSystemContext } from "./functions/SystemContext.jsx";
 import SearchBarUI from "./ui/SearchBarUI.jsx";
@@ -20,8 +19,10 @@ import NebulaObject from "./shapes/Nebula.jsx";
 // };
 
 export default function Markers() {
-  const map = useMap();
-  const { zoomLevel } = useZoom();
+	const map = useMap();
+
+	const savedZoom = localStorage.getItem("zoomLevel");
+	const zoomLevel = savedZoom ? parseInt(savedZoom) : 5;
 
   const [starSystems, setStarSystems] = useState([]);
   const [visibleMarkers, setVisibleMarkers] = useState([]);
