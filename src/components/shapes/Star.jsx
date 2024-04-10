@@ -6,8 +6,8 @@ import markerIconCanon from "../../assets/marker-canon.svg";
 import markerIconLegends from "../../assets/marker-legends.svg";
 import markerIconShared from "../../assets/marker-shared.svg";
 import markerIconError from "../../assets/marker-error.svg";
-import markerIconMajor from "../../assets/marker-icon-major.svg";
-import markerIconMid from "../../assets/marker-icon-mid.svg";
+// import markerIconMajor from "../../assets/marker-icon-major.svg";
+// import markerIconMid from "../../assets/marker-icon-mid.svg";
 
 Star.propTypes = {
   position: PropTypes.array,
@@ -21,10 +21,10 @@ Star.propTypes = {
 };
 
 export default function Star(props) {
-	// const { zoomLevel } = useZoom();
+  // const { zoomLevel } = useZoom();
 
-	const savedZoom = localStorage.getItem("zoomLevel");
-	const zoomLevel = savedZoom ? parseInt(savedZoom) : 5;
+  const savedZoom = localStorage.getItem("zoomLevel");
+  const zoomLevel = savedZoom ? parseInt(savedZoom) : 5;
 
   const markerRef = useRef(null);
 
@@ -44,10 +44,6 @@ export default function Star(props) {
 
     if (hasError) {
       markerIcon = markerIconError;
-    } else if (starType === "MajorStar") {
-      markerIcon = markerIconMajor;
-    } else if (starType === "MidStar") {
-      markerIcon = markerIconMid;
     } else if (isCanon && !isLegends) {
       markerIcon = markerIconCanon;
     } else if (!isCanon && isLegends) {
@@ -130,12 +126,12 @@ export default function Star(props) {
   const calculateFontSize = () => {
     if (zoomLevel === 5) return 21;
     if (zoomLevel === 6) return 35;
-		if (zoomLevel === 7) return 40;
-		if (zoomLevel >= 8) return 45;
+    if (zoomLevel === 7) return 40;
+    if (zoomLevel >= 8) return 45;
     return 30;
   };
 
-  const calculateMajorMarginSize = () => {
+  const calculateMajorMargin = () => {
     if (zoomLevel <= 4) return "6px";
     if (zoomLevel === 5) return "12px";
     if (zoomLevel === 6) return "16px";
@@ -148,16 +144,34 @@ export default function Star(props) {
     if (zoomLevel === 6) return "12px";
     if (zoomLevel === 7) return "18px";
     return "26px";
+	};
+
+
+  const calculateMajorMarginRight = () => {
+    if (zoomLevel <= 4) return "6px";
+    if (zoomLevel === 5) return "12px";
+    if (zoomLevel === 6) return "18px";
+    return "24px";
+  };
+
+  const calculateMidMarginRight = () => {
+    if (zoomLevel <= 4) return "6px";
+    if (zoomLevel === 5) return "10px";
+    if (zoomLevel === 6) return "12px";
+    if (zoomLevel === 7) return "18px";
+    return "26px";
   };
 
   const calculateMarginRight = () => {
-    if (zoomLevel <= 5) return "0px";
+		if (zoomLevel <= 4) return "0px";
+		if (zoomLevel === 5) return "2px";
     if (zoomLevel === 6) return "4px";
     return "8px";
   };
 
   const calculateMarginLeft = () => {
-    if (zoomLevel <= 5) return "0px";
+		if (zoomLevel <= 4) return "0px";
+		if (zoomLevel === 5) return "2px";
     if (zoomLevel === 6) return "4px";
     return "8px";
   };
@@ -178,9 +192,9 @@ export default function Star(props) {
 
   const calculateStroke = () => {
     if (zoomLevel === 5) return "0.8px";
-		if (zoomLevel === 6) return "1px";
-		if (zoomLevel === 7) return "1.5px";
-		if (zoomLevel === 8) return "1.8px";
+    if (zoomLevel === 6) return "1px";
+    if (zoomLevel === 7) return "1.5px";
+    if (zoomLevel === 8) return "1.8px";
     return "1px";
   };
 
@@ -190,26 +204,6 @@ export default function Star(props) {
       ? {
           fontSize: calculateMajorFontSize(),
           fontWeight: "bold",
-          color: hasError ? "#C7303A" : isCanon ? "#B56327" : "#67ACD7",
-          WebkitTextStroke: calculateMajorStroke(),
-          textAlign: "left",
-          position: "relative",
-          marginLeft: calculateMajorMarginSize(),
-          zIndex: 610,
-        }
-      : starType === "MidStar"
-      ? {
-          fontSize: calculateMidFontSize(),
-          fontWeight: "bold",
-          color: hasError ? "#C7303A" : isCanon ? "#CC8A46" : "#67ACD7",
-          WebkitTextStroke: calculateMidStroke(),
-          textAlign: "left",
-          position: "relative",
-          marginLeft: calculateMidMargin(),
-        }
-      : {
-          fontSize: calculateFontSize(),
-					fontWeight: "bold",
           color: hasError
             ? "#C7303A"
             : isCanon && !isLegends
@@ -219,10 +213,50 @@ export default function Star(props) {
             : isCanon && isLegends
             ? "#E3B687"
             : "#C7303A",
-					WebkitTextStroke: `${calculateStroke()} black`,
+          WebkitTextStroke: calculateMajorStroke(),
+          textAlign: "left",
+				position: "relative",
+					marginTop: "-5px",
+          marginRight: calculateMajorMarginRight(),
+          marginLeft: calculateMajorMargin(),
+          zIndex: 610,
+        }
+      : starType === "MidStar"
+      ? {
+          fontSize: calculateMidFontSize(),
+          fontWeight: "bold",
+          color: hasError
+            ? "#C7303A"
+            : isCanon && !isLegends
+            ? "#F6A6CA"
+            : !isCanon && isLegends
+            ? "#529DD4"
+            : isCanon && isLegends
+            ? "#E3B687"
+            : "#C7303A",
+          WebkitTextStroke: calculateMidStroke(),
+          textAlign: "left",
+					position: "relative",
+					marginTop: "-5px",
+          marginRight: calculateMidMarginRight(),
+          marginLeft: calculateMidMargin(),
+        }
+      : {
+          fontSize: calculateFontSize(),
+          fontWeight: "bold",
+          color: hasError
+            ? "#C7303A"
+            : isCanon && !isLegends
+            ? "#F6A6CA"
+            : !isCanon && isLegends
+            ? "#529DD4"
+            : isCanon && isLegends
+            ? "#E3B687"
+            : "#C7303A",
+          WebkitTextStroke: `${calculateStroke()} black`,
 
-					textAlign: alignRight ? "right" : "left",
-					marginTop: "-4px",
+          textAlign: alignRight ? "right" : "left",
+          marginTop: "-4px",
           marginRight: calculateMarginRight(),
           marginLeft: calculateMarginLeft(),
           position: "relative",

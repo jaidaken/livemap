@@ -16,33 +16,53 @@ export default function TradeNames(props) {
   const { text, coords, color, rotation, textStyle } = props;
 
   const calculateMajFontSize = () => {
-    if (zoomLevel <= 5) return 12;
-    if (zoomLevel === 6) return 25;
-    if (zoomLevel === 7) return 70;
+		if (zoomLevel <= 4) return 12;
+		if (zoomLevel === 5) return 20;
+    if (zoomLevel === 6) return 30;
+    if (zoomLevel === 7) return 50;
     return 120;
   };
 
   const calculateMinFontSize = () => {
-    if (zoomLevel <= 5) return 0;
-    if (zoomLevel === 6) return 10;
+		if (zoomLevel <= 4) return 0;
+		if (zoomLevel === 5) return 10;
+    if (zoomLevel === 6) return 15;
     if (zoomLevel === 7) return 20;
     return 40;
-  };
+	};
+
+	const calculateNebFontSize = () => {
+		if (zoomLevel <= 5) return 0;
+    if (zoomLevel === 6) return 15;
+    if (zoomLevel === 7) return 20;
+    return 40;
+	};
+
 
   const majStyle = {
     color: color || "#231F20",
     fontSize: calculateMajFontSize(),
     letterSpacing: ".15rem",
 		transform: `translate(-53.5%, -5%) rotate(${rotation}) `,
-		opacity: 0.8,
+		opacity: 1,
   };
 
   const minStyle = {
     color: color || "#231F20",
     fontSize: calculateMinFontSize(),
-    letterSpacing: ".1rem",
+		letterSpacing: ".1rem",
+		lineHeight: "1",
 		transform: `translate(-53.5%, -5%) rotate(${rotation}) `,
-		opacity: 0.8,
+		opacity: 1,
+	};
+
+	const nebStyle = {
+    color: color || "#231F20",
+    fontSize: calculateNebFontSize(),
+		letterSpacing: ".1rem",
+		lineHeight: "1",
+		transform: `translate(-53.5%, -5%) rotate(${rotation}) `,
+		opacity: 1,
   };
 
   const getStyle = (lineStyle) => {
@@ -51,6 +71,8 @@ export default function TradeNames(props) {
         return majStyle;
       case "minStyle":
         return minStyle;
+      case "nebStyle":
+        return nebStyle;
       default:
         return [];
     }
@@ -62,7 +84,7 @@ export default function TradeNames(props) {
   return (
     <div>
       <Polygon color="transparent" positions={[coords, coords, coords]}>
-        {zoomLevel >= 5 ? (
+        {zoomLevel >= 4 ? (
           <Tooltip direction="right" offset={[0, 0]} opacity={1} permanent>
             <div className="title-span" style={style}>
               {lines.map((line, index) => (
