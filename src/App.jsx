@@ -78,7 +78,7 @@ function App() {
           }}
         >
             <SystemProvider>
-              <TileLayer attribution="" url="/src/assets/images/{z}/{x}/{y}.jpg" />
+              {/* <TileLayer attribution="" url="/src/assets/images/{z}/{x}/{y}.jpg" /> */}
               <TileLayer attribution="" url="" />
               <Patreon />
               <Key />
@@ -88,11 +88,10 @@ function App() {
               <GridLayer
                 bottomLeftCoord={bottomLeftCoord}
                 lineColor="#ffffff"
-                lineOpacity={0.08}
-                lineWeight={3}
+                lineOpacity={0.04}
                 labelFont="Arial, sans-serif"
                 labelColor="#ffffff"
-                labelOpacity={0.3}
+                labelOpacity={0.2}
                 squareSize={squareSize}
               />
             </SystemProvider>

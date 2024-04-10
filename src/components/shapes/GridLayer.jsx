@@ -7,7 +7,6 @@ const GridLayer = ({
   bottomLeftCoord,
   lineColor,
   lineOpacity,
-  // lineWeight,
   labelFont,
   labelColor,
   labelOpacity,
@@ -17,7 +16,6 @@ const GridLayer = ({
     bottomLeftCoord: PropTypes.array.isRequired,
     lineColor: PropTypes.string.isRequired,
     lineOpacity: PropTypes.number.isRequired,
-    // lineWeight: PropTypes.number.isRequired,
     labelFont: PropTypes.string.isRequired,
     labelFontSize: PropTypes.string.isRequired,
     labelColor: PropTypes.string.isRequired,
@@ -39,11 +37,11 @@ const GridLayer = ({
     const labelFontSize = () => {
       const savedZoom = localStorage.getItem("zoomLevel");
       const zoomLevel = savedZoom ? parseInt(savedZoom) : 5;
-      if (zoomLevel <= 2) return 12;
-      if (zoomLevel === 3) return 15;
-      if (zoomLevel === 4) return 18;
-      if (zoomLevel === 5) return 20;
-      if (zoomLevel === 6) return 22;
+      if (zoomLevel <= 2) return 10;
+      if (zoomLevel === 3) return 12;
+      if (zoomLevel === 4) return 14;
+      if (zoomLevel === 5) return 16;
+      if (zoomLevel === 6) return 18;
       if (zoomLevel === 7) return 30;
       if (zoomLevel >= 8) return 45;
       return 30;
@@ -60,11 +58,23 @@ const GridLayer = ({
       if (zoomLevel === 7) return 6;
       if (zoomLevel >= 8) return 10;
       return 1;
+		};
+
+		const paddingSize = () => {
+      const savedZoom = localStorage.getItem("zoomLevel");
+      const zoomLevel = savedZoom ? parseInt(savedZoom) : 5;
+      if (zoomLevel <= 2) return "3px";
+      if (zoomLevel === 3) return "5px";
+      if (zoomLevel === 4) return "6px";
+      if (zoomLevel === 5) return "10px";
+      if (zoomLevel === 6) return "12px";
+      if (zoomLevel === 7) return "15px";
+      if (zoomLevel >= 8) return "20px";
+      return "3px";
     };
 
     gridLayer.clearLayers();
 
-    // Calculate the step size for the grid based on squareSize prop
     const stepSize = squareSize;
 
     // Iterate over rows and columns to create grid squares and labels
@@ -87,10 +97,11 @@ const GridLayer = ({
           color: lineColor,
           weight: lineWeight(),
           opacity: lineOpacity,
-          fillOpacity: 0,
+					fillOpacity: 0,
+					className: 'grid-square'
         }).addTo(gridLayer);
 
-        // Calculate the label position at the top left corner of the current grid square
+        // Calculate the label position
         const labelLat = bottomLeftCoord[0] + i * stepSize;
         const labelLng = bottomLeftCoord[1] + j * stepSize;
 
@@ -101,7 +112,7 @@ const GridLayer = ({
         L.marker([labelLat, labelLng], {
           icon: L.divIcon({
             className: "grid-label",
-            html: `<div style="color: ${labelColor}; font-size: ${labelFontSize()}px; line-height: ${labelFontSize()}px; font-family: ${labelFont}; opacity: ${labelOpacity};">${label.toUpperCase()}</div>`,
+            html: `<div style="color: ${labelColor}; font-size: ${labelFontSize()}px; line-height: ${labelFontSize()}px; font-family: ${labelFont}; opacity: ${labelOpacity}; padding: ${paddingSize()} ">${label.toUpperCase()}</div>`,
             iconAnchor: [0, 0],
           }),
           interactive: false,
@@ -113,7 +124,6 @@ const GridLayer = ({
     bottomLeftCoord,
     lineColor,
     lineOpacity,
-    // lineWeight,
     labelFont,
     labelColor,
     labelOpacity,

@@ -225,15 +225,7 @@
 .title-span {
   text-align: center;
 }
-.grid-label  {
-	height: 0px !important;
-	width: 0px !important;
-}
-.grid-label div {
-  margin-left: 3px;
-	margin-top: 3px;
-	/* line-height: 45px; */
-}
+
 
 .leaflet-control-attribution {
   display: none;
@@ -337,8 +329,6 @@
     font-size: 1.2rem;
   }
 
-	.fade-out {
-		opacity: 0;
-		transition: opacity 0.5s ease-out; /* Adjust the duration and easing as needed */
-	}
+
+
 }
