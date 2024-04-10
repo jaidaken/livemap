@@ -7,7 +7,7 @@ const GridLayer = ({
   bottomLeftCoord,
   lineColor,
   lineOpacity,
-  lineWeight,
+  // lineWeight,
   labelFont,
   labelColor,
   labelOpacity,
@@ -17,7 +17,7 @@ const GridLayer = ({
     bottomLeftCoord: PropTypes.array.isRequired,
     lineColor: PropTypes.string.isRequired,
     lineOpacity: PropTypes.number.isRequired,
-    lineWeight: PropTypes.number.isRequired,
+    // lineWeight: PropTypes.number.isRequired,
     labelFont: PropTypes.string.isRequired,
     labelFontSize: PropTypes.string.isRequired,
     labelColor: PropTypes.string.isRequired,
@@ -47,6 +47,19 @@ const GridLayer = ({
       if (zoomLevel === 7) return 30;
       if (zoomLevel >= 8) return 45;
       return 30;
+		};
+
+		const lineWeight = () => {
+      const savedZoom = localStorage.getItem("zoomLevel");
+      const zoomLevel = savedZoom ? parseInt(savedZoom) : 5;
+      if (zoomLevel <= 2) return 1;
+      if (zoomLevel === 3) return 1;
+      if (zoomLevel === 4) return 1;
+      if (zoomLevel === 5) return 3;
+      if (zoomLevel === 6) return 5;
+      if (zoomLevel === 7) return 6;
+      if (zoomLevel >= 8) return 10;
+      return 1;
     };
 
     gridLayer.clearLayers();
@@ -72,7 +85,7 @@ const GridLayer = ({
         // Add the grid lines to the map
         L.rectangle(squareBounds, {
           color: lineColor,
-          weight: lineWeight,
+          weight: lineWeight(),
           opacity: lineOpacity,
           fillOpacity: 0,
         }).addTo(gridLayer);
@@ -100,7 +113,7 @@ const GridLayer = ({
     bottomLeftCoord,
     lineColor,
     lineOpacity,
-    lineWeight,
+    // lineWeight,
     labelFont,
     labelColor,
     labelOpacity,
