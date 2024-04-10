@@ -32,31 +32,31 @@ export default function TradeLine(props) {
 
   const calculateMajWeight = () => {
     if (zoomLevel <= 3) return 2;
-    if (zoomLevel === 4) return 3;
-    if (zoomLevel === 5) return 4;
+    if (zoomLevel === 4) return 5;
+    if (zoomLevel === 5) return 6;
     if (zoomLevel === 6) return 8;
     if (zoomLevel === 7) return 15;
-    return 25;
+    return 20;
   };
 
   const majStyle = {
     weight: calculateMajWeight(),
-    opacity: 0.8,
+    opacity: 1,
     color: color || "white",
   };
 
   const calculateMinWeight = () => {
-    if (zoomLevel <= 3) return 0;
-    if (zoomLevel === 4) return 2;
-    if (zoomLevel === 5) return 3;
-    if (zoomLevel === 6) return 4;
-    if (zoomLevel === 7) return 6;
-    return 10;
+    if (zoomLevel <= 3) return 0.5;
+    if (zoomLevel === 4) return 1;
+    if (zoomLevel === 5) return 2;
+    if (zoomLevel === 6) return 3;
+    if (zoomLevel === 7) return 5;
+    return 8;
   };
 
   const minStyle = {
     weight: calculateMinWeight(),
-    opacity: 0.5,
+    opacity: 1,
     color: color || "white",
   };
 
@@ -93,7 +93,7 @@ export default function TradeLine(props) {
 
   return (
     <div>
-      {zoomLevel >= 3 ? (
+      {zoomLevel >= 2 ? (
         <div>
           <Polyline positions={positions} pathOptions={style} />
         </div>

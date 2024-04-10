@@ -14,7 +14,7 @@ const MapEvents = () => {
   useMapEvents({
     click: (e) => {
       console.log(`[${e.latlng.lat}, ${e.latlng.lng}],`);
-      // navigator.clipboard.writeText(`[${e.latlng.lat}, ${e.latlng.lng}],`);
+      navigator.clipboard.writeText(`[${e.latlng.lat}, ${e.latlng.lng}],`);
     },
     zoomend: (event) => {
       const newZoomLevel = event.target.getZoom();
@@ -24,7 +24,6 @@ const MapEvents = () => {
 		moveend(e) {
       const { lat, lng } = e.target.getCenter();
       localStorage.setItem("mapCenter", JSON.stringify([lat, lng]));
-      // console.log("Map center saved to local storage:", [lat, lng]);
     }
   });
   return null;
@@ -56,7 +55,6 @@ function App() {
 		const savedZoom = localStorage.getItem("zoomLevel");
 		if (savedZoom) {
 			setInitialZoom(parseInt(savedZoom));
-			// console.log("Initial zoom level set from local storage:", parseInt(savedZoom));
 		}
 	}, []);
 
@@ -80,10 +78,7 @@ function App() {
           }}
         >
             <SystemProvider>
-              {/* <TileLayer
-                attribution=""
-                url="/src/assets/images/{z}/{x}/{y}.jpg"
-              /> */}
+              {/* <TileLayer attribution="" url="/src/assets/images/{z}/{x}/{y}.jpg" /> */}
               <TileLayer attribution="" url="" />
               <Patreon />
               <Key />

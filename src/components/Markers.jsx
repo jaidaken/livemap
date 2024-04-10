@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import CircleObject from "./shapes/Circle.jsx";
 import TradeLine from "./shapes/TradeLine.jsx";
 import TitleObject from "./shapes/Title.jsx";
-// import PolygonObject from "./shapes/Polygon.jsx";
+import PolygonObject from "./shapes/Polygon.jsx";
 import { fetchSystems } from "./functions/fetch.jsx";
 import { useMap } from "react-leaflet";
 import TradeNames from "./shapes/TradeNames.jsx";
@@ -98,11 +98,9 @@ export default function Markers() {
       map.on("zoomend", handleZoomEnd);
       map.on("moveend", handleMoveEnd);
 
-      // Fetch data only if it hasn't been fetched yet
       if (!dataFetched) {
         fetchData();
       } else {
-        // update visible markers
         updateVisibleMarkers();
       }
 
@@ -119,17 +117,12 @@ export default function Markers() {
     }
   }, [loading, zoomLevel, updateVisibleMarkers]);
 
-  // Listen new system added and updates screen
-
   const { newSystemAdded, handleAddSystem } = useSystemContext();
 
   useEffect(() => {
     if (newSystemAdded === true) {
-      // Reset to false
       handleAddSystem();
-      // Fetch the added data
       fetchData();
-      // Update visible markers
       updateVisibleMarkers();
     }
   }, [newSystemAdded, fetchData, updateVisibleMarkers, handleAddSystem]);
@@ -184,10 +177,10 @@ export default function Markers() {
       />
 
       <div className="zone-circles">
-        {/* <PolygonObject plot="innerRim" color="#1B609F" opacity={0.2} />
+        <PolygonObject plot="innerRim" color="#1B609F" opacity={0.2} />
         <PolygonObject plot="expansionRegion" color="#25538A" opacity={0.2} />
         <PolygonObject plot="midRim" color="#264476" opacity={0.2} />
-        <PolygonObject plot="outerRim" color="#2D3E6E" opacity={0.2} /> */}
+        <PolygonObject plot="outerRim" color="#2D3E6E" opacity={0.2} />
 
         <CircleObject
           center={[-128.2, 128]}
@@ -229,7 +222,7 @@ export default function Markers() {
         />
       </div>
 
-      {/* <div className="territory">
+      <div className="territory">
         <PolygonObject
           plot="huttSpace"
           color="#2C446C"
@@ -238,7 +231,7 @@ export default function Markers() {
           lineOpacity={1}
           dash={1}
         />
-      </div> */}
+      </div>
 
       <div className="trade-routes">
         <TradeNames
@@ -248,7 +241,7 @@ export default function Markers() {
           rotation={"-35deg"}
           textStyle="minStyle"
         />
-        <TradeLine plot="byssRun" lineStyle="majStyle" />
+        <TradeLine plot="byssRun" lineStyle="minStyle" />
 
         <TradeNames
           color="white"
@@ -279,7 +272,38 @@ export default function Markers() {
           rotation={"46deg"}
           textStyle="majStyle"
         />
-        <TradeLine plot="corellian" lineStyle="majStyle" />
+				<TradeLine plot="corellian" lineStyle="majStyle" />
+
+        <TradeNames
+          color="white"
+          coords={[-139.21791472416473, 145.6319376118068]}
+          text={`Corellian Trade Spine`}
+          rotation={"46deg"}
+          textStyle="majStyle"
+        />
+				<TradeLine plot="corellianspine" lineStyle="majStyle" />
+
+				<TradeLine plot="hoth" lineStyle="majStyle" />
+
+        <TradeNames
+          color="white"
+          coords={[-39.64054001554007, 200.93844476744187]}
+          text={`Hydian Way`}
+          rotation={"0deg"}
+          textStyle="majStyle"
+        />
+
+				<TradeLine plot="hydian" lineStyle="majStyle" />
+
+        <TradeNames
+          color="white"
+          coords={[-154.34803321678322, 129.14653398926654]}
+          text={`Rimma Trade Route`}
+          rotation={"0deg"}
+          textStyle="majStyle"
+        />
+
+				<TradeLine plot="rimma" lineStyle="majStyle" />
 
         <TradeNames
           color="white"
@@ -317,7 +341,7 @@ export default function Markers() {
         />
         <TradeLine plot="carbonite" lineStyle="dashStyle" color={"#CC8A46"} />
 
-        {/*
+
         <TradeNames
           color="white"
           coords={[-117.37158423174048, 129.5150205158265]}
@@ -346,48 +370,51 @@ export default function Markers() {
         <TradeLine plot="Namadii" lineStyle="minStyle" />
         <TradeLine plot="corkid" lineStyle="minStyle" />
         <TradeLine plot="corwak" lineStyle="minStyle" />
-        <TradeLine plot="velhya" lineStyle="minStyle" /> */}
+        <TradeLine plot="twihya" lineStyle="minStyle" />
       </div>
       <div className="zone-titles">
         <TitleObject
           color=""
-          coords={[-127.625, 125.625]}
+          coords={[-127.31663752913752, 124.1328104993598]}
           text={`D E E P\nC O R E`}
         />
         <TitleObject
           color=""
-          coords={[-133.1875, 119.0625]}
+          coords={[-137.03689782439784, 112.37980153649168]}
           text={`C O R E\nW O R L D S`}
         />
         <TitleObject
           color=""
-          coords={[-136.875, 114.78125]}
+          coords={[-144.50628885003886, 105.9716709346991]}
           text={`C O L O N I E S`}
         />
         <TitleObject
           color=""
-          coords={[-142.5625, 111.4375]}
+          coords={[-154.32031371406373, 101.03290653008963]}
           text={`I N N E R\nR I M`}
         />
         <TitleObject
           color=""
-          coords={[-147.1875, 108.5625]}
+          coords={[-165.0407294094794, 96.68804417413573]}
           text={`E X P A N S I O N\nR E G I O N`}
         />
-        <TitleObject color="" coords={[-154, 107.0625]} text={`M I D\nR I M`} />
+				<TitleObject
+					color=""
+					coords={[-177.79271076146077, 98.4072343149808]}
+					text={`M I D\nR I M`} />
         <TitleObject
           color=""
-          coords={[-160.1875, 101.125]}
+          coords={[-212.15455516705518, 107.75422535211267]}
           text={`O U T E R\nR I M`}
         />
         <TitleObject
           color=""
-          coords={[-133.75, 89.1875]}
+          coords={[-141.69406565656567, 51.19210947503201]}
           text={`U N K N O W N\nR E G I O N S`}
         />
         <TitleObject
           color=""
-          coords={[-122.375, 179.625]}
+          coords={[-133.19274475524477, 218.48493918053776]}
           text={`H U T T\nS P A C E`}
         />
       </div>
