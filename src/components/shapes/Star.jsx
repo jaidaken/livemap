@@ -77,7 +77,9 @@ export default function Star(props) {
 
   const calculateMinIconSize = () => {
     if (zoomLevel <= 5) return [10, 10];
-    if (zoomLevel === 6) return [15, 15];
+		if (zoomLevel === 6) return [20, 20];
+		if (zoomLevel === 7) return [25, 25];
+		if (zoomLevel === 8) return [30, 30];
     return [20, 20];
   };
 
@@ -165,14 +167,18 @@ export default function Star(props) {
   const calculateMarginRight = () => {
 		if (zoomLevel <= 4) return "0px";
 		if (zoomLevel === 5) return "2px";
-    if (zoomLevel === 6) return "4px";
+		if (zoomLevel === 6) return "8px";
+		if (zoomLevel === 7) return "10px";
+		if (zoomLevel === 8) return "12px";
     return "8px";
   };
 
   const calculateMarginLeft = () => {
 		if (zoomLevel <= 4) return "0px";
 		if (zoomLevel === 5) return "2px";
-    if (zoomLevel === 6) return "4px";
+		if (zoomLevel === 6) return "6px";
+		if (zoomLevel === 7) return "10px";
+		if (zoomLevel === 8) return "14px";
     return "8px";
   };
 
