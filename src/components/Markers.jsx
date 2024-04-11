@@ -32,7 +32,7 @@ export default function Markers() {
   const [activeFilters, setActiveFilters] = useState([
     "legends",
     "canon",
-    "shared",
+		"shared",
   ]);
 
   const fetchData = useCallback(async () => {
@@ -162,7 +162,7 @@ export default function Markers() {
                   isLegends={isLegends}
                   hasError={hasError}
                   alignRight={alignRight}
-                  starType={starType} // Pass the starType property
+									starType={starType} // Pass the starType property
                 />
               </React.Suspense>
             );
@@ -178,16 +178,16 @@ export default function Markers() {
 
 			<div className="zone-circles">
 
-        <PolygonObject plot="outerRim" color="#2D3E6E" opacity={0.5} />
-        <PolygonObject plot="midRim" color="#264476" opacity={1} />
-				<PolygonObject plot="expansionRegion" color="#25538A" opacity={1} />
-				<PolygonObject plot="innerRim" color="#1B609F" opacity={1} />
+        <PolygonObject plot="outerRim" color="#2D3E6E" opacity={0.2} />
+        <PolygonObject plot="midRim" color="#264476" opacity={0.2} />
+				<PolygonObject plot="expansionRegion" color="#25538A" opacity={0.2} />
+				<PolygonObject plot="innerRim" color="#1B609F" opacity={0.2} />
 
         <CircleObject
           center={[-128.2, 128]}
           radius={31.6}
           color="#006CB5"
-          opacity={1}
+          opacity={0.2}
         />
         <CircleObject
           center={[-128.2, 128]}
@@ -467,14 +467,27 @@ export default function Markers() {
           text={`Namadii Corridor`}
           rotation={"52deg"}
           textStyle="minStyle"
+				/>
+
+				<TradeNames
+          color="white"
+          coords={[-157.3803952991453, 148.2579203478741]}
+          text={`Shipwright's Trace`}
+          rotation={"5deg"}
+          textStyle="minStyle"
         />
+				<TradeLine plot="shipwrights" lineStyle="minStyle" />
+
         <TradeLine plot="Namadii" lineStyle="minStyle" />
+        <TradeLine plot="vakuvi" lineStyle="minStyle" />
         <TradeLine plot="corkid" lineStyle="minStyle" />
         <TradeLine plot="corwak" lineStyle="minStyle" />
         <TradeLine plot="twihya" lineStyle="minStyle" />
         <TradeLine plot="brencomm" lineStyle="minStyle" />
         <TradeLine plot="fedcomm" lineStyle="minStyle" />
         <TradeLine plot="trelcomm" lineStyle="minStyle" />
+        <TradeLine plot="byssabre" lineStyle="minStyle" />
+        <TradeLine plot="exonan" lineStyle="minStyle" />
 
         <TradeNames
           color="white"
