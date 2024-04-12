@@ -1,4 +1,4 @@
-export const corgiz = [
+export const vaathkree = [
   [
     [-84.17589415792541, 149.2109375],
     [-86.31283508158508, 153],

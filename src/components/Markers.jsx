@@ -308,6 +308,7 @@ export default function Markers() {
           rotation={"-15deg"}
           textStyle="nebStyle"
 				/>
+
         <NebulaObject
           plot="dragon"
           color="#A080A2"
@@ -321,6 +322,30 @@ export default function Markers() {
           coords={[-159.6415574009324, 117.9765625]}
           text={`Dragon Void`}
           rotation={"30deg"}
+          textStyle="nebStyle"
+				/>
+
+        <NebulaObject
+          plot="transitory1"
+          color="#A080A2"
+          line="transparent"
+          opacity={1}
+          lineOpacity={1}
+          dash={1}
+        />
+        <NebulaObject
+          plot="transitory2"
+          color="#A080A2"
+          line="transparent"
+          opacity={1}
+          lineOpacity={1}
+          dash={1}
+        />
+        <TradeNames
+          color="#A080A2"
+          coords={[-103.40791326728827, 166.140625]}
+          text={`Transitory Mists`}
+          rotation={"-50deg"}
           textStyle="nebStyle"
 				/>
 
@@ -558,8 +583,18 @@ export default function Markers() {
         <TradeLine plot="trelcomm" lineStyle="minStyle" />
         <TradeLine plot="byssabre" lineStyle="minStyle" />
         <TradeLine plot="exonan" lineStyle="minStyle" />
-        <TradeLine plot="corgiz" lineStyle="minStyle" />
-        <TradeLine plot="zeltose" lineStyle="minStyle" />
+
+				<TradeLine plot="zeltose" lineStyle="minStyle" />
+
+				<TradeLine plot="vaathkree" lineStyle="minStyle" />
+
+				<TradeNames
+          color="white"
+          coords={[-90.39262092074593, 160.513816260745]}
+          text={`Vaathkree Trade Corridor`}
+          rotation={"22deg"}
+          textStyle="minStyle"
+        />
 
         <TradeLine plot="shwuyexchange" lineStyle="minStyle" />
 
