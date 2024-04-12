@@ -32,7 +32,7 @@ export default function Markers() {
   const [activeFilters, setActiveFilters] = useState([
     "legends",
     "canon",
-		"shared",
+    "shared",
   ]);
 
   const fetchData = useCallback(async () => {
@@ -162,7 +162,7 @@ export default function Markers() {
                   isLegends={isLegends}
                   hasError={hasError}
                   alignRight={alignRight}
-									starType={starType} // Pass the starType property
+                  starType={starType} // Pass the starType property
                 />
               </React.Suspense>
             );
@@ -176,12 +176,11 @@ export default function Markers() {
         onFilterChange={handleFilterChange}
       />
 
-			<div className="zone-circles">
-
+      <div className="zone-circles">
         <PolygonObject plot="outerRim" color="#2D3E6E" opacity={0.2} />
         <PolygonObject plot="midRim" color="#264476" opacity={0.2} />
-				<PolygonObject plot="expansionRegion" color="#25538A" opacity={0.2} />
-				<PolygonObject plot="innerRim" color="#1B609F" opacity={0.2} />
+        <PolygonObject plot="expansionRegion" color="#25538A" opacity={0.2} />
+        <PolygonObject plot="innerRim" color="#1B609F" opacity={0.2} />
 
         <CircleObject
           center={[-128.2, 128]}
@@ -201,9 +200,9 @@ export default function Markers() {
           color="#0079C0"
           opacity={1}
         />
-			</div>
+      </div>
 
-			<div className="territory">
+      <div className="territory">
         <PolygonObject
           plot="huttSpace"
           color="#2C446C"
@@ -370,9 +369,9 @@ export default function Markers() {
 
         <TradeNames
           color="white"
-          coords={[-155.6544349747475, 129.9331618962433]}
+          coords={[-158.2055676961927, 130.93849846390168]}
           text={`Rimma Trade Route`}
-          rotation={"55deg"}
+          rotation={"50deg"}
           textStyle="majStyle"
         />
         <TradeNames
@@ -467,16 +466,16 @@ export default function Markers() {
           text={`Namadii Corridor`}
           rotation={"52deg"}
           textStyle="minStyle"
-				/>
+        />
 
-				<TradeNames
+        <TradeNames
           color="white"
           coords={[-157.3803952991453, 148.2579203478741]}
           text={`Shipwright's Trace`}
           rotation={"5deg"}
           textStyle="minStyle"
         />
-				<TradeLine plot="shipwrights" lineStyle="minStyle" />
+        <TradeLine plot="shipwrights" lineStyle="minStyle" />
 
         <TradeLine plot="Namadii" lineStyle="minStyle" />
         <TradeLine plot="vakuvi" lineStyle="minStyle" />
@@ -488,6 +487,7 @@ export default function Markers() {
         <TradeLine plot="trelcomm" lineStyle="minStyle" />
         <TradeLine plot="byssabre" lineStyle="minStyle" />
         <TradeLine plot="exonan" lineStyle="minStyle" />
+        <TradeLine plot="quelchar" lineStyle="minStyle" />
 
         <TradeNames
           color="white"
@@ -498,6 +498,27 @@ export default function Markers() {
         />
         <TradeLine plot="giju" lineStyle="minStyle" />
       </div>
+      <TradeLine plot="tapani" lineStyle="microStyle" />
+      <TradeLine plot="tapani2" lineStyle="microStyle" />
+      <TradeLine plot="tapani3" lineStyle="microStyle" />
+      <TradeLine plot="tapani4" lineStyle="microStyle" />
+      <TradeLine plot="tapani5" lineStyle="microStyle" />
+      <TradeLine plot="tapani6" lineStyle="microStyle" />
+      <TradeLine plot="tapani7" lineStyle="microStyle" />
+      <TradeLine plot="tapani8" lineStyle="microStyle" />
+      <TradeLine plot="tapani9" lineStyle="microStyle" />
+      <TradeLine plot="tapani10" lineStyle="microStyle" />
+      <TradeLine plot="tapani11" lineStyle="microStyle" />
+      <TradeLine plot="tapani12" lineStyle="microStyle" />
+      <TradeLine plot="tapani13" lineStyle="microStyle" />
+      <TradeLine plot="tapani14" lineStyle="microStyle" />
+      <TradeLine plot="tapani15" lineStyle="microStyle" />
+      <TradeLine plot="tapani16" lineStyle="microStyle" />
+      <TradeLine plot="tapani17" lineStyle="microStyle" />
+      <TradeLine plot="tapani18" lineStyle="microStyle" />
+      <TradeLine plot="tapani19" lineStyle="microStyle" />
+      <div className="micro-lanes"></div>
+
       <div className="zone-titles">
         <TitleObject
           color=""

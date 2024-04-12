@@ -165,7 +165,8 @@ const AddSystemForm = () => {
           >
             <option value="MinorStar">MinorStar</option>
             <option value="MajorStar">MajorStar</option>
-            <option value="MidStar">MidStar</option>
+							<option value="MidStar">MidStar</option>
+							<option value="MicroStar">MicroStar</option>
 						</select>
 						</label>
         </div>

@@ -30,7 +30,7 @@ const MapEvents = () => {
 };
 
 const minZoom = 2;
-const maxZoom = 8;
+const maxZoom = 9;
 const desiredTopRightCorner = [-111.508, 128.0];
 
 function App() {

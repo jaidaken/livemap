@@ -73,13 +73,21 @@ export default function Star(props) {
     if (zoomLevel === 6) return [30, 30];
     if (zoomLevel === 7) return [40, 40];
     return [55, 55];
+	};
+
+	const calculateMicroIconSize = () => {
+		if (zoomLevel <= 5) return [0, 0];
+    if (zoomLevel === 6) return [15, 15];
+    if (zoomLevel === 7) return [20, 20];
+    if (zoomLevel === 8) return [22, 22];
+    return [20, 20];
   };
 
   const calculateMinIconSize = () => {
     if (zoomLevel <= 5) return [10, 10];
-		if (zoomLevel === 6) return [20, 20];
-		if (zoomLevel === 7) return [25, 25];
-		if (zoomLevel === 8) return [30, 30];
+    if (zoomLevel === 6) return [20, 20];
+    if (zoomLevel === 7) return [25, 25];
+    if (zoomLevel === 8) return [30, 30];
     return [20, 20];
   };
 
@@ -92,7 +100,9 @@ export default function Star(props) {
       iconSize = calculateMajorIconSize();
     } else if (starType === "MidStar") {
       iconSize = calculateMidIconSize();
-    } else {
+    } else if (starType === "MicroStar") {
+      iconSize = calculateMicroIconSize();
+    }else {
       iconSize = calculateMinIconSize();
     }
 
@@ -117,6 +127,27 @@ export default function Star(props) {
     return 55;
   };
 
+  const calculateMajorMargin = () => {
+    if (zoomLevel <= 4) return "6px";
+    if (zoomLevel === 5) return "12px";
+    if (zoomLevel === 6) return "16px";
+    return "24px";
+  };
+
+  const calculateMajorMarginRight = () => {
+    if (zoomLevel <= 4) return "6px";
+    if (zoomLevel === 5) return "12px";
+    if (zoomLevel === 6) return "18px";
+    return "24px";
+  };
+
+  const calculateMajorStroke = () => {
+    if (zoomLevel <= 4) return "0.6px black";
+    if (zoomLevel === 5) return "0.7px black";
+    if (zoomLevel === 6) return "0.8px black";
+    return "1px black";
+  };
+
   const calculateMidFontSize = () => {
     if (zoomLevel === 4) return 18;
     if (zoomLevel === 5) return 22;
@@ -125,35 +156,12 @@ export default function Star(props) {
     return 55;
   };
 
-  const calculateFontSize = () => {
-    if (zoomLevel === 5) return 21;
-    if (zoomLevel === 6) return 35;
-    if (zoomLevel === 7) return 40;
-    if (zoomLevel >= 8) return 45;
-    return 30;
-  };
-
-  const calculateMajorMargin = () => {
-    if (zoomLevel <= 4) return "6px";
-    if (zoomLevel === 5) return "12px";
-    if (zoomLevel === 6) return "16px";
-    return "24px";
-  };
-
   const calculateMidMargin = () => {
     if (zoomLevel <= 4) return "6px";
     if (zoomLevel === 5) return "10px";
     if (zoomLevel === 6) return "12px";
     if (zoomLevel === 7) return "18px";
     return "26px";
-	};
-
-
-  const calculateMajorMarginRight = () => {
-    if (zoomLevel <= 4) return "6px";
-    if (zoomLevel === 5) return "12px";
-    if (zoomLevel === 6) return "18px";
-    return "24px";
   };
 
   const calculateMidMarginRight = () => {
@@ -164,36 +172,58 @@ export default function Star(props) {
     return "26px";
   };
 
-  const calculateMarginRight = () => {
-		if (zoomLevel <= 4) return "0px";
-		if (zoomLevel === 5) return "2px";
-		if (zoomLevel === 6) return "8px";
-		if (zoomLevel === 7) return "10px";
-		if (zoomLevel === 8) return "12px";
-    return "8px";
-  };
-
-  const calculateMarginLeft = () => {
-		if (zoomLevel <= 4) return "0px";
-		if (zoomLevel === 5) return "2px";
-		if (zoomLevel === 6) return "6px";
-		if (zoomLevel === 7) return "10px";
-		if (zoomLevel === 8) return "14px";
-    return "8px";
-  };
-
-  const calculateMajorStroke = () => {
-    if (zoomLevel <= 4) return "0.6px black";
-    if (zoomLevel === 5) return "0.7px black";
-    if (zoomLevel === 6) return "0.8px black";
-    return "1px black";
-  };
-
   const calculateMidStroke = () => {
     if (zoomLevel <= 4) return "0.6px black";
     if (zoomLevel === 5) return "0.7px black";
     if (zoomLevel === 6) return "0.8px black";
     return "1px black";
+  };
+
+  const calculateMicroFontSize = () => {
+    if (zoomLevel <= 6) return 0;
+    if (zoomLevel === 7) return 22;
+    return 30;
+  };
+
+  const calculateMicroMargin = () => {
+    if (zoomLevel <= 7) return "8px";
+    return "10px";
+  };
+
+  const calculateMicroMarginRight = () => {
+    if (zoomLevel <= 7 ) return "8px";
+    return "10px";
+  };
+
+  const calculateMicroStroke = () => {
+    if (zoomLevel <= 7) return "0.8px black";
+    return "0.8px black";
+  };
+
+  const calculateFontSize = () => {
+    if (zoomLevel === 5) return 21;
+    if (zoomLevel === 6) return 35;
+    if (zoomLevel === 7) return 40;
+    if (zoomLevel >= 8) return 45;
+    return 30;
+  };
+
+  const calculateMarginLeft = () => {
+    if (zoomLevel <= 4) return "0px";
+    if (zoomLevel === 5) return "2px";
+    if (zoomLevel === 6) return "6px";
+    if (zoomLevel === 7) return "10px";
+    if (zoomLevel === 8) return "14px";
+    return "8px";
+  };
+
+  const calculateMarginRight = () => {
+    if (zoomLevel <= 4) return "0px";
+    if (zoomLevel === 5) return "2px";
+    if (zoomLevel === 6) return "8px";
+    if (zoomLevel === 7) return "10px";
+    if (zoomLevel === 8) return "12px";
+    return "8px";
   };
 
   const calculateStroke = () => {
@@ -221,8 +251,8 @@ export default function Star(props) {
             : "#C7303A",
           WebkitTextStroke: calculateMajorStroke(),
           textAlign: "left",
-				position: "relative",
-					marginTop: "-5px",
+          position: "relative",
+          marginTop: "-5px",
           marginRight: calculateMajorMarginRight(),
           marginLeft: calculateMajorMargin(),
           zIndex: 610,
@@ -242,10 +272,30 @@ export default function Star(props) {
             : "#C7303A",
           WebkitTextStroke: calculateMidStroke(),
           textAlign: "left",
-					position: "relative",
-					marginTop: "-5px",
+          position: "relative",
+          marginTop: "-5px",
           marginRight: calculateMidMarginRight(),
           marginLeft: calculateMidMargin(),
+        }
+      : starType === "MicroStar"
+      ? {
+          fontSize: calculateMicroFontSize(),
+          fontWeight: "bold",
+          color: hasError
+            ? "#C7303A"
+            : isCanon && !isLegends
+            ? "#F6A6CA"
+            : !isCanon && isLegends
+            ? "#529DD4"
+            : isCanon && isLegends
+            ? "#E3B687"
+            : "#C7303A",
+          WebkitTextStroke: calculateMicroStroke(),
+          textAlign: "left",
+          position: "relative",
+          marginTop: "-5px",
+          marginRight: calculateMicroMarginRight(),
+          marginLeft: calculateMicroMargin(),
         }
       : {
           fontSize: calculateFontSize(),

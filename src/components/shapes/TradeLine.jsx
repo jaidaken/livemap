@@ -9,8 +9,8 @@ TradeLine.propTypes = {
 };
 
 export default function TradeLine(props) {
-	const savedZoom = localStorage.getItem("zoomLevel");
-	const zoomLevel = savedZoom ? parseInt(savedZoom) : 5;
+  const savedZoom = localStorage.getItem("zoomLevel");
+  const zoomLevel = savedZoom ? parseInt(savedZoom) : 5;
 
   const { plot, lineStyle, color } = props;
 
@@ -73,7 +73,24 @@ export default function TradeLine(props) {
     opacity: 1,
     dashArray: calculateDash(),
     color: color || "white",
+	};
+
+	const calculateMicroWeight = () => {
+    if (zoomLevel <= 4) return 0;
+    if (zoomLevel === 5) return 1;
+    if (zoomLevel === 6) return 1.5;
+    if (zoomLevel === 7) return 3;
+		if (zoomLevel === 8) return 4;
+    return 5;
   };
+
+	const microStyle = {
+    weight: calculateMicroWeight(),
+    opacity: 1,
+    color: color || "white",
+	};
+
+
 
   const getStyle = (lineStyle) => {
     switch (lineStyle) {
@@ -83,6 +100,8 @@ export default function TradeLine(props) {
         return minStyle;
       case "dashStyle":
         return dashStyle;
+      case "microStyle":
+        return microStyle;
       default:
         return [];
     }
