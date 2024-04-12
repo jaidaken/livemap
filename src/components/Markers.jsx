@@ -180,7 +180,7 @@ export default function Markers() {
         <PolygonObject plot="outerRim" color="#2D3E6E" opacity={0.2} />
         <PolygonObject plot="midRim" color="#264476" opacity={0.2} />
         <PolygonObject plot="expansionRegion" color="#25538A" opacity={0.2} />
-        <PolygonObject plot="innerRim" color="#1B609F" opacity={0.2} />
+        <PolygonObject plot="innerRim" color="#1B609F" opacity={1} />
 
         <CircleObject
           center={[-128.2, 128]}
@@ -261,6 +261,69 @@ export default function Markers() {
           rotation={"-35deg"}
           textStyle="nebStyle"
         />
+
+        <NebulaObject
+          plot="byrnum"
+          color="#A080A2"
+          line="transparent"
+          opacity={1}
+          lineOpacity={1}
+          dash={1}
+        />
+        <TradeNames
+          color="#A080A2"
+          coords={[-92.38305895493396, 128.5234375]}
+          text={`Byrnum Maw`}
+          rotation={"0deg"}
+          textStyle="nebStyle"
+				/>
+
+        <NebulaObject
+          plot="ryyk"
+          color="#A080A2"
+          line="transparent"
+          opacity={1}
+          lineOpacity={1}
+          dash={1}
+        />
+        <TradeNames
+          color="#A080A2"
+          coords={[-85.32901855089355, 159.921875]}
+          text={`Ryyk Nebula`}
+          rotation={"-10deg"}
+          textStyle="nebStyle"
+				/>
+        <NebulaObject
+          plot="almegest"
+          color="#A080A2"
+          line="transparent"
+          opacity={1}
+          lineOpacity={1}
+          dash={1}
+        />
+        <TradeNames
+          color="#A080A2"
+          coords={[-152.58844332750584, 105.296875]}
+          text={`The Almagest`}
+          rotation={"-15deg"}
+          textStyle="nebStyle"
+				/>
+        <NebulaObject
+          plot="dragon"
+          color="#A080A2"
+          line="transparent"
+          opacity={1}
+          lineOpacity={1}
+          dash={1}
+        />
+        <TradeNames
+          color="#A080A2"
+          coords={[-159.6415574009324, 117.9765625]}
+          text={`Dragon Void`}
+          rotation={"30deg"}
+          textStyle="nebStyle"
+				/>
+
       </div>
 
       <div className="trade-routes">
@@ -425,7 +488,16 @@ export default function Markers() {
           rotation={"15deg"}
           textStyle="minStyle"
         />
-        <TradeLine plot="carbonite" lineStyle="dashStyle" color={"#CC8A46"} />
+				<TradeLine plot="carbonite" lineStyle="dashStyle" color={"#CC8A46"} />
+
+				<TradeNames
+          color="#CC8A46"
+          coords={[-162.29373482420357, 154.171875]}
+          text={`Itani Run`}
+          rotation={"52deg"}
+          textStyle="minStyle"
+        />
+				<TradeLine plot="itani" lineStyle="dashStyle" color={"#CC8A46"} />
 
         <TradeNames
           color="white"
@@ -485,11 +557,13 @@ export default function Markers() {
         <TradeLine plot="fedcomm" lineStyle="minStyle" />
         <TradeLine plot="trelcomm" lineStyle="minStyle" />
         <TradeLine plot="byssabre" lineStyle="minStyle" />
-				<TradeLine plot="exonan" lineStyle="minStyle" />
+        <TradeLine plot="exonan" lineStyle="minStyle" />
+        <TradeLine plot="corgiz" lineStyle="minStyle" />
+        <TradeLine plot="zeltose" lineStyle="minStyle" />
 
-				<TradeLine plot="shwuyexchange" lineStyle="minStyle" />
+        <TradeLine plot="shwuyexchange" lineStyle="minStyle" />
 
-				<TradeNames
+        <TradeNames
           color="white"
           coords={[-98.93816894910645, 127.7578125]}
           text={`Shwuy Exchange`}
@@ -497,9 +571,9 @@ export default function Markers() {
           textStyle="minStyle"
         />
 
-				<TradeLine plot="quellorrun" lineStyle="minStyle" />
+        <TradeLine plot="quellorrun" lineStyle="minStyle" />
 
-				<TradeNames
+        <TradeNames
           color="white"
           coords={[-121.5636557886558, 158.453125]}
           text={`Quellor Run`}
@@ -515,27 +589,43 @@ export default function Markers() {
           textStyle="minStyle"
         />
         <TradeLine plot="giju" lineStyle="minStyle" />
+        <TradeLine plot="tanhapes" lineStyle="minStyle" />
+        <TradeLine plot="hapesquell" lineStyle="minStyle" />
       </div>
-      <TradeLine plot="tapani" lineStyle="microStyle" />
-      <TradeLine plot="tapani2" lineStyle="microStyle" />
-      <TradeLine plot="tapani3" lineStyle="microStyle" />
-      <TradeLine plot="tapani4" lineStyle="microStyle" />
-      <TradeLine plot="tapani5" lineStyle="microStyle" />
-      <TradeLine plot="tapani6" lineStyle="microStyle" />
-      <TradeLine plot="tapani7" lineStyle="microStyle" />
-      <TradeLine plot="tapani8" lineStyle="microStyle" />
-      <TradeLine plot="tapani9" lineStyle="microStyle" />
-      <TradeLine plot="tapani10" lineStyle="microStyle" />
-      <TradeLine plot="tapani11" lineStyle="microStyle" />
-      <TradeLine plot="tapani12" lineStyle="microStyle" />
-      <TradeLine plot="tapani13" lineStyle="microStyle" />
-      <TradeLine plot="tapani14" lineStyle="microStyle" />
-      <TradeLine plot="tapani15" lineStyle="microStyle" />
-      <TradeLine plot="tapani16" lineStyle="microStyle" />
-      <TradeLine plot="tapani17" lineStyle="microStyle" />
-      <TradeLine plot="tapani18" lineStyle="microStyle" />
-      <TradeLine plot="tapani19" lineStyle="microStyle" />
-      <div className="micro-lanes"></div>
+
+      <div className="micro-lanes">
+        <TradeLine plot="tapani" lineStyle="microStyle" />
+        <TradeLine plot="tapani2" lineStyle="microStyle" />
+        <TradeLine plot="tapani3" lineStyle="microStyle" />
+        <TradeLine plot="tapani4" lineStyle="microStyle" />
+        <TradeLine plot="tapani5" lineStyle="microStyle" />
+        <TradeLine plot="tapani6" lineStyle="microStyle" />
+        <TradeLine plot="tapani7" lineStyle="microStyle" />
+        <TradeLine plot="tapani8" lineStyle="microStyle" />
+        <TradeLine plot="tapani9" lineStyle="microStyle" />
+        <TradeLine plot="tapani10" lineStyle="microStyle" />
+        <TradeLine plot="tapani11" lineStyle="microStyle" />
+        <TradeLine plot="tapani12" lineStyle="microStyle" />
+        <TradeLine plot="tapani13" lineStyle="microStyle" />
+        <TradeLine plot="tapani14" lineStyle="microStyle" />
+        <TradeLine plot="tapani15" lineStyle="microStyle" />
+        <TradeLine plot="tapani16" lineStyle="microStyle" />
+        <TradeLine plot="tapani17" lineStyle="microStyle" />
+        <TradeLine plot="tapani18" lineStyle="microStyle" />
+        <TradeLine plot="tapani19" lineStyle="microStyle" />
+
+        <TradeLine plot="hapes1" lineStyle="microStyle" />
+        <TradeLine plot="hapes2" lineStyle="microStyle" />
+        <TradeLine plot="hapes3" lineStyle="microStyle" />
+        <TradeLine plot="hapes4" lineStyle="microStyle" />
+        <TradeLine plot="hapes5" lineStyle="microStyle" />
+        <TradeLine plot="hapes6" lineStyle="microStyle" />
+        <TradeLine plot="hapes7" lineStyle="microStyle" />
+        <TradeLine plot="hapes8" lineStyle="microStyle" />
+        <TradeLine plot="hapes9" lineStyle="microStyle" />
+        <TradeLine plot="hapes10" lineStyle="microStyle" />
+        <TradeLine plot="hapes11" lineStyle="microStyle" />
+      </div>
 
       <div className="zone-titles">
         <TitleObject
