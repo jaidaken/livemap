@@ -186,7 +186,7 @@ export default function Markers() {
           center={[-128.2, 128]}
           radius={31.6}
           color="#006CB5"
-          opacity={0.2}
+          opacity={1}
         />
         <CircleObject
           center={[-128.2, 128]}
@@ -478,7 +478,6 @@ export default function Markers() {
         <TradeLine plot="shipwrights" lineStyle="minStyle" />
 
         <TradeLine plot="Namadii" lineStyle="minStyle" />
-        <TradeLine plot="vakuvi" lineStyle="minStyle" />
         <TradeLine plot="corkid" lineStyle="minStyle" />
         <TradeLine plot="corwak" lineStyle="minStyle" />
         <TradeLine plot="twihya" lineStyle="minStyle" />
@@ -486,8 +485,27 @@ export default function Markers() {
         <TradeLine plot="fedcomm" lineStyle="minStyle" />
         <TradeLine plot="trelcomm" lineStyle="minStyle" />
         <TradeLine plot="byssabre" lineStyle="minStyle" />
-        <TradeLine plot="exonan" lineStyle="minStyle" />
-        <TradeLine plot="quelchar" lineStyle="minStyle" />
+				<TradeLine plot="exonan" lineStyle="minStyle" />
+
+				<TradeLine plot="shwuyexchange" lineStyle="minStyle" />
+
+				<TradeNames
+          color="white"
+          coords={[-98.93816894910645, 127.7578125]}
+          text={`Shwuy Exchange`}
+          rotation={"10deg"}
+          textStyle="minStyle"
+        />
+
+				<TradeLine plot="quellorrun" lineStyle="minStyle" />
+
+				<TradeNames
+          color="white"
+          coords={[-121.5636557886558, 158.453125]}
+          text={`Quellor Run`}
+          rotation={"5deg"}
+          textStyle="minStyle"
+        />
 
         <TradeNames
           color="white"
