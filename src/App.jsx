@@ -6,7 +6,7 @@ import Markers from "./components/Markers.jsx";
 import GridLayer from "./components/shapes/GridLayer.jsx";
 import Key from "./components/ui/Key.jsx";
 import Patreon from "./components/ui/Patreon.jsx";
-import AddSystemForm from "./components/AddSystem.jsx";
+// import AddSystemForm from "./components/AddSystem.jsx";
 import { SystemProvider } from "./components/functions/SystemContext.jsx";
 import { useEffect, useState } from "react";
 
@@ -83,7 +83,7 @@ function App() {
               <Patreon />
               <Key />
               <Markers />
-              <AddSystemForm />
+              {/* <AddSystemForm /> */}
               <MapEvents />
               <GridLayer
                 bottomLeftCoord={bottomLeftCoord}
