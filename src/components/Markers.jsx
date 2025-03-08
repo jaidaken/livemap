@@ -215,6 +215,54 @@ export default function Markers() {
 
       <div className="nebula">
         <NebulaObject
+          plot="quelugan"
+          color="#A080A2"
+          line="transparent"
+          opacity={1}
+          lineOpacity={1}
+          dash={1}
+        />
+        <TradeNames
+          color="#A080A2"
+          coords={[-145.6953125, 91.359375]}
+          text={`Quelugan Nebula`}
+          rotation={"0deg"}
+          textStyle="nebStyle"
+				/>
+
+<NebulaObject
+          plot="llon"
+          color="#A080A2"
+          line="transparent"
+          opacity={1}
+          lineOpacity={1}
+          dash={1}
+        />
+        <TradeNames
+          color="#A080A2"
+          coords={[-177.609375, 125.296875]}
+          text={`Llon Nebula`}
+          rotation={"35deg"}
+          textStyle="nebStyle"
+				/>
+
+<NebulaObject
+          plot="vulpinus"
+          color="#A080A2"
+          line="transparent"
+          opacity={1}
+          lineOpacity={1}
+          dash={1}
+        />
+        <TradeNames
+          color="#A080A2"
+          coords={[-180.875, 118.7578125]}
+          text={`Vulpinus Nebula`}
+          rotation={"0deg"}
+          textStyle="nebStyle"
+				/>
+
+				<NebulaObject
           plot="koornacht"
           color="#A080A2"
           line="transparent"
@@ -413,7 +461,9 @@ export default function Markers() {
           rotation={"-90deg"}
           textStyle="majStyle"
         />
-        <TradeLine plot="corellianspine" lineStyle="majStyle" />
+				<TradeLine plot="corellianspine" lineStyle="majStyle" />
+
+        <TradeLine plot="kinyen" lineStyle="minStyle" />
 
         <TradeLine plot="hoth" lineStyle="majStyle" />
 

@@ -14,7 +14,7 @@ const MapEvents = () => {
   useMapEvents({
     click: (e) => {
       console.log(`[${e.latlng.lat}, ${e.latlng.lng}],`);
-      navigator.clipboard.writeText(`[${e.latlng.lat}, ${e.latlng.lng}],`);
+      // navigator.clipboard.writeText(`[${e.latlng.lat}, ${e.latlng.lng}],`);
     },
     zoomend: (event) => {
       const newZoomLevel = event.target.getZoom();
@@ -78,7 +78,7 @@ function App() {
           }}
         >
             <SystemProvider>
-              {/* <TileLayer attribution="" url="/src/assets/images/{z}/{x}/{y}.jpg" /> */}
+              <TileLayer attribution="" url="/src/assets/images/{z}/{x}/{y}.jpg" />
               <TileLayer attribution="" url="" />
               <Patreon />
               <Key />
