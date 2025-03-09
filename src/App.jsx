@@ -78,7 +78,7 @@ function App() {
           }}
         >
             <SystemProvider>
-              {/* <TileLayer attribution="" url="/src/assets/images/{z}/{x}/{y}.jpg" /> */}
+              <TileLayer attribution="" url="/src/assets/images/{z}/{x}/{y}.jpg" />
               <TileLayer attribution="" url="" />
               <Patreon />
               <Key />

@@ -463,8 +463,10 @@ export default function Markers() {
         />
 				<TradeLine plot="corellianspine" lineStyle="majStyle" />
 
-        <TradeLine plot="kinyen" lineStyle="minStyle" />
-
+				<TradeLine plot="kinyen" lineStyle="minStyle" />
+				<TradeLine plot="wroona" lineStyle="minStyle" />
+				<TradeLine plot="naboo" lineStyle="minStyle" />
+				<TradeLine plot="kira" lineStyle="minStyle" />
         <TradeLine plot="hoth" lineStyle="majStyle" />
 
         <TradeNames
