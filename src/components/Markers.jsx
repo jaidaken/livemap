@@ -180,7 +180,7 @@ export default function Markers() {
         <PolygonObject plot="outerRim" color="#2D3E6E" opacity={0.2} />
         <PolygonObject plot="midRim" color="#264476" opacity={0.2} />
         <PolygonObject plot="expansionRegion" color="#25538A" opacity={0.2} />
-        <PolygonObject plot="innerRim" color="#1B609F" opacity={1} />
+        <PolygonObject plot="innerRim" color="#1B609F" opacity={0.9} />
 
         <CircleObject
           center={[-128.2, 128]}
@@ -207,7 +207,7 @@ export default function Markers() {
           plot="huttSpace"
           color="#2C446C"
           line="#FF7200"
-          opacity={1}
+          opacity={0.4}
           lineOpacity={1}
           dash={1}
         />
@@ -228,9 +228,25 @@ export default function Markers() {
           text={`Quelugan Nebula`}
           rotation={"0deg"}
           textStyle="nebStyle"
-				/>
+        />
 
 <NebulaObject
+          plot="zavian"
+          color="#A080A2"
+          line="transparent"
+          opacity={1}
+          lineOpacity={1}
+          dash={1}
+        />
+        <TradeNames
+          color="#A080A2"
+          coords={[-112.34375, 177.15625]}
+          text={`Zavian Abyss`}
+          rotation={"-15deg"}
+          textStyle="nebStyle"
+        />
+
+        <NebulaObject
           plot="llon"
           color="#A080A2"
           line="transparent"
@@ -244,9 +260,9 @@ export default function Markers() {
           text={`Llon Nebula`}
           rotation={"35deg"}
           textStyle="nebStyle"
-				/>
+        />
 
-<NebulaObject
+        <NebulaObject
           plot="vulpinus"
           color="#A080A2"
           line="transparent"
@@ -260,9 +276,9 @@ export default function Markers() {
           text={`Vulpinus Nebula`}
           rotation={"0deg"}
           textStyle="nebStyle"
-				/>
+        />
 
-				<NebulaObject
+        <NebulaObject
           plot="koornacht"
           color="#A080A2"
           line="transparent"
@@ -324,7 +340,7 @@ export default function Markers() {
           text={`Byrnum Maw`}
           rotation={"0deg"}
           textStyle="nebStyle"
-				/>
+        />
 
         <NebulaObject
           plot="ryyk"
@@ -340,7 +356,7 @@ export default function Markers() {
           text={`Ryyk Nebula`}
           rotation={"-10deg"}
           textStyle="nebStyle"
-				/>
+        />
         <NebulaObject
           plot="almegest"
           color="#A080A2"
@@ -355,7 +371,7 @@ export default function Markers() {
           text={`The Almagest`}
           rotation={"-15deg"}
           textStyle="nebStyle"
-				/>
+        />
 
         <NebulaObject
           plot="dragon"
@@ -371,7 +387,7 @@ export default function Markers() {
           text={`Dragon Void`}
           rotation={"30deg"}
           textStyle="nebStyle"
-				/>
+        />
 
         <NebulaObject
           plot="transitory1"
@@ -395,8 +411,7 @@ export default function Markers() {
           text={`Transitory Mists`}
           rotation={"-50deg"}
           textStyle="nebStyle"
-				/>
-
+        />
       </div>
 
       <div className="trade-routes">
@@ -416,6 +431,29 @@ export default function Markers() {
           rotation={"-90deg"}
           textStyle="minStyle"
         />
+
+<TradeNames
+          color="white"
+          coords={[-131.96875, 234.84375]}
+          text={`Triellust Run`}
+          rotation={"-75deg"}
+          textStyle="majStyle"
+        />
+<TradeNames
+          color="white"
+          coords={[-114, 199.65625]}
+          text={`Pabol Sleheyron`}
+          rotation={"-10deg"}
+          textStyle="majStyle"
+        />
+        <TradeNames
+          color="white"
+          coords={[-121.875, 178.34375]}
+          text={`Ootmian Pabol`}
+          rotation={"-50deg"}
+          textStyle="majStyle"
+        />
+        <TradeLine plot="ootmian" lineStyle="majStyle" />
 
         <TradeNames
           color="white"
@@ -461,12 +499,30 @@ export default function Markers() {
           rotation={"-90deg"}
           textStyle="majStyle"
         />
-				<TradeLine plot="corellianspine" lineStyle="majStyle" />
+        <TradeLine plot="corellianspine" lineStyle="majStyle" />
 
-				<TradeLine plot="kinyen" lineStyle="minStyle" />
-				<TradeLine plot="wroona" lineStyle="minStyle" />
-				<TradeLine plot="naboo" lineStyle="minStyle" />
-				<TradeLine plot="kira" lineStyle="minStyle" />
+				<TradeLine plot="mandalorian" lineStyle="minStyle" />
+				<TradeNames
+          color="white"
+          coords={[-78.28125, 166.84375]}
+          text={`Mandalorian Road`}
+          rotation={"30deg"}
+          textStyle="minStyle"
+				/>
+
+<TradeLine plot="calanon" lineStyle="minStyle" />
+				<TradeNames
+          color="white"
+          coords={[-59.5, 150]}
+          text={`Celanon Spur`}
+          rotation={"-12deg"}
+          textStyle="minStyle"
+				/>
+
+        <TradeLine plot="kinyen" lineStyle="minStyle" />
+        <TradeLine plot="wroona" lineStyle="minStyle" />
+        <TradeLine plot="naboo" lineStyle="minStyle" />
+        <TradeLine plot="kira" lineStyle="minStyle" />
         <TradeLine plot="hoth" lineStyle="majStyle" />
 
         <TradeNames
@@ -565,16 +621,16 @@ export default function Markers() {
           rotation={"15deg"}
           textStyle="minStyle"
         />
-				<TradeLine plot="carbonite" lineStyle="dashStyle" color={"#CC8A46"} />
+        <TradeLine plot="carbonite" lineStyle="dashStyle" color={"#CC8A46"} />
 
-				<TradeNames
+        <TradeNames
           color="#CC8A46"
           coords={[-162.29373482420357, 154.171875]}
           text={`Itani Run`}
           rotation={"52deg"}
           textStyle="minStyle"
         />
-				<TradeLine plot="itani" lineStyle="dashStyle" color={"#CC8A46"} />
+        <TradeLine plot="itani" lineStyle="dashStyle" color={"#CC8A46"} />
 
         <TradeNames
           color="white"
@@ -636,11 +692,11 @@ export default function Markers() {
         <TradeLine plot="byssabre" lineStyle="minStyle" />
         <TradeLine plot="exonan" lineStyle="minStyle" />
 
-				<TradeLine plot="zeltose" lineStyle="minStyle" />
+        <TradeLine plot="zeltose" lineStyle="minStyle" />
 
-				<TradeLine plot="vaathkree" lineStyle="minStyle" />
+        <TradeLine plot="vaathkree" lineStyle="minStyle" />
 
-				<TradeNames
+        <TradeNames
           color="white"
           coords={[-90.39262092074593, 160.513816260745]}
           text={`Vaathkree Trade Corridor`}
