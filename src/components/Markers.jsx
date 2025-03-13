@@ -15,6 +15,17 @@ export default function Markers() {
   const map = useMap();
   const { newSystemAdded, handleAddSystem } = useSystemContext();
 
+  const [zoomLevel, setZoomLevel] = useState(map.getZoom());
+
+  useEffect(() => {
+    const handleMapChange = () => setZoomLevel(map.getZoom());
+    map.on("zoomend", handleMapChange);
+
+    return () => {
+      map.off("zoomend", handleMapChange);
+    };
+  }, [map]);
+
   const [allSystems, setAllSystems] = useState([]);
   const [visibleMarkers, setVisibleMarkers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -64,7 +75,6 @@ export default function Markers() {
   useEffect(() => {
     const handleMapChange = () => {
       updateVisibleMarkers();
-      localStorage.setItem("zoomLevel", map.getZoom());
       localStorage.setItem(
         "mapCenter",
         JSON.stringify([map.getCenter().lat, map.getCenter().lng])
@@ -113,7 +123,7 @@ export default function Markers() {
   return (
     <div>
       {loading && <div>Loading...</div>}
-			{!loading &&
+      {!loading &&
         visibleMarkers.map(
           ({
             id,
@@ -146,13 +156,16 @@ export default function Markers() {
 
       <SearchBarUI systems={allSystems} onSystemSelect={handleSystemSelect} />
 
-      <Filter activeFilters={activeFilters} onFilterChange={handleFilterChange} />
+      <Filter
+        activeFilters={activeFilters}
+        onFilterChange={handleFilterChange}
+      />
 
       {/* Memoized static layers */}
-      <MemoAreaPlots />
-      <MemoTerritoryPlots />
-      <MemoNebulaPlots />
-      <MemoLanePlots />
+      <MemoAreaPlots zoomLevel={zoomLevel} />
+      <MemoTerritoryPlots zoomLevel={zoomLevel} />
+      <MemoNebulaPlots zoomLevel={zoomLevel} />
+      <MemoLanePlots zoomLevel={zoomLevel} />
     </div>
   );
 }
