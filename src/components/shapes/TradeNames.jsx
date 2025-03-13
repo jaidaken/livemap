@@ -1,27 +1,41 @@
-import { useState } from "react";
-import { Polygon, Tooltip, useMapEvents } from "react-leaflet";
+import { useEffect, useState } from "react";
+import { Polygon, Tooltip } from "react-leaflet";
 import PropTypes from "prop-types";
 
 TradeNames.propTypes = {
   color: PropTypes.string,
   text: PropTypes.string,
-	rotation: PropTypes.string,
-	coords: PropTypes.array,
-	textStyle: PropTypes.string
+  rotation: PropTypes.string,
+  coords: PropTypes.array,
+  textStyle: PropTypes.string,
 };
 
 export default function TradeNames(props) {
-	// const savedZoom = localStorage.getItem("zoomLevel");
-	// const zoomLevel = savedZoom ? parseInt(savedZoom) : 5;
-
-	const map = useMapEvents({
-    zoomend: () => {
-      setZoomLevel(map.getZoom());
-    },
-  });
-  const [zoomLevel, setZoomLevel] = useState(map.getZoom());
-
   const { text, coords, color, rotation, textStyle } = props;
+  const [zoomLevel, setZoomLevel] = useState(() => {
+    const savedZoom = localStorage.getItem("zoomLevel");
+    return savedZoom ? parseInt(savedZoom) : 5;
+  });
+
+  useEffect(() => {
+    const handleZoomChange = () => {
+      const updatedZoom = parseInt(localStorage.getItem("zoomLevel") || "5");
+      setZoomLevel(updatedZoom);
+    };
+
+    window.addEventListener("storage", handleZoomChange);
+    window.addEventListener("zoomend", handleZoomChange);
+
+    const interval = setInterval(handleZoomChange, 500);
+
+    return () => {
+      window.removeEventListener("storage", handleZoomChange);
+      window.removeEventListener("zoomend", handleZoomChange);
+      clearInterval(interval);
+    };
+  }, []);
+
+  // const [zoomLevel, setZoomLevel] = useState(5);
 
   const calculateMajFontSize = () => {
 		if (zoomLevel <= 4) return 12;
@@ -94,7 +108,7 @@ export default function TradeNames(props) {
       <Polygon color="transparent" positions={[coords, coords, coords]}>
         {zoomLevel >= 4 ? (
           <Tooltip direction="right" offset={[0, 0]} opacity={1} permanent>
-            <div className="title-span tradeName" style={style}>
+            <div className="title-span" style={style}>
               {lines.map((line, index) => (
                 <span key={index}>
                   {line}

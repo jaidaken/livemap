@@ -1,36 +1,3 @@
-/* eslint-disable react-refresh/only-export-components */
-import { createContext, useContext, useState } from "react";
-import PropTypes from 'prop-types';
+import { createContext } from "react";
 
-const SystemContext = createContext();
-
-export const useSystemContext = () => {
-  const context = useContext(SystemContext);
-  if (!context) {
-    throw new Error('useSystemContext must be used within a ZoomProvider');
-  }
-  return context;
-};
-
-export const SystemProvider = ({ children }) => {
-  const [newSystemAdded, setNewSystemAdded] = useState(false);
-
-	const handleAddSystem = () => {
-		setNewSystemAdded(prev => !prev);
-	};
-
-  const contextValue = {
-    newSystemAdded,
-    handleAddSystem,
-	};
-
-	SystemProvider.propTypes = {
-		children: PropTypes.node,
-	};
-
-  return (
-    <SystemContext.Provider value={contextValue}>
-      {children}
-    </SystemContext.Provider>
-  );
-};
+export const SystemContext = createContext();
