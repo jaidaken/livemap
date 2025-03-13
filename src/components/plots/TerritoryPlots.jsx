@@ -10,7 +10,6 @@ function TerritoryPlots() {
         line="#FF7200"
         opacity={0.4}
         lineOpacity={1}
-        dash={1}
       />
     </div>
   );

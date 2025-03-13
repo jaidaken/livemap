@@ -1,4 +1,5 @@
-import { Polygon, Tooltip } from "react-leaflet";
+import { useState } from "react";
+import { Polygon, Tooltip, useMapEvents } from "react-leaflet";
 import PropTypes from "prop-types";
 
 TradeNames.propTypes = {
@@ -10,8 +11,15 @@ TradeNames.propTypes = {
 };
 
 export default function TradeNames(props) {
-	const savedZoom = localStorage.getItem("zoomLevel");
-	const zoomLevel = savedZoom ? parseInt(savedZoom) : 5;
+	// const savedZoom = localStorage.getItem("zoomLevel");
+	// const zoomLevel = savedZoom ? parseInt(savedZoom) : 5;
+
+	const map = useMapEvents({
+    zoomend: () => {
+      setZoomLevel(map.getZoom());
+    },
+  });
+  const [zoomLevel, setZoomLevel] = useState(map.getZoom());
 
   const { text, coords, color, rotation, textStyle } = props;
 
@@ -86,7 +94,7 @@ export default function TradeNames(props) {
       <Polygon color="transparent" positions={[coords, coords, coords]}>
         {zoomLevel >= 4 ? (
           <Tooltip direction="right" offset={[0, 0]} opacity={1} permanent>
-            <div className="title-span" style={style}>
+            <div className="title-span tradeName" style={style}>
               {lines.map((line, index) => (
                 <span key={index}>
                   {line}

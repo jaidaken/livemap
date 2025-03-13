@@ -6,7 +6,7 @@ import Markers from "./components/Markers.jsx";
 import GridLayer from "./components/shapes/GridLayer.jsx";
 import Key from "./components/ui/Key.jsx";
 import Patreon from "./components/ui/Patreon.jsx";
-import AddSystemForm from "./components/AddSystem.jsx";
+// import AddSystemForm from "./components/AddSystem.jsx";
 import { SystemProvider } from "./components/functions/SystemContext.jsx";
 import { useEffect, useState } from "react";
 
@@ -34,6 +34,8 @@ const maxZoom = 9;
 const desiredTopRightCorner = [-111.508, 128.0];
 
 function App() {
+
+
 	const squareSize = 11.616;
 
 	const [initialZoom, setInitialZoom] = useState(() => {
@@ -65,7 +67,8 @@ function App() {
   return (
     <div className="App">
       <div className="map-container">
-        <MapContainer
+				<MapContainer
+					preferCanvas={true}
           crs={CRS.Simple}
           center={initialCenter}
           zoom={initialZoom}
@@ -78,12 +81,12 @@ function App() {
           }}
         >
             <SystemProvider>
-              <TileLayer attribution="" url="/src/assets/images/{z}/{x}/{y}.jpg" opacity={0.6}/>
+              {/* <TileLayer attribution="" url="/src/assets/images/{z}/{x}/{y}.jpg" opacity={0.6}/> */}
               <TileLayer attribution="" url="" />
               <Patreon />
               <Key />
               <Markers />
-              <AddSystemForm />
+              {/* <AddSystemForm /> */}
               <MapEvents />
               <GridLayer
                 bottomLeftCoord={bottomLeftCoord}
