@@ -63,7 +63,8 @@ function App() {
   const bottomLeftCoord = [
     desiredTopRightCorner[0] - squareSize * 15,
     desiredTopRightCorner[1] - squareSize * 11,
-  ];
+	];
+	
   return (
     <div className="App">
       <div className="map-container">
