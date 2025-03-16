@@ -12,7 +12,7 @@ import markerIconError from "../../assets/marker-error.svg";
 
 
 const Star = (props) => {
-	const { position, name, wiki, isCanon, isLegends, hasError, alignRight, starType, className, } = props;
+	const { position, name, wiki, isCanon, isLegends, hasError, alignRight, starType, } = props;
 
   const markerRef = useRef(null);
 
