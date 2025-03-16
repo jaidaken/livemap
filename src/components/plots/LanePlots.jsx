@@ -167,6 +167,14 @@ function LanePlots() {
           rotation="-35deg"
           textStyle="minStyle"
         />
+        <TradeLine plot="veragit" lineStyle="minStyle" />
+        <TradeNames
+          color="white"
+          coords={[-32.03125, 133.40625]}
+          text="Veragit Run"
+          rotation="-37deg"
+          textStyle="minStyle"
+        />
 
         <TradeLine plot="mandalorian" lineStyle="minStyle" />
         <TradeNames
@@ -289,6 +297,27 @@ function LanePlots() {
         <TradeLine plot="tanhapes" lineStyle="minStyle" />
         <TradeLine plot="hapesquell" lineStyle="minStyle" />
         <TradeLine plot="hoth" lineStyle="majStyle" />
+        <TradeLine plot="coth" lineStyle="minStyle" />
+        <TradeLine plot="shili" lineStyle="minStyle" />
+        <TradeLine plot="luuq" lineStyle="minStyle" />
+        <TradeLine plot="dohu" lineStyle="minStyle" />
+        <TradeLine plot="roxuli" lineStyle="minStyle" />
+        <TradeLine plot="moro" lineStyle="minStyle" />
+        <TradeLine plot="ariarch" lineStyle="minStyle" />
+        <TradeLine plot="barka" lineStyle="minStyle" />
+        <TradeLine plot="traval" lineStyle="minStyle" />
+        <TradeLine plot="chelenor" lineStyle="minStyle" />
+        <TradeLine plot="ejolus" lineStyle="minStyle" />
+        <TradeLine plot="asamin" lineStyle="minStyle" />
+        <TradeLine plot="kidriff" lineStyle="minStyle" />
+        <TradeLine plot="hewett" lineStyle="minStyle" />
+        <TradeLine plot="garqi" lineStyle="minStyle" />
+        <TradeLine plot="parshoone" lineStyle="minStyle" />
+        <TradeLine plot="thoden" lineStyle="minStyle" />
+        <TradeLine plot="gravlex" lineStyle="minStyle" />
+        <TradeLine plot="dolis" lineStyle="minStyle" />
+        <TradeLine plot="muun" lineStyle="minStyle" />
+        <TradeLine plot="cezith" lineStyle="minStyle" />
       </div>
 
       <div className="MicroLanes">
