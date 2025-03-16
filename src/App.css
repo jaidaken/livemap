@@ -246,6 +246,7 @@
   flex-direction: column;
 }
 
+
 @media only screen and (max-width: 768px) {
   .leaflet-container {
     height: 100dvh;
@@ -338,6 +339,21 @@
     font-size: 1.2rem;
   }
 
+}
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
 
+.marker-animate {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.leaflet-marker-icon {
+	animation: fadeIn 0.5s ease-in-out;
 }

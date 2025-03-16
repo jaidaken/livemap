@@ -36,9 +36,9 @@ const TitleObject = (props) => {
 
   return (
     <div>
-      <Polygon color="transparent" positions={[coords, coords, coords]}>
+      <Polygon className="marker-animate" color="transparent" positions={[coords, coords, coords]}>
         <Tooltip direction="right" offset={[0, 0]} opacity={1} permanent>
-          <div className="title-span" style={Style}>
+          <div className="title-span marker-animate" style={Style}>
             {lines.map((line, index) => (
               <span key={index}>
                 {line}

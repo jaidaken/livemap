@@ -4,13 +4,12 @@ import { fetchSystems } from "./functions/fetch.jsx";
 import { useSystemContext } from "./functions/useSystemContext.jsx";
 import SearchBarUI from "./ui/SearchBarUI.jsx";
 import Filter from "./ui/filter.jsx";
-import Star from "./shapes/Star.jsx";
+
 import MemoAreaPlots from "./plots/AreaPlots.jsx";
 import MemoTerritoryPlots from "./plots/TerritoryPlots.jsx";
 import MemoNebulaPlots from "./plots/NebulaPlots.jsx";
 import MemoLanePlots from "./plots/LanePlots.jsx";
-
-const MemoStar = React.memo(Star);
+import MemoizedStar from "./shapes/Star.jsx";
 
 export default function Markers() {
   const map = useMap();
@@ -69,7 +68,7 @@ export default function Markers() {
       }
     );
 
-    setVisibleMarkers(filtered);
+    setVisibleMarkers(filtered.map((marker) => ({ ...marker, animate: true })));
   }, [map, allSystems, activeFilters]);
 
   useEffect(() => {
@@ -140,10 +139,11 @@ export default function Markers() {
             isLegends,
             hasError,
             alignRight,
+            animate,
           }) => {
             return (
               <React.Suspense key={id} fallback={<div>Loading...</div>}>
-                <MemoStar
+                <MemoizedStar
                   position={[latitude, longitude]}
                   name={name}
                   starType={starType}
@@ -152,6 +152,7 @@ export default function Markers() {
                   isLegends={isLegends}
                   hasError={hasError}
                   alignRight={alignRight}
+                  className={animate ? "marker-animate" : ""}
                 />
               </React.Suspense>
             );

@@ -32,17 +32,28 @@ const PolygonObject = (props) => {
     return 6;
   };
 
+  const calculateDashArray = () => {
+    if (zoomLevel <= 3) return [25, 25];
+    if (zoomLevel === 4) return [28, 28];
+    if (zoomLevel === 5) return [32, 32];
+    if (zoomLevel === 6) return [37, 37];
+    return [45, 45];
+  };
+
+  const Style = {
+    fillColor: color || "#0079C0",
+    fillOpacity: opacity || 1,
+    color: line || "#202933",
+    opacity: lineOpacity || 1,
+    dashArray: dash || calculateDashArray(),
+    weight: calculateWeight(),
+    lineCap: "square",
+  };
+
   return (
-    <Polygon
-      positions={positions}
-      color={color}
-      weight={calculateWeight()}
-      opacity={opacity}
-      dashArray={dash}
-      lineCap={line}
-      lineJoin={line}
-      fillOpacity={lineOpacity}
-    />
+    <div>
+      <Polygon positions={positions} pathOptions={Style} className="marker-animate"/>
+    </div>
   );
 };
 

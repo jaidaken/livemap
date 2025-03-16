@@ -97,7 +97,7 @@ const TradeNames = (props) => {
 
   return (
     <div>
-      <Polygon color="transparent" positions={[coords, coords, coords]}>
+      <Polygon className="marker-animate" color="transparent" positions={[coords, coords, coords]}>
         {zoomLevel >= 4 ? (
           <Tooltip direction="right" offset={[0, 0]} opacity={1} permanent>
             <div className="title-span tradeName" style={style}>

@@ -56,7 +56,7 @@ export default function CircleObject(props) {
 
   return (
     <div>
-      <Circle center={center} pathOptions={Style} radius={radius} />
+      <Circle center={center} pathOptions={Style} radius={radius} className="marker-animate"/>
     </div>
   );
 }

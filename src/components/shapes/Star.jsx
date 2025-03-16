@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import React, { useRef } from "react";
 import { Marker, Tooltip, Popup } from "react-leaflet";
 import { Icon } from "leaflet";
 import PropTypes from "prop-types";
@@ -11,24 +11,15 @@ import markerIconError from "../../assets/marker-error.svg";
 
 
 
-export default function Star(props) {
-  // const { zoomLevel } = useZoom();
-
-  const savedZoom = localStorage.getItem("zoomLevel");
-  const zoomLevel = savedZoom ? parseInt(savedZoom) : 5;
+const Star = (props) => {
+	const { position, name, wiki, isCanon, isLegends, hasError, alignRight, starType, className, } = props;
 
   const markerRef = useRef(null);
 
-  const {
-    position,
-    name,
-    wiki,
-    isCanon,
-    isLegends,
-    hasError,
-    alignRight,
-    starType,
-  } = props;
+  const savedZoom = localStorage.getItem("zoomLevel");
+	const zoomLevel = savedZoom ? parseInt(savedZoom) : 5;
+
+
 
   const calculateIcon = () => {
     let markerIcon;
@@ -48,7 +39,25 @@ export default function Star(props) {
     return markerIcon;
   };
 
-  const markerIcon = calculateIcon();
+	const markerIcon = calculateIcon();
+
+	const calculateIconSize = () => {
+    let iconSize;
+
+    if (hasError) {
+      iconSize = [10, 10];
+    } else if (starType === "MajorStar") {
+      iconSize = calculateMajorIconSize();
+    } else if (starType === "MidStar") {
+      iconSize = calculateMidIconSize();
+    } else if (starType === "MicroStar") {
+      iconSize = calculateMicroIconSize();
+    }else {
+      iconSize = calculateMinIconSize();
+    }
+
+    return iconSize;
+  };
 
   const calculateMajorIconSize = () => {
     if (zoomLevel <= 3) return [15, 15];
@@ -80,35 +89,7 @@ export default function Star(props) {
     if (zoomLevel === 7) return [25, 25];
     if (zoomLevel === 8) return [30, 30];
     return [20, 20];
-  };
-
-  const calculateIconSize = () => {
-    let iconSize;
-
-    if (hasError) {
-      iconSize = [10, 10];
-    } else if (starType === "MajorStar") {
-      iconSize = calculateMajorIconSize();
-    } else if (starType === "MidStar") {
-      iconSize = calculateMidIconSize();
-    } else if (starType === "MicroStar") {
-      iconSize = calculateMicroIconSize();
-    }else {
-      iconSize = calculateMinIconSize();
-    }
-
-    return iconSize;
-  };
-
-  const iconSize = calculateIconSize();
-  const iconAnchor = iconSize.map((dim) => dim / 2);
-
-  const icon = new Icon({
-    iconUrl: markerIcon !== null ? markerIcon : markerIconError,
-    iconSize: iconSize,
-    iconAnchor: iconAnchor,
-    popupAnchor: [7, -10],
-  });
+	};
 
   const calculateMajorFontSize = () => {
     if (zoomLevel === 3) return 30;
@@ -223,7 +204,17 @@ export default function Star(props) {
     if (zoomLevel === 7) return "1.5px";
     if (zoomLevel === 8) return "1.8px";
     return "1px";
-  };
+	};
+
+	const iconSize = calculateIconSize();
+  const iconAnchor = iconSize.map((dim) => dim / 2);
+
+  const icon = new Icon({
+    iconUrl: markerIcon !== null ? markerIcon : markerIconError,
+    iconSize: iconSize,
+    iconAnchor: iconAnchor,
+    popupAnchor: [7, -10],
+  });
 
   // Apply different styles based on starType
   const starStyle =
@@ -317,9 +308,9 @@ export default function Star(props) {
   };
 
   return (
-    <div>
+    <div className="">
       {zoomLevel >= 2 ? (
-        <Marker ref={markerRef} position={position} icon={icon}>
+        <Marker ref={markerRef} position={position} icon={icon} >
           {zoomLevel >= 3 && starType === "MajorStar" ? (
             <Tooltip
               interactive={true}
@@ -328,7 +319,7 @@ export default function Star(props) {
               opacity={1}
               permanent
             >
-              <div className="marker-popup" style={starStyle}>
+              <div className="marker-popup marker-animate" style={starStyle}>
                 {name}
               </div>
             </Tooltip>
@@ -340,7 +331,7 @@ export default function Star(props) {
               opacity={1}
               permanent
             >
-              <div className="marker-popup" style={starStyle}>
+              <div className="marker-popup marker-animate" style={starStyle}>
                 {name}
               </div>
             </Tooltip>
@@ -352,7 +343,7 @@ export default function Star(props) {
               opacity={1}
               permanent
             >
-              <div className="marker-popup" style={starStyle}>
+              <div className="marker-popup marker-animate" style={starStyle}>
                 {name}
               </div>
             </Tooltip>
@@ -376,5 +367,10 @@ Star.propTypes = {
   isLegends: PropTypes.bool,
   hasError: PropTypes.bool,
   alignRight: PropTypes.bool,
-  starType: PropTypes.string.isRequired,
+	starType: PropTypes.string.isRequired,
+	className: PropTypes.string,
 };
+
+const MemoizedStar = React.memo(Star);
+
+export default MemoizedStar;

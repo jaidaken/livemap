@@ -55,7 +55,7 @@ const NebulaObject = (props) => {
 
   return (
     <div>
-      <Polygon positions={positions} pathOptions={Style} />
+      <Polygon positions={positions} pathOptions={Style} className="marker-animate"/>
     </div>
   );
 };

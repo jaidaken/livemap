@@ -107,7 +107,7 @@ const TradeLine = (props) => {
     <div>
       {zoomLevel >= 2 ? (
         <div>
-          <Polyline positions={positions} pathOptions={style} />
+          <Polyline className="marker-animate" positions={positions} pathOptions={style} />
         </div>
       ) : null}
     </div>

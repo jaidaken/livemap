@@ -1,14 +1,16 @@
+import React, { useEffect, useState, Suspense } from "react";
 import "leaflet/dist/leaflet.css";
 import "./App.css";
 import { MapContainer, TileLayer, useMapEvents } from "react-leaflet";
 import { CRS } from "leaflet";
-import Markers from "./components/Markers.jsx";
+
 import GridLayer from "./components/shapes/GridLayer.jsx";
 import Key from "./components/ui/Key.jsx";
 import Patreon from "./components/ui/Patreon.jsx";
 // import AddSystemForm from "./components/AddSystem.jsx";
 import { SystemProvider } from "./components/functions/SystemProvider.jsx";
-import { useEffect, useState } from "react";
+
+const Markers = React.lazy(() => import("./components/Markers.jsx"));
 
 const MapEvents = () => {
   useMapEvents({
@@ -60,7 +62,7 @@ function App() {
 
   // Clear cached systems on page load
   useEffect(() => {
-    localStorage.removeItem('cachedSystems');
+    localStorage.removeItem("cachedSystems");
   }, []);
 
   const bottomLeftCoord = [
@@ -89,7 +91,9 @@ function App() {
             <TileLayer attribution="" url="" />
             <Patreon />
             <Key />
-            <Markers />
+            <Suspense fallback={<div>Loading Markers...</div>}>
+              <Markers />
+            </Suspense>
             {/* <AddSystemForm /> */}
             <MapEvents />
             <GridLayer
