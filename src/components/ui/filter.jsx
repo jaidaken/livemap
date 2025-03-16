@@ -25,7 +25,7 @@ const Filter = ({ activeFilters, onFilterChange }) => {
 
         const createCheckbox = (filter, label) => {
           const checkbox = document.createElement("input");
-          checkbox.type = "checkbox";
+					checkbox.type = "checkbox";
 					checkbox.checked = activeFilters.includes(filter);
 					checkbox.id = `${filter}-id`;
           checkbox.addEventListener("change", () => handleCheckboxChange(filter));
@@ -38,12 +38,10 @@ const Filter = ({ activeFilters, onFilterChange }) => {
           return checkboxLabel;
         };
 
-        const legendsCheckbox = createCheckbox("legends", "Legends Only");
-        const sharedCheckbox = createCheckbox("shared", "Shared");
-        const canonCheckbox = createCheckbox("canon", "Canon Only");
+        const legendsCheckbox = createCheckbox("legends", "Legends");
+        const canonCheckbox = createCheckbox("canon", "Canon");
 
         div.appendChild(canonCheckbox);
-        div.appendChild(sharedCheckbox);
         div.appendChild(legendsCheckbox);
 
         return div;

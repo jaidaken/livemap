@@ -65,12 +65,11 @@ export default function Markers() {
     const bounds = map.getBounds();
 
     const filtered = allSystems.filter(
-      ({ latitude, longitude, isCanon, isLegends, isShared }) => {
+      ({ latitude, longitude, isCanon, isLegends }) => {
         const inView = bounds.contains([latitude, longitude]);
         const matchesFilter =
-          (isCanon && activeFilters.includes("canon") && !isShared) ||
-          (isLegends && activeFilters.includes("legends") && !isShared) ||
-          (isShared && activeFilters.includes("shared"));
+          (isCanon && activeFilters.includes("canon")) ||
+          (isLegends && activeFilters.includes("legends"))
 
         return inView && matchesFilter;
       }
