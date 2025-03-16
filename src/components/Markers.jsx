@@ -16,16 +16,6 @@ export default function Markers() {
   const { newSystemAdded, handleAddSystem } = useSystemContext();
 
   const [zoomLevel, setZoomLevel] = useState(map.getZoom());
-
-  useEffect(() => {
-    const handleMapChange = () => setZoomLevel(map.getZoom());
-    map.on("zoomend", handleMapChange);
-
-    return () => {
-      map.off("zoomend", handleMapChange);
-    };
-  }, [map]);
-
   const [allSystems, setAllSystems] = useState([]);
   const [visibleMarkers, setVisibleMarkers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -38,6 +28,7 @@ export default function Markers() {
   const fetchAllData = useCallback(async () => {
     try {
       setLoading(true);
+      console.log("Fetching systems...");
       const data = await fetchSystems();
       setAllSystems(data);
       setLoading(false);
@@ -47,9 +38,26 @@ export default function Markers() {
     }
   }, []);
 
+	useEffect(() => {
+		const debouncedFetchAllData = debounce(() => {
+			fetchAllData();
+		}, 100);
+
+		debouncedFetchAllData();
+
+		return () => {
+			// Cleanup the debounced function if the component unmounts
+			debouncedFetchAllData.cancel && debouncedFetchAllData.cancel();
+		};
+	}, [fetchAllData]);
+
   useEffect(() => {
-    fetchAllData();
-  }, [fetchAllData]);
+    if (newSystemAdded) {
+      console.log("New system added, fetching data...");
+      fetchAllData();
+      handleAddSystem(); // Reset state after fetching
+    }
+  }, [newSystemAdded, fetchAllData, handleAddSystem]);
 
   const updateVisibleMarkers = useCallback(() => {
     if (!map || allSystems.length === 0) return;
@@ -71,37 +79,28 @@ export default function Markers() {
     setVisibleMarkers(filtered.map((marker) => ({ ...marker, animate: true })));
   }, [map, allSystems, activeFilters]);
 
+  const handleMapChange = useCallback(() => {
+    setZoomLevel(map.getZoom());
+		updateVisibleMarkers();
+    localStorage.setItem(
+      "mapCenter",
+      JSON.stringify([map.getCenter().lat, map.getCenter().lng])
+    );
+  }, [map, updateVisibleMarkers]);
+
   useEffect(() => {
-    const handleMapChange = () => {
-      updateVisibleMarkers();
-      localStorage.setItem(
-        "mapCenter",
-        JSON.stringify([map.getCenter().lat, map.getCenter().lng])
-      );
-    };
-
-    // Debounce handleMapChange to reduce frequency of updates
-    const debouncedHandleMapChange = debounce(handleMapChange, 200);
-
-    map.on("zoomend", debouncedHandleMapChange);
-    map.on("moveend", debouncedHandleMapChange);
+    map.on("zoomend", handleMapChange);
+    map.on("moveend", handleMapChange);
 
     if (!loading) {
       updateVisibleMarkers();
     }
 
     return () => {
-      map.off("zoomend", debouncedHandleMapChange);
-      map.off("moveend", debouncedHandleMapChange);
+      map.off("zoomend", handleMapChange);
+      map.off("moveend", handleMapChange);
     };
-  }, [map, loading, updateVisibleMarkers]);
-
-  useEffect(() => {
-    if (newSystemAdded) {
-      fetchAllData();
-      handleAddSystem(); // Reset state after fetching
-    }
-  }, [newSystemAdded, fetchAllData, updateVisibleMarkers, handleAddSystem]);
+  }, [map, loading, updateVisibleMarkers, handleMapChange]);
 
   const handleSystemSelect = useCallback(
     (selectedSystem) => {
@@ -118,10 +117,6 @@ export default function Markers() {
         : [...prevFilters, filter]
     );
   }, []);
-
-  useEffect(() => {
-    updateVisibleMarkers();
-  }, [activeFilters, updateVisibleMarkers]);
 
   return (
     <div>
@@ -175,15 +170,16 @@ export default function Markers() {
   );
 }
 
-// Debounce function to limit the rate of function execution
 function debounce(func, wait) {
   let timeout;
-  return function (...args) {
+  function debounced(...args) {
     const later = () => {
       clearTimeout(timeout);
       func(...args);
     };
     clearTimeout(timeout);
     timeout = setTimeout(later, wait);
-  };
+  }
+  debounced.cancel = () => clearTimeout(timeout);
+  return debounced;
 }

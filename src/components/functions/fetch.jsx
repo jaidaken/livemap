@@ -2,27 +2,34 @@ import { supabase } from "./supabase";
 
 let cachedSystems = null;
 
-export const fetchSystems = async () => {
-  if (cachedSystems) {
-    console.log("Returning cached systems");
-    return cachedSystems;
-  }
+const handleSupabaseError = (error, action) => {
+  console.error(`Supabase error ${action}:`, error);
+  throw error;
+};
 
-  const cachedData = localStorage.getItem("cachedSystems");
-  if (cachedData) {
-    console.log("Returning systems from localStorage cache");
-    cachedSystems = JSON.parse(cachedData);
-    return cachedSystems;
+const handleCache = (key, data = null) => {
+  if (data) {
+    localStorage.setItem(key, JSON.stringify(data));
+  } else {
+    const cachedData = localStorage.getItem(key);
+    return cachedData ? JSON.parse(cachedData) : null;
+  }
+};
+
+export const fetchSystems = async () => {
+  if (!cachedSystems) {
+    cachedSystems = handleCache("cachedSystems");
+    if (cachedSystems) {
+      console.log("Returning systems from localStorage cache");
+      return cachedSystems;
+    }
   }
 
   try {
     console.log("Fetching systems from database");
     const { data, error } = await supabase.from("systems").select("*");
 
-    if (error) {
-      console.error("Supabase error fetching systems:", error);
-      throw error;
-    }
+    if (error) handleSupabaseError(error, "fetching systems");
 
     const systems = data.map((system) => ({
       id: system.id,
@@ -51,7 +58,7 @@ export const fetchSystems = async () => {
     });
 
     cachedSystems = systems;
-    localStorage.setItem("cachedSystems", JSON.stringify(systems));
+    handleCache("cachedSystems", systems);
     return systems;
   } catch (error) {
     console.error("Error fetching systems:", error.message);
@@ -59,7 +66,6 @@ export const fetchSystems = async () => {
   }
 };
 
-// Add a new system
 export const addSystem = async (name, latitude, longitude, starType) => {
   try {
     const latitudeValue = Number(latitude);
@@ -78,12 +84,14 @@ export const addSystem = async (name, latitude, longitude, starType) => {
       },
     ]);
 
-    if (error) {
-      console.error("Supabase error adding system:", error);
-      throw error;
-    }
+    if (error) handleSupabaseError(error, "adding system");
 
     console.log("System added:", data);
+    cachedSystems = null;
+    localStorage.removeItem("cachedSystems");
+    console.log("Cached systems cleared");
+    await fetchSystems();
+
     return data;
   } catch (error) {
     console.error("Error adding system:", error.message);
@@ -91,7 +99,6 @@ export const addSystem = async (name, latitude, longitude, starType) => {
   }
 };
 
-// Update an existing system
 export const updateSystem = async (systemId, updatedData) => {
   try {
     const { data, error } = await supabase
@@ -99,9 +106,7 @@ export const updateSystem = async (systemId, updatedData) => {
       .update(updatedData)
       .match({ id: systemId });
 
-    if (error) {
-      throw error;
-    }
+    if (error) handleSupabaseError(error, "updating system");
 
     console.log("System updated:", data);
     return data;
@@ -111,7 +116,6 @@ export const updateSystem = async (systemId, updatedData) => {
   }
 };
 
-// Delete a system
 export const deleteSystem = async (systemId) => {
   try {
     const { data, error } = await supabase
@@ -119,9 +123,7 @@ export const deleteSystem = async (systemId) => {
       .delete()
       .match({ id: systemId });
 
-    if (error) {
-      throw error;
-    }
+    if (error) handleSupabaseError(error, "deleting system");
 
     console.log("System deleted:", data);
     return data;
