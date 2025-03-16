@@ -4,7 +4,8 @@ import PropTypes from "prop-types";
 
 // Ensure TradeNames is declared before usage
 const TradeNames = (props) => {
-  const { text, coords, color, rotation, textStyle } = props;
+	const { text, coords, color, rotation, textStyle } = props;
+	
   const [zoomLevel, setZoomLevel] = useState(() => {
     const savedZoom = localStorage.getItem("zoomLevel");
     return savedZoom ? parseInt(savedZoom) : 5;
@@ -27,8 +28,6 @@ const TradeNames = (props) => {
       clearInterval(interval);
     };
   }, []);
-
-  // const [zoomLevel, setZoomLevel] = useState(5);
 
   const calculateMajFontSize = () => {
     if (zoomLevel <= 4) return 12;

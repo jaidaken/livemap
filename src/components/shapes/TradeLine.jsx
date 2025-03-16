@@ -4,8 +4,28 @@ import PropTypes from "prop-types";
 
 // Ensure TradeLine is declared before usage
 const TradeLine = (props) => {
-  const savedZoom = localStorage.getItem("zoomLevel");
-  const zoomLevel = savedZoom ? parseInt(savedZoom) : 5;
+  const [zoomLevel, setZoomLevel] = useState(() => {
+    const savedZoom = localStorage.getItem("zoomLevel");
+    return savedZoom ? parseInt(savedZoom) : 5;
+  });
+
+  useEffect(() => {
+    const handleZoomChange = () => {
+      const updatedZoom = parseInt(localStorage.getItem("zoomLevel") || "5");
+      setZoomLevel(updatedZoom);
+    };
+
+    window.addEventListener("storage", handleZoomChange);
+    window.addEventListener("zoomend", handleZoomChange);
+
+    const interval = setInterval(handleZoomChange, 500);
+
+    return () => {
+      window.removeEventListener("storage", handleZoomChange);
+      window.removeEventListener("zoomend", handleZoomChange);
+      clearInterval(interval);
+    };
+  }, []);
 
   const { plot, lineStyle, color } = props;
 
@@ -107,7 +127,11 @@ const TradeLine = (props) => {
     <div>
       {zoomLevel >= 2 ? (
         <div>
-          <Polyline className="marker-animate" positions={positions} pathOptions={style} />
+          <Polyline
+            className="marker-animate"
+            positions={positions}
+            pathOptions={style}
+          />
         </div>
       ) : null}
     </div>
