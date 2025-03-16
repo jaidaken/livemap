@@ -5,11 +5,12 @@ import { useSystemContext } from "./functions/useSystemContext.jsx";
 import SearchBarUI from "./ui/SearchBarUI.jsx";
 import Filter from "./ui/filter.jsx";
 import Star from "./shapes/Star.jsx";
-
 import MemoAreaPlots from "./plots/AreaPlots.jsx";
 import MemoTerritoryPlots from "./plots/TerritoryPlots.jsx";
 import MemoNebulaPlots from "./plots/NebulaPlots.jsx";
 import MemoLanePlots from "./plots/LanePlots.jsx";
+
+const MemoStar = React.memo(Star);
 
 export default function Markers() {
   const map = useMap();
@@ -35,7 +36,6 @@ export default function Markers() {
     "shared",
   ]);
 
-  // Moved to top-level scope for accessibility everywhere
   const fetchAllData = useCallback(async () => {
     try {
       setLoading(true);
@@ -80,16 +80,20 @@ export default function Markers() {
         JSON.stringify([map.getCenter().lat, map.getCenter().lng])
       );
     };
-    map.on("zoomend", handleMapChange);
-    map.on("moveend", handleMapChange);
+
+    // Debounce handleMapChange to reduce frequency of updates
+    const debouncedHandleMapChange = debounce(handleMapChange, 200);
+
+    map.on("zoomend", debouncedHandleMapChange);
+    map.on("moveend", debouncedHandleMapChange);
 
     if (!loading) {
       updateVisibleMarkers();
     }
 
     return () => {
-      map.off("zoomend", handleMapChange);
-      map.off("moveend", handleMapChange);
+      map.off("zoomend", debouncedHandleMapChange);
+      map.off("moveend", debouncedHandleMapChange);
     };
   }, [map, loading, updateVisibleMarkers]);
 
@@ -139,15 +143,15 @@ export default function Markers() {
           }) => {
             return (
               <React.Suspense key={id} fallback={<div>Loading...</div>}>
-                <Star
+                <MemoStar
                   position={[latitude, longitude]}
                   name={name}
+                  starType={starType}
                   wiki={wiki}
                   isCanon={isCanon}
                   isLegends={isLegends}
                   hasError={hasError}
                   alignRight={alignRight}
-                  starType={starType} // Pass the starType property
                 />
               </React.Suspense>
             );
@@ -168,4 +172,17 @@ export default function Markers() {
       <MemoLanePlots zoomLevel={zoomLevel} />
     </div>
   );
+}
+
+// Debounce function to limit the rate of function execution
+function debounce(func, wait) {
+  let timeout;
+  return function (...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
 }

@@ -1,16 +1,9 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Polygon, Tooltip } from "react-leaflet";
 import PropTypes from "prop-types";
 
-TradeNames.propTypes = {
-  color: PropTypes.string,
-  text: PropTypes.string,
-  rotation: PropTypes.string,
-  coords: PropTypes.array,
-  textStyle: PropTypes.string,
-};
-
-export default function TradeNames(props) {
+// Ensure TradeNames is declared before usage
+const TradeNames = (props) => {
   const { text, coords, color, rotation, textStyle } = props;
   const [zoomLevel, setZoomLevel] = useState(() => {
     const savedZoom = localStorage.getItem("zoomLevel");
@@ -38,53 +31,52 @@ export default function TradeNames(props) {
   // const [zoomLevel, setZoomLevel] = useState(5);
 
   const calculateMajFontSize = () => {
-		if (zoomLevel <= 4) return 12;
-		if (zoomLevel === 5) return 20;
+    if (zoomLevel <= 4) return 12;
+    if (zoomLevel === 5) return 20;
     if (zoomLevel === 6) return 30;
     if (zoomLevel === 7) return 50;
     return 120;
   };
 
   const calculateMinFontSize = () => {
-		if (zoomLevel <= 4) return 0;
-		if (zoomLevel === 5) return 10;
+    if (zoomLevel <= 4) return 0;
+    if (zoomLevel === 5) return 10;
     if (zoomLevel === 6) return 15;
     if (zoomLevel === 7) return 20;
     return 40;
-	};
+  };
 
-	const calculateNebFontSize = () => {
-		if (zoomLevel <= 5) return 0;
+  const calculateNebFontSize = () => {
+    if (zoomLevel <= 5) return 0;
     if (zoomLevel === 6) return 15;
     if (zoomLevel === 7) return 20;
     return 40;
-	};
-
+  };
 
   const majStyle = {
     color: color || "#231F20",
     fontSize: calculateMajFontSize(),
     letterSpacing: ".15rem",
-		transform: `translate(-53.5%, -5%) rotate(${rotation}) `,
-		opacity: 1,
+    transform: `translate(-53.5%, -5%) rotate(${rotation}) `,
+    opacity: 1,
   };
 
   const minStyle = {
     color: color || "#231F20",
     fontSize: calculateMinFontSize(),
-		letterSpacing: ".1rem",
-		lineHeight: "1",
-		transform: `translate(-53.5%, -5%) rotate(${rotation}) `,
-		opacity: 1,
-	};
+    letterSpacing: ".1rem",
+    lineHeight: "1",
+    transform: `translate(-53.5%, -5%) rotate(${rotation}) `,
+    opacity: 1,
+  };
 
-	const nebStyle = {
+  const nebStyle = {
     color: color || "#231F20",
     fontSize: calculateNebFontSize(),
-		letterSpacing: ".1rem",
-		lineHeight: "1",
-		transform: `translate(-53.5%, -5%) rotate(${rotation}) `,
-		opacity: 1,
+    letterSpacing: ".1rem",
+    lineHeight: "1",
+    transform: `translate(-53.5%, -5%) rotate(${rotation}) `,
+    opacity: 1,
   };
 
   const getStyle = (lineStyle) => {
@@ -108,7 +100,7 @@ export default function TradeNames(props) {
       <Polygon color="transparent" positions={[coords, coords, coords]}>
         {zoomLevel >= 4 ? (
           <Tooltip direction="right" offset={[0, 0]} opacity={1} permanent>
-            <div className="title-span" style={style}>
+            <div className="title-span tradeName" style={style}>
               {lines.map((line, index) => (
                 <span key={index}>
                   {line}
@@ -121,4 +113,16 @@ export default function TradeNames(props) {
       </Polygon>
     </div>
   );
-}
+};
+
+TradeNames.propTypes = {
+  color: PropTypes.string,
+  text: PropTypes.string,
+  rotation: PropTypes.string,
+  coords: PropTypes.array,
+  textStyle: PropTypes.string,
+};
+
+const MemoizedTradeNames = React.memo(TradeNames);
+
+export default MemoizedTradeNames;

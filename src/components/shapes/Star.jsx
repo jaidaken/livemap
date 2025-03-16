@@ -9,16 +9,7 @@ import markerIconError from "../../assets/marker-error.svg";
 // import markerIconMajor from "../../assets/marker-icon-major.svg";
 // import markerIconMid from "../../assets/marker-icon-mid.svg";
 
-Star.propTypes = {
-  position: PropTypes.array,
-  name: PropTypes.string,
-  wiki: PropTypes.string,
-  isCanon: PropTypes.bool,
-  isLegends: PropTypes.bool,
-  hasError: PropTypes.bool,
-  alignRight: PropTypes.bool,
-  starType: PropTypes.string, // Include the starType property
-};
+
 
 export default function Star(props) {
   // const { zoomLevel } = useZoom();
@@ -376,3 +367,14 @@ export default function Star(props) {
     </div>
   );
 }
+
+Star.propTypes = {
+  position: PropTypes.array,
+  name: PropTypes.string,
+  wiki: PropTypes.string,
+  isCanon: PropTypes.bool,
+  isLegends: PropTypes.bool,
+  hasError: PropTypes.bool,
+  alignRight: PropTypes.bool,
+  starType: PropTypes.string.isRequired,
+};

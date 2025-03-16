@@ -1,14 +1,9 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Polyline } from "react-leaflet";
 import PropTypes from "prop-types";
 
-TradeLine.propTypes = {
-  color: PropTypes.string,
-  lineStyle: PropTypes.string,
-  plot: PropTypes.string,
-};
-
-export default function TradeLine(props) {
+// Ensure TradeLine is declared before usage
+const TradeLine = (props) => {
   const savedZoom = localStorage.getItem("zoomLevel");
   const zoomLevel = savedZoom ? parseInt(savedZoom) : 5;
 
@@ -73,24 +68,22 @@ export default function TradeLine(props) {
     opacity: 1,
     dashArray: calculateDash(),
     color: color || "white",
-	};
+  };
 
-	const calculateMicroWeight = () => {
+  const calculateMicroWeight = () => {
     if (zoomLevel <= 4) return 0;
     if (zoomLevel === 5) return 1;
     if (zoomLevel === 6) return 1.5;
     if (zoomLevel === 7) return 3;
-		if (zoomLevel === 8) return 4;
+    if (zoomLevel === 8) return 4;
     return 5;
   };
 
-	const microStyle = {
+  const microStyle = {
     weight: calculateMicroWeight(),
     opacity: 1,
     color: color || "white",
-	};
-
-
+  };
 
   const getStyle = (lineStyle) => {
     switch (lineStyle) {
@@ -119,4 +112,15 @@ export default function TradeLine(props) {
       ) : null}
     </div>
   );
-}
+};
+
+TradeLine.propTypes = {
+  color: PropTypes.string,
+  lineStyle: PropTypes.string,
+  plot: PropTypes.string,
+};
+
+// Memoize the TradeLine component to prevent unnecessary re-renders
+const MemoizedTradeLine = React.memo(TradeLine);
+
+export default MemoizedTradeLine;

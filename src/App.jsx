@@ -14,7 +14,7 @@ const MapEvents = () => {
   useMapEvents({
     click: (e) => {
       console.log(`[${e.latlng.lat}, ${e.latlng.lng}],`);
-      navigator.clipboard.writeText(`[${e.latlng.lat}, ${e.latlng.lng}],`);
+      // navigator.clipboard.writeText(`[${e.latlng.lat}, ${e.latlng.lng}],`);
     },
     zoomend: (event) => {
       const newZoomLevel = event.target.getZoom();
@@ -56,6 +56,11 @@ function App() {
     if (savedZoom) {
       setInitialZoom(parseInt(savedZoom));
     }
+  }, []);
+
+  // Clear cached systems on page load
+  useEffect(() => {
+    localStorage.removeItem('cachedSystems');
   }, []);
 
   const bottomLeftCoord = [

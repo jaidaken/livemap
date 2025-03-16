@@ -1,37 +1,60 @@
-import { supabase } from './supabase';
+import { supabase } from "./supabase";
+
+let cachedSystems = null;
 
 export const fetchSystems = async () => {
+  if (cachedSystems) {
+    console.log("Returning cached systems");
+    return cachedSystems;
+  }
+
+  const cachedData = localStorage.getItem("cachedSystems");
+  if (cachedData) {
+    console.log("Returning systems from localStorage cache");
+    cachedSystems = JSON.parse(cachedData);
+    return cachedSystems;
+  }
+
   try {
-    const { data, error } = await supabase.from('systems').select('*');
+    console.log("Fetching systems from database");
+    const { data, error } = await supabase.from("systems").select("*");
 
     if (error) {
-      console.error('Supabase error fetching systems:', error);
+      console.error("Supabase error fetching systems:", error);
       throw error;
     }
 
-    const systems = data.map(system => ({
+    const systems = data.map((system) => ({
       id: system.id,
       name: system.name,
       latitude: system.latitude,
       longitude: system.longitude,
       starType: system.starType,
       wiki: system.wiki || null,
-			isCanon: system.isCanon === true,
-			isLegends: system.isLegends === true,
-			isShared: system.isCanon === true && system.isLegends === true,
-			hasError: system.isCanon === null || system.isCanon === undefined || system.isLegends === null || system.isLegends === undefined,
-			alignRight: system.alignRight === true
+      isCanon: system.isCanon === true,
+      isLegends: system.isLegends === true,
+      isShared: system.isCanon === true && system.isLegends === true,
+      hasError:
+        system.isCanon === null ||
+        system.isCanon === undefined ||
+        system.isLegends === null ||
+        system.isLegends === undefined,
+      alignRight: system.alignRight === true,
     }));
 
-    systems.forEach(system => {
+    systems.forEach((system) => {
       if (system.wiki === null) {
-        console.warn(`Warning: Wiki link is missing for system: ${system.name}`);
+        console.warn(
+          `Warning: Wiki link is missing for system: ${system.name}`
+        );
       }
     });
 
+    cachedSystems = systems;
+    localStorage.setItem("cachedSystems", JSON.stringify(systems));
     return systems;
   } catch (error) {
-    console.error('Error fetching systems:', error.message);
+    console.error("Error fetching systems:", error.message);
     throw error;
   }
 };
@@ -46,7 +69,7 @@ export const addSystem = async (name, latitude, longitude, starType) => {
       throw new Error("Latitude and Longitude must be valid numbers.");
     }
 
-    const { data, error } = await supabase.from('systems').upsert([
+    const { data, error } = await supabase.from("systems").upsert([
       {
         name,
         latitude: latitudeValue,
@@ -56,14 +79,14 @@ export const addSystem = async (name, latitude, longitude, starType) => {
     ]);
 
     if (error) {
-      console.error('Supabase error adding system:', error);
+      console.error("Supabase error adding system:", error);
       throw error;
     }
 
-    console.log('System added:', data);
+    console.log("System added:", data);
     return data;
   } catch (error) {
-    console.error('Error adding system:', error.message);
+    console.error("Error adding system:", error.message);
     throw error;
   }
 };
@@ -72,7 +95,7 @@ export const addSystem = async (name, latitude, longitude, starType) => {
 export const updateSystem = async (systemId, updatedData) => {
   try {
     const { data, error } = await supabase
-      .from('systems')
+      .from("systems")
       .update(updatedData)
       .match({ id: systemId });
 
@@ -80,10 +103,10 @@ export const updateSystem = async (systemId, updatedData) => {
       throw error;
     }
 
-    console.log('System updated:', data);
+    console.log("System updated:", data);
     return data;
   } catch (error) {
-    console.error('Error updating system:', error.message);
+    console.error("Error updating system:", error.message);
     throw error;
   }
 };
@@ -91,16 +114,19 @@ export const updateSystem = async (systemId, updatedData) => {
 // Delete a system
 export const deleteSystem = async (systemId) => {
   try {
-    const { data, error } = await supabase.from('systems').delete().match({ id: systemId });
+    const { data, error } = await supabase
+      .from("systems")
+      .delete()
+      .match({ id: systemId });
 
     if (error) {
       throw error;
     }
 
-    console.log('System deleted:', data);
+    console.log("System deleted:", data);
     return data;
   } catch (error) {
-    console.error('Error deleting system:', error.message);
+    console.error("Error deleting system:", error.message);
     throw error;
   }
 };

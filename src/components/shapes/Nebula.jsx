@@ -1,24 +1,15 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Polygon } from "react-leaflet";
 import PropTypes from "prop-types";
 
-NebulaObject.propTypes = {
-  color: PropTypes.string,
-  line: PropTypes.string,
-  lineOpacity: PropTypes.number,
-  opacity: PropTypes.number,
-  dash: PropTypes.number,
-  plot: PropTypes.string,
-};
-
-export default function NebulaObject(props) {
-
-	const savedZoom = localStorage.getItem("zoomLevel");
-	const zoomLevel = savedZoom ? parseInt(savedZoom) : 5;
+// Ensure NebulaObject is declared before usage
+const NebulaObject = (props) => {
+  const savedZoom = localStorage.getItem("zoomLevel");
+  const zoomLevel = savedZoom ? parseInt(savedZoom) : 5;
 
   const { color, line, lineOpacity, opacity, dash, plot } = props;
 
-	const [positions, setPositions] = useState([]);
+  const [positions, setPositions] = useState([]);
 
   useEffect(() => {
     const importNebula = async () => {
@@ -32,7 +23,7 @@ export default function NebulaObject(props) {
     };
 
     importNebula();
-	}, [plot]);
+  }, [plot]);
 
   const calculateWeight = () => {
     if (zoomLevel <= 3) return 1;
@@ -67,4 +58,17 @@ export default function NebulaObject(props) {
       <Polygon positions={positions} pathOptions={Style} />
     </div>
   );
-}
+};
+
+NebulaObject.propTypes = {
+  color: PropTypes.string,
+  line: PropTypes.string,
+  lineOpacity: PropTypes.number,
+  opacity: PropTypes.number,
+  dash: PropTypes.number,
+  plot: PropTypes.string,
+};
+
+const MemoizedNebulaObject = React.memo(NebulaObject);
+
+export default MemoizedNebulaObject;

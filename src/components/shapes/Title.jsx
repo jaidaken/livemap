@@ -1,16 +1,10 @@
 import { Polygon, Tooltip } from "react-leaflet";
+import React from "react";
 import PropTypes from "prop-types";
 
-TitleObject.propTypes = {
-	color: PropTypes.string,
-	text: PropTypes.string,
-	coords: PropTypes.array
-};
-
-export default function TitleObject(props) {
-
-	const savedZoom = localStorage.getItem("zoomLevel");
-	const zoomLevel = savedZoom ? parseInt(savedZoom) : 5;
+const TitleObject = (props) => {
+  const savedZoom = localStorage.getItem("zoomLevel");
+  const zoomLevel = savedZoom ? parseInt(savedZoom) : 5;
 
   const { text, coords, color } = props;
 
@@ -56,4 +50,14 @@ export default function TitleObject(props) {
       </Polygon>
     </div>
   );
-}
+};
+
+TitleObject.propTypes = {
+  color: PropTypes.string,
+  text: PropTypes.string,
+  coords: PropTypes.array,
+};
+
+const MemoizedTitleObject = React.memo(TitleObject);
+
+export default MemoizedTitleObject;
