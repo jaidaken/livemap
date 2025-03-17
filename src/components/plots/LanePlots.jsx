@@ -155,7 +155,9 @@ function LanePlots() {
             rotation="-60deg"
             textStyle="minStyle"
           />
-        </div>
+				</div>
+
+				<TradeLine plot="hoth" lineStyle="majStyle" />
       </div>
 
       <div className="MinorLanes">
@@ -296,7 +298,7 @@ function LanePlots() {
         <TradeLine plot="giju" lineStyle="minStyle" />
         <TradeLine plot="tanhapes" lineStyle="minStyle" />
         <TradeLine plot="hapesquell" lineStyle="minStyle" />
-        <TradeLine plot="hoth" lineStyle="majStyle" />
+
         <TradeLine plot="coth" lineStyle="minStyle" />
         <TradeLine plot="shili" lineStyle="minStyle" />
         <TradeLine plot="luuq" lineStyle="minStyle" />
@@ -318,6 +320,19 @@ function LanePlots() {
         <TradeLine plot="dolis" lineStyle="minStyle" />
         <TradeLine plot="muun" lineStyle="minStyle" />
         <TradeLine plot="cezith" lineStyle="minStyle" />
+        <TradeLine plot="tangrene" lineStyle="minStyle" />
+        <TradeLine plot="axxila" lineStyle="minStyle" />
+        <TradeLine plot="tierell" lineStyle="minStyle" />
+        <TradeLine plot="indosa" lineStyle="minStyle" />
+        <TradeLine plot="vandyne" lineStyle="minStyle" />
+        <TradeLine plot="hynah" lineStyle="minStyle" />
+        <TradeLine plot="selitan" lineStyle="minStyle" />
+        <TradeLine plot="arkuda" lineStyle="minStyle" />
+        <TradeLine plot="denarii" lineStyle="minStyle" />
+        <TradeLine plot="junction" lineStyle="minStyle" />
+        <TradeLine plot="jovan" lineStyle="minStyle" />
+        <TradeLine plot="lucazec" lineStyle="minStyle" />
+        <TradeLine plot="troos" lineStyle="minStyle" />
       </div>
 
       <div className="MicroLanes">
