@@ -9,35 +9,42 @@ import markerIconError from "../../assets/marker-error.svg";
 // import markerIconMajor from "../../assets/marker-icon-major.svg";
 // import markerIconMid from "../../assets/marker-icon-mid.svg";
 
-
-
 const Star = (props) => {
-	const { position, name, wiki, isCanon, isLegends, hasError, alignRight, starType, } = props;
+  const {
+    position,
+    name,
+    wiki,
+    isCanon,
+    isLegends,
+    hasError,
+    alignRight,
+    starType,
+  } = props;
 
   const markerRef = useRef(null);
 
-	const [zoomLevel, setZoomLevel] = useState(() => {
-		const savedZoom = localStorage.getItem("zoomLevel");
-		return savedZoom ? parseInt(savedZoom) : 5;
-	});
+  const [zoomLevel, setZoomLevel] = useState(() => {
+    const savedZoom = localStorage.getItem("zoomLevel");
+    return savedZoom ? parseInt(savedZoom) : 5;
+  });
 
-	useEffect(() => {
-		const handleZoomChange = () => {
-			const updatedZoom = parseInt(localStorage.getItem("zoomLevel") || "5");
-			setZoomLevel(updatedZoom);
-		};
+  useEffect(() => {
+    const handleZoomChange = () => {
+      const updatedZoom = parseInt(localStorage.getItem("zoomLevel") || "5");
+      setZoomLevel(updatedZoom);
+    };
 
-		window.addEventListener("storage", handleZoomChange);
-		window.addEventListener("zoomend", handleZoomChange);
+    window.addEventListener("storage", handleZoomChange);
+    window.addEventListener("zoomend", handleZoomChange);
 
-		const interval = setInterval(handleZoomChange, 500);
+    const interval = setInterval(handleZoomChange, 500);
 
-		return () => {
-			window.removeEventListener("storage", handleZoomChange);
-			window.removeEventListener("zoomend", handleZoomChange);
-			clearInterval(interval);
-		};
-	}, []);
+    return () => {
+      window.removeEventListener("storage", handleZoomChange);
+      window.removeEventListener("zoomend", handleZoomChange);
+      clearInterval(interval);
+    };
+  }, []);
 
   const calculateIcon = () => {
     let markerIcon;
@@ -57,9 +64,9 @@ const Star = (props) => {
     return markerIcon;
   };
 
-	const markerIcon = calculateIcon();
+  const markerIcon = calculateIcon();
 
-	const calculateIconSize = () => {
+  const calculateIconSize = () => {
     let iconSize;
 
     if (hasError) {
@@ -70,7 +77,7 @@ const Star = (props) => {
       iconSize = calculateMidIconSize();
     } else if (starType === "MicroStar") {
       iconSize = calculateMicroIconSize();
-    }else {
+    } else {
       iconSize = calculateMinIconSize();
     }
 
@@ -91,10 +98,10 @@ const Star = (props) => {
     if (zoomLevel === 6) return [30, 30];
     if (zoomLevel === 7) return [40, 40];
     return [55, 55];
-	};
+  };
 
-	const calculateMicroIconSize = () => {
-		if (zoomLevel <= 5) return [0, 0];
+  const calculateMicroIconSize = () => {
+    if (zoomLevel <= 5) return [0, 0];
     if (zoomLevel === 6) return [15, 15];
     if (zoomLevel === 7) return [20, 20];
     if (zoomLevel === 8) return [22, 22];
@@ -107,7 +114,7 @@ const Star = (props) => {
     if (zoomLevel === 7) return [25, 25];
     if (zoomLevel === 8) return [30, 30];
     return [20, 20];
-	};
+  };
 
   const calculateMajorFontSize = () => {
     if (zoomLevel === 3) return 30;
@@ -181,7 +188,7 @@ const Star = (props) => {
   };
 
   const calculateMicroMarginRight = () => {
-    if (zoomLevel <= 7 ) return "8px";
+    if (zoomLevel <= 7) return "8px";
     return "10px";
   };
 
@@ -222,9 +229,9 @@ const Star = (props) => {
     if (zoomLevel === 7) return "1.5px";
     if (zoomLevel === 8) return "1.8px";
     return "1px";
-	};
+  };
 
-	const iconSize = calculateIconSize();
+  const iconSize = calculateIconSize();
   const iconAnchor = iconSize.map((dim) => dim / 2);
 
   const icon = new Icon({
@@ -251,11 +258,19 @@ const Star = (props) => {
             : "#C7303A",
           WebkitTextStroke: calculateMajorStroke(),
           textAlign: "left",
+          zIndex: hasError
+            ? 11
+            : isCanon && !isLegends
+            ? 9
+            : !isCanon && isLegends
+            ? 8
+            : isCanon && isLegends
+            ? 10
+            : 7,
           position: "relative",
           marginTop: "-5px",
           marginRight: calculateMajorMarginRight(),
           marginLeft: calculateMajorMargin(),
-          zIndex: 610,
         }
       : starType === "MidStar"
       ? {
@@ -272,6 +287,15 @@ const Star = (props) => {
             : "#C7303A",
           WebkitTextStroke: calculateMidStroke(),
           textAlign: "left",
+          zIndex: hasError
+            ? 11
+            : isCanon && !isLegends
+            ? 9
+            : !isCanon && isLegends
+            ? 8
+            : isCanon && isLegends
+            ? 10
+            : 7,
           position: "relative",
           marginTop: "-5px",
           marginRight: calculateMidMarginRight(),
@@ -292,6 +316,15 @@ const Star = (props) => {
             : "#C7303A",
           WebkitTextStroke: calculateMicroStroke(),
           textAlign: "left",
+          zIndex: hasError
+            ? 11
+            : isCanon && !isLegends
+            ? 9
+            : !isCanon && isLegends
+            ? 8
+            : isCanon && isLegends
+            ? 10
+            : 7,
           position: "relative",
           marginTop: "-5px",
           marginRight: calculateMicroMarginRight(),
@@ -310,13 +343,20 @@ const Star = (props) => {
             ? "#E3B687"
             : "#C7303A",
           WebkitTextStroke: `${calculateStroke()} black`,
-
           textAlign: alignRight ? "right" : "left",
           marginTop: "-4px",
           marginRight: calculateMarginRight(),
           marginLeft: calculateMarginLeft(),
           position: "relative",
-          zIndex: 1,
+          zIndex: hasError
+            ? 11
+            : isCanon && !isLegends
+            ? 9
+            : !isCanon && isLegends
+            ? 8
+            : isCanon && isLegends
+            ? 10
+            : 7,
         };
 
   const onTooltipClick = () => {
@@ -328,7 +368,7 @@ const Star = (props) => {
   return (
     <div className="">
       {zoomLevel >= 2 ? (
-        <Marker ref={markerRef} position={position} icon={icon} >
+        <Marker ref={markerRef} position={position} icon={icon}>
           {zoomLevel >= 3 && starType === "MajorStar" ? (
             <Tooltip
               interactive={true}
@@ -375,7 +415,7 @@ const Star = (props) => {
       ) : null}
     </div>
   );
-}
+};
 
 Star.propTypes = {
   position: PropTypes.array,
@@ -385,8 +425,8 @@ Star.propTypes = {
   isLegends: PropTypes.bool,
   hasError: PropTypes.bool,
   alignRight: PropTypes.bool,
-	starType: PropTypes.string.isRequired,
-	className: PropTypes.string,
+  starType: PropTypes.string.isRequired,
+  className: PropTypes.string,
 };
 
 const MemoizedStar = React.memo(Star);

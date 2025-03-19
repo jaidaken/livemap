@@ -354,6 +354,7 @@ function LanePlots() {
         <TradeLine plot="korriz" lineStyle="minStyle" />
 				<TradeLine plot="yutusk" lineStyle="minStyle" />
 				<TradeLine plot="stenos" lineStyle="minStyle" />
+				<TradeLine plot="tothis" lineStyle="minStyle" />
       </div>
 
 
