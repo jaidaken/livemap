@@ -334,6 +334,19 @@ function LanePlots() {
         <TradeLine plot="lucazec" lineStyle="minStyle" />
         <TradeLine plot="troos" lineStyle="minStyle" />
         <TradeLine plot="kashyyyk" lineStyle="minStyle" />
+        <TradeLine plot="listehol" lineStyle="minStyle" />
+        <TradeLine plot="shaltin" lineStyle="minStyle" />
+        <TradeLine plot="ninn" lineStyle="minStyle" />
+        <TradeLine plot="ekibo" lineStyle="minStyle" />
+        <TradeLine plot="mytus" lineStyle="minStyle" />
+        <TradeLine plot="kamar" lineStyle="minStyle" />
+        <TradeLine plot="orron" lineStyle="minStyle" />
+        <TradeLine plot="kir" lineStyle="minStyle" />
+        <TradeLine plot="media" lineStyle="minStyle" />
+        <TradeLine plot="deltooine" lineStyle="minStyle" />
+        <TradeLine plot="reltooine" lineStyle="minStyle" />
+        <TradeLine plot="lur" lineStyle="minStyle" />
+        <TradeLine plot="irudiru" lineStyle="minStyle" />
       </div>
 
       <div className="MicroLanes">
