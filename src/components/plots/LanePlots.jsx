@@ -351,6 +351,7 @@ function LanePlots() {
         <TradeLine plot="jaguada" lineStyle="minStyle" />
         <TradeLine plot="ashas" lineStyle="minStyle" />
         <TradeLine plot="ree" lineStyle="minStyle" />
+        <TradeLine plot="korriz" lineStyle="minStyle" />
 				<TradeLine plot="yutusk" lineStyle="minStyle" />
 				<TradeLine plot="stenos" lineStyle="minStyle" />
       </div>
