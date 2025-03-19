@@ -347,7 +347,14 @@ function LanePlots() {
         <TradeLine plot="reltooine" lineStyle="minStyle" />
         <TradeLine plot="lur" lineStyle="minStyle" />
         <TradeLine plot="irudiru" lineStyle="minStyle" />
+        <TradeLine plot="moraband" lineStyle="minStyle" />
+        <TradeLine plot="jaguada" lineStyle="minStyle" />
+        <TradeLine plot="ashas" lineStyle="minStyle" />
+        <TradeLine plot="ree" lineStyle="minStyle" />
+				<TradeLine plot="yutusk" lineStyle="minStyle" />
+				<TradeLine plot="stenos" lineStyle="minStyle" />
       </div>
+
 
       <div className="MicroLanes">
         <div className="micro-lanes">
