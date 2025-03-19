@@ -333,6 +333,7 @@ function LanePlots() {
         <TradeLine plot="jovan" lineStyle="minStyle" />
         <TradeLine plot="lucazec" lineStyle="minStyle" />
         <TradeLine plot="troos" lineStyle="minStyle" />
+        <TradeLine plot="kashyyyk" lineStyle="minStyle" />
       </div>
 
       <div className="MicroLanes">

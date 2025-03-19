@@ -248,6 +248,20 @@ function NebulaPlots() {
         rotation={"-50deg"}
         textStyle="nebStyle"
       />
+      <NebulaObject
+        plot="dinarii"
+        color="#A080A2"
+        line="transparent"
+        opacity={1}
+        lineOpacity={1}
+      />
+      <TradeNames
+        color="#A080A2"
+        coords={[-68.4140625, 181.7578125]}
+        text={`Dinarii Nebula`}
+        rotation={"-28deg"}
+        textStyle="nebStyle"
+      />
     </div>
   );
 }
