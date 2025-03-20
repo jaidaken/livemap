@@ -130,7 +130,8 @@ const TradeLine = (props) => {
           <Polyline
             className="marker-animate"
             positions={positions}
-            pathOptions={style}
+						pathOptions={style}
+						zIndex={4}
           />
         </div>
       ) : null}

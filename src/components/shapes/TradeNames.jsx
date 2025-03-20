@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 // Ensure TradeNames is declared before usage
 const TradeNames = (props) => {
 	const { text, coords, color, rotation, textStyle } = props;
-	
+
   const [zoomLevel, setZoomLevel] = useState(() => {
     const savedZoom = localStorage.getItem("zoomLevel");
     return savedZoom ? parseInt(savedZoom) : 5;
@@ -57,7 +57,8 @@ const TradeNames = (props) => {
     fontSize: calculateMajFontSize(),
     letterSpacing: ".15rem",
     transform: `translate(-53.5%, -5%) rotate(${rotation}) `,
-    opacity: 1,
+		opacity: 1,
+		zIndex: 4,
   };
 
   const minStyle = {
@@ -66,7 +67,8 @@ const TradeNames = (props) => {
     letterSpacing: ".1rem",
     lineHeight: "1",
     transform: `translate(-53.5%, -5%) rotate(${rotation}) `,
-    opacity: 1,
+		opacity: 1,
+		zIndex: 4,
   };
 
   const nebStyle = {
@@ -75,7 +77,8 @@ const TradeNames = (props) => {
     letterSpacing: ".1rem",
     lineHeight: "1",
     transform: `translate(-53.5%, -5%) rotate(${rotation}) `,
-    opacity: 1,
+		opacity: 1,
+		zIndex: 3,
   };
 
   const getStyle = (lineStyle) => {

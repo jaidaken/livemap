@@ -262,6 +262,34 @@ function NebulaPlots() {
         rotation={"-28deg"}
         textStyle="nebStyle"
       />
+      <NebulaObject
+        plot="thandon"
+        color="#A080A2"
+        line="transparent"
+        opacity={1}
+        lineOpacity={1}
+      />
+      <TradeNames
+        color="#A080A2"
+        coords={[-40.5546875, 214.59765625]}
+        text={`Thandon Nebula`}
+        rotation={"-90deg"}
+        textStyle="nebStyle"
+      />
+      <NebulaObject
+        plot="stygian"
+        color="#A080A2"
+        line="transparent"
+        opacity={1}
+        lineOpacity={1}
+      />
+      <TradeNames
+        color="#A080A2"
+        coords={[-57.109375, 205.40625]}
+        text={`Stygian Caldera`}
+        rotation={"-30deg"}
+        textStyle="nebStyle"
+      />
     </div>
   );
 }

@@ -272,7 +272,30 @@ function LanePlots() {
           rotation="0deg"
           textStyle="minStyle"
 				/>
-
+				<TradeLine plot="listehol" lineStyle="minStyle" />
+				<TradeNames
+          color="white"
+          coords={[-47.875, 204.53125]}
+          text="Listehol Run"
+          rotation="10deg"
+          textStyle="minStyle"
+				/>
+				<TradeLine plot="shaltin" lineStyle="minStyle" />
+				<TradeNames
+          color="white"
+          coords={[-50.546875, 209.453125]}
+          text="Shaltin Tunnels"
+          rotation="-65deg"
+          textStyle="minStyle"
+				/>
+				<TradeLine plot="overic" lineStyle="minStyle" />
+				<TradeNames
+          color="white"
+          coords={[-59.5546875, 220.296875]}
+          text="Overic Griplink"
+          rotation="40deg"
+          textStyle="minStyle"
+				/>
 
       </div>
 
@@ -298,7 +321,6 @@ function LanePlots() {
         <TradeLine plot="giju" lineStyle="minStyle" />
         <TradeLine plot="tanhapes" lineStyle="minStyle" />
         <TradeLine plot="hapesquell" lineStyle="minStyle" />
-
         <TradeLine plot="coth" lineStyle="minStyle" />
         <TradeLine plot="shili" lineStyle="minStyle" />
         <TradeLine plot="luuq" lineStyle="minStyle" />
@@ -334,8 +356,7 @@ function LanePlots() {
         <TradeLine plot="lucazec" lineStyle="minStyle" />
         <TradeLine plot="troos" lineStyle="minStyle" />
         <TradeLine plot="kashyyyk" lineStyle="minStyle" />
-        <TradeLine plot="listehol" lineStyle="minStyle" />
-        <TradeLine plot="shaltin" lineStyle="minStyle" />
+
         <TradeLine plot="ninn" lineStyle="minStyle" />
         <TradeLine plot="ekibo" lineStyle="minStyle" />
         <TradeLine plot="mytus" lineStyle="minStyle" />
@@ -355,6 +376,8 @@ function LanePlots() {
 				<TradeLine plot="yutusk" lineStyle="minStyle" />
 				<TradeLine plot="stenos" lineStyle="minStyle" />
 				<TradeLine plot="tothis" lineStyle="minStyle" />
+				<TradeLine plot="mossak" lineStyle="minStyle" />
+				<TradeLine plot="arcan" lineStyle="minStyle" />
       </div>
 
 

@@ -71,7 +71,8 @@ const NebulaObject = (props) => {
     opacity: lineOpacity || 1,
     dashArray: dash || calculateDashArray(),
     weight: calculateWeight(),
-    lineCap: "square",
+		lineCap: "square",
+		zIndex: 3,
   };
 
   return (
