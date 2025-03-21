@@ -155,6 +155,14 @@ function LanePlots() {
             rotation="-60deg"
             textStyle="minStyle"
           />
+          <TradeLine plot="triellus" lineStyle="majStyle" />
+          <TradeNames
+            color="white"
+            coords={[-120.46875, 234.21875]}
+            text="Triellus Trade Route"
+            rotation="65deg"
+            textStyle="majStyle"
+          />
 				</div>
 
 				<TradeLine plot="hoth" lineStyle="majStyle" />
@@ -378,6 +386,19 @@ function LanePlots() {
 				<TradeLine plot="tothis" lineStyle="minStyle" />
 				<TradeLine plot="mossak" lineStyle="minStyle" />
 				<TradeLine plot="arcan" lineStyle="minStyle" />
+				<TradeLine plot="desevro" lineStyle="minStyle" />
+				<TradeLine plot="gadon" lineStyle="minStyle" />
+				<TradeLine plot="estaria" lineStyle="minStyle" />
+				<TradeLine plot="rudrig" lineStyle="minStyle" />
+				<TradeLine plot="pakuuni" lineStyle="minStyle" />
+				<TradeLine plot="belderone" lineStyle="minStyle" />
+				<TradeLine plot="pasmin" lineStyle="minStyle" />
+				<TradeLine plot="sy" lineStyle="minStyle" />
+				<TradeLine plot="balshebr" lineStyle="minStyle" />
+				<TradeLine plot="astigone" lineStyle="minStyle" />
+				<TradeLine plot="eridicon" lineStyle="minStyle" />
+				<TradeLine plot="poseidenna" lineStyle="minStyle" />
+				<TradeLine plot="starcave" lineStyle="minStyle" />
       </div>
 
 
