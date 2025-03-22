@@ -377,7 +377,7 @@ function NebulaPlots() {
       <TradeNames
         color="#A080A2"
         coords={[-138.1875, 207.921875]}
-        text={`Oktos Nebula`}
+        text={`Ganath Cloud`}
         rotation={"0deg"}
         textStyle="nebStyle"
       />

@@ -21,7 +21,7 @@ const Star = (props) => {
     starType,
   } = props;
 
-  const markerRef = useRef(null);
+	const markerRef = useRef(null);
 
   const [zoomLevel, setZoomLevel] = useState(() => {
     const savedZoom = localStorage.getItem("zoomLevel");
@@ -85,7 +85,8 @@ const Star = (props) => {
   };
 
   const calculateMajorIconSize = () => {
-    if (zoomLevel <= 3) return [20, 20];
+    if (zoomLevel <= 2) return [10, 10];
+    if (zoomLevel === 3) return [16, 16];
     if (zoomLevel === 4) return [20, 20];
     if (zoomLevel === 5) return [30, 30];
     if (zoomLevel === 6) return [40, 40];
@@ -96,7 +97,8 @@ const Star = (props) => {
   };
 
   const calculateMidIconSize = () => {
-    if (zoomLevel <= 4) return [18, 18];
+    if (zoomLevel <= 3) return [10, 10];
+    if (zoomLevel === 4) return [18, 18];
     if (zoomLevel === 5) return [22, 22];
     if (zoomLevel === 6) return [30, 30];
     if (zoomLevel === 7) return [40, 40];
@@ -114,7 +116,10 @@ const Star = (props) => {
   };
 
   const calculateMinIconSize = () => {
-    if (zoomLevel <= 5) return [15, 15];
+    if (zoomLevel <= 2) return [6, 6];
+    if (zoomLevel === 3) return [10, 10];
+    if (zoomLevel === 4) return [10, 10];
+    if (zoomLevel === 5) return [15, 15];
     if (zoomLevel === 6) return [25, 25];
     if (zoomLevel === 7) return [30, 30];
     if (zoomLevel === 8) return [35, 35];
@@ -239,7 +244,7 @@ const Star = (props) => {
     if (zoomLevel === 7) return "1px";
     if (zoomLevel === 8) return "1.5px";
     return "1px";
-  };
+	};
 
   const iconSize = calculateIconSize();
   const iconAnchor = iconSize.map((dim) => dim / 2);
@@ -248,8 +253,7 @@ const Star = (props) => {
     iconUrl: markerIcon !== null ? markerIcon : markerIconError,
     iconSize: iconSize,
     iconAnchor: iconAnchor,
-    popupAnchor: [7, -10],
-    className: "icon-shadow",
+		popupAnchor: [7, -10],
   });
 
   useEffect(() => {
