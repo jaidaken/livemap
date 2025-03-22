@@ -49,7 +49,7 @@ const TradeLine = (props) => {
     if (zoomLevel <= 3) return 4;
     if (zoomLevel === 4) return 5;
     if (zoomLevel === 5) return 7;
-    if (zoomLevel === 6) return 8;
+    if (zoomLevel === 6) return 10;
     if (zoomLevel === 7) return 15;
     return 20;
   };
@@ -64,14 +64,14 @@ const TradeLine = (props) => {
     if (zoomLevel <= 3) return 0.6;
     if (zoomLevel === 4) return 3;
     if (zoomLevel === 5) return 4;
-    if (zoomLevel === 6) return 5;
-    if (zoomLevel === 7) return 7;
+    if (zoomLevel === 6) return 6;
+    if (zoomLevel === 7) return 10;
     return 8;
   };
 
   const midStyle = {
     weight: calculateMidWeight(),
-    opacity: 1,
+    opacity: 0.6,
     color: color || "white",
   };
 
@@ -86,7 +86,7 @@ const TradeLine = (props) => {
 
   const minStyle = {
     weight: calculateMinWeight(),
-    opacity: 1,
+    opacity: 0.4,
     color: color || "white",
   };
 

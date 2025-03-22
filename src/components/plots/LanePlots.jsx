@@ -121,24 +121,6 @@ function LanePlots() {
           />
         </div>
 
-        <div className="lane ootmian-pabol">
-          <TradeLine plot="ootmian" lineStyle="majStyle" />
-          <TradeNames
-            color="white"
-            coords={[-114, 199.65625]}
-            text="Pabol Sleheyron"
-            rotation="-10deg"
-            textStyle="majStyle"
-          />
-          <TradeNames
-            color="white"
-            coords={[-121.875, 178.34375]}
-            text="Ootmian Pabol"
-            rotation="-50deg"
-            textStyle="majStyle"
-          />
-        </div>
-
         <div className="lane perlemian-route">
           <TradeLine plot="perlemian" lineStyle="majStyle" />
           <TradeNames
@@ -161,6 +143,37 @@ function LanePlots() {
             coords={[-120.46875, 234.21875]}
             text="Triellus Trade Route"
             rotation="65deg"
+            textStyle="majStyle"
+          />
+          <TradeLine plot="dead" lineStyle="majStyle" />
+          <TradeNames
+            color="white"
+            coords={[-109.21875, 218.6875]}
+            text="The Dead Road"
+            rotation="70deg"
+            textStyle="majStyle"
+          />
+          <TradeNames
+            color="white"
+            coords={[-125.15625, 225.15625]}
+            text="The Dead Road"
+            rotation="70deg"
+            textStyle="majStyle"
+          />
+
+          <TradeLine plot="bootana" lineStyle="majStyle" />
+          <TradeNames
+            color="white"
+            coords={[-120.6875, 218.609375]}
+            text="Bootana Hutta"
+            rotation="0deg"
+            textStyle="majStyle"
+          />
+          <TradeNames
+            color="white"
+            coords={[-133.25, 212.5625]}
+            text="Pabol Hutta"
+            rotation="-34deg"
             textStyle="majStyle"
           />
         </div>
@@ -256,6 +269,14 @@ function LanePlots() {
           rotation="0deg"
           textStyle="minStyle"
         />
+        <TradeLine plot="ilosian" lineStyle="minStyle" />
+        <TradeNames
+          color="white"
+          coords={[-113.125, 208.125]}
+          text="Ilosian Spur"
+          rotation="90deg"
+          textStyle="minStyle"
+        />
       </div>
 
       <div className="midLanes">
@@ -267,7 +288,6 @@ function LanePlots() {
           rotation="90deg"
           textStyle="minStyle"
         />
-
         <TradeLine plot="shaltin" lineStyle="midStyle" />
         <TradeNames
           color="white"
@@ -284,7 +304,6 @@ function LanePlots() {
           rotation="40deg"
           textStyle="minStyle"
         />
-
         <TradeLine plot="calanon" lineStyle="midStyle" />
         <TradeNames
           color="white"
@@ -325,10 +344,69 @@ function LanePlots() {
           rotation="-12deg"
           textStyle="minStyle"
         />
-
+        <TradeLine plot="kashyyyk" lineStyle="midStyle" />
+        <TradeNames
+          color="white"
+          coords={[-119.6875, 209.28125]}
+          text="Pabol Kreeta"
+          rotation="-70deg"
+          textStyle="minStyle"
+        />
+        <TradeLine plot="sleheyron" lineStyle="midStyle" />
+        <TradeLine plot="ootmian" lineStyle="midStyle" />
+        <TradeNames
+          color="white"
+          coords={[-114, 199.65625]}
+          text="Pabol Sleheyron"
+          rotation="-10deg"
+          textStyle="majStyle"
+        />
+        <TradeNames
+          color="white"
+          coords={[-121.875, 178.34375]}
+          text="Ootmian Pabol"
+          rotation="-50deg"
+          textStyle="majStyle"
+        />
+        <TradeNames
+          color="white"
+          coords={[-125.125, 208.5]}
+          text="Ootmian Pabol"
+          rotation="63deg"
+          textStyle="majStyle"
+        />
         <TradeLine plot="estaria" lineStyle="midStyle" />
         <TradeLine plot="arcan" lineStyle="midStyle" />
         <TradeLine plot="gadon" lineStyle="midStyle" />
+        <TradeLine plot="kegan" lineStyle="midStyle" />
+        <TradeLine plot="cyborrea" lineStyle="midStyle" />
+        <TradeLine plot="quellorrun" lineStyle="midStyle" />
+        <TradeLine plot="zeltose" lineStyle="midStyle" />
+        <TradeLine plot="shag" lineStyle="midStyle" />
+				<TradeLine plot="hollastin" lineStyle="midStyle" />
+				<TradeLine plot="kaaga" lineStyle="midStyle" />
+
+				<TradeNames
+          color="white"
+          coords={[-144.4375, 217.6875]}
+          text="Hollastin Run"
+          rotation="30deg"
+          textStyle="minStyle"
+        />
+        <TradeNames
+          color="white"
+          coords={[-151.71875, 215.359375]}
+          text="Pando Spur"
+          rotation="75deg"
+          textStyle="minStyle"
+        />
+        <TradeNames
+          color="white"
+          coords={[-136.359375, 221.5]}
+          text="Shag Pabol"
+          rotation="-8deg"
+          textStyle="minStyle"
+        />
       </div>
 
       <div className="MinorLanes2">
@@ -346,10 +424,8 @@ function LanePlots() {
         <TradeLine plot="trelcomm" lineStyle="minStyle" />
         <TradeLine plot="byssabre" lineStyle="minStyle" />
         <TradeLine plot="exonan" lineStyle="minStyle" />
-        <TradeLine plot="zeltose" lineStyle="minStyle" />
         <TradeLine plot="vaathkree" lineStyle="minStyle" />
         <TradeLine plot="shwuyexchange" lineStyle="minStyle" />
-        <TradeLine plot="quellorrun" lineStyle="minStyle" />
         <TradeLine plot="giju" lineStyle="minStyle" />
         <TradeLine plot="tanhapes" lineStyle="minStyle" />
         <TradeLine plot="hapesquell" lineStyle="minStyle" />
@@ -387,8 +463,6 @@ function LanePlots() {
         <TradeLine plot="jovan" lineStyle="minStyle" />
         <TradeLine plot="lucazec" lineStyle="minStyle" />
         <TradeLine plot="troos" lineStyle="minStyle" />
-        <TradeLine plot="kashyyyk" lineStyle="minStyle" />
-
         <TradeLine plot="ninn" lineStyle="minStyle" />
         <TradeLine plot="ekibo" lineStyle="minStyle" />
         <TradeLine plot="mytus" lineStyle="minStyle" />
@@ -403,7 +477,6 @@ function LanePlots() {
         <TradeLine plot="moraband" lineStyle="minStyle" />
         <TradeLine plot="jaguada" lineStyle="minStyle" />
         <TradeLine plot="ashas" lineStyle="minStyle" />
-
         <TradeLine plot="ree" lineStyle="minStyle" />
         <TradeLine plot="korriz" lineStyle="minStyle" />
         <TradeLine plot="yutusk" lineStyle="minStyle" />
@@ -420,6 +493,13 @@ function LanePlots() {
         <TradeLine plot="eridicon" lineStyle="minStyle" />
         <TradeLine plot="poseidenna" lineStyle="minStyle" />
         <TradeLine plot="starcave" lineStyle="minStyle" />
+        <TradeLine plot="sulorine" lineStyle="minStyle" />
+        <TradeLine plot="klatooine" lineStyle="minStyle" />
+        <TradeLine plot="hutta" lineStyle="minStyle" />
+        <TradeLine plot="randa" lineStyle="minStyle" />
+        <TradeLine plot="moralan" lineStyle="minStyle" />
+        <TradeLine plot="kessel" lineStyle="minStyle" />
+        <TradeLine plot="deysum" lineStyle="minStyle" />
       </div>
 
       <div className="MicroLanes">
