@@ -99,7 +99,7 @@ function App() {
             <GridLayer
               bottomLeftCoord={bottomLeftCoord}
               lineColor="#ffffff"
-              lineOpacity={0.001}
+              lineOpacity={0.01}
               labelFont="Arial, sans-serif"
               labelColor="#ffffff"
               labelOpacity={0.1}
