@@ -500,7 +500,26 @@ function LanePlots() {
         <TradeLine plot="moralan" lineStyle="minStyle" />
         <TradeLine plot="kessel" lineStyle="minStyle" />
         <TradeLine plot="deysum" lineStyle="minStyle" />
-      </div>
+			</div>
+
+			<div className="dashLines">
+				<TradeLine plot="kesselrun" lineStyle="dashStyle" />
+				<TradeNames
+          color="#c75d16"
+          coords={[-112.86328125, 227.6796875]}
+          text="Kessel Run"
+          rotation="0deg"
+          textStyle="minStyle"
+        />
+				<TradeLine plot="carbonite" lineStyle="dashStyle" />
+				<TradeNames
+          color="#c75d16"
+          coords={[-117.36328125, 132.87109375]}
+          text="Carbonite Run"
+          rotation="15deg"
+          textStyle="minStyle"
+        />
+			</div>
 
       <div className="MicroLanes">
         <div className="micro-lanes">

@@ -305,6 +305,13 @@ function NebulaPlots() {
         textStyle="nebStyle"
       />
       <NebulaObject
+        plot="ota"
+        color="#A080A2"
+        line="transparent"
+        opacity={0.4}
+        lineopacity={0.4}
+      />
+      <NebulaObject
         plot="starcave"
         color="#A080A2"
         line="transparent"
@@ -316,6 +323,62 @@ function NebulaPlots() {
         coords={[-97.17321283134211, 230.92245747429826]}
         text={`Starcave Nebula`}
         rotation={"10deg"}
+        textStyle="nebStyle"
+      />
+      <NebulaObject
+        plot="maw"
+        color="#A080A2"
+        line="transparent"
+        opacity={0.4}
+        lineopacity={0.4}
+      />
+      <TradeNames
+        color="#A080A2"
+        coords={[-107.9375, 226.671875]}
+        text={`Maw Nebulae`}
+        rotation={"10deg"}
+        textStyle="nebStyle"
+      />
+      <NebulaObject
+        plot="inamorta"
+        color="#A080A2"
+        line="transparent"
+        opacity={0.4}
+        lineopacity={0.4}
+      />
+      <TradeNames
+        color="#A080A2"
+        coords={[-122.53125, 239.421875]}
+        text={`The Inamorta`}
+        rotation={"-35deg"}
+        textStyle="nebStyle"
+      />
+      <NebulaObject
+        plot="typhonic"
+        color="#A080A2"
+        line="transparent"
+        opacity={0.4}
+        lineopacity={0.4}
+      />
+      <TradeNames
+        color="#A080A2"
+        coords={[-125.53125, 193.3203125]}
+        text={`Typhonic Nebula`}
+        rotation={"-10deg"}
+        textStyle="nebStyle"
+      />
+      <NebulaObject
+        plot="oktos"
+        color="#A080A2"
+        line="transparent"
+        opacity={0.4}
+        lineopacity={0.4}
+      />
+      <TradeNames
+        color="#A080A2"
+        coords={[-138.1875, 207.921875]}
+        text={`Oktos Nebula`}
+        rotation={"0deg"}
         textStyle="nebStyle"
       />
     </div>

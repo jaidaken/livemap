@@ -102,7 +102,7 @@ const TradeLine = (props) => {
     weight: calculateMinWeight(),
     opacity: 1,
     dashArray: calculateDash(),
-    color: color || "white",
+    color: color || "#c75d16",
   };
 
   const calculateMicroWeight = () => {
