@@ -48,7 +48,7 @@ const TradeLine = (props) => {
   const calculateMajWeight = () => {
     if (zoomLevel <= 3) return 4;
     if (zoomLevel === 4) return 5;
-    if (zoomLevel === 5) return 6;
+    if (zoomLevel === 5) return 7;
     if (zoomLevel === 6) return 8;
     if (zoomLevel === 7) return 15;
     return 20;
