@@ -46,7 +46,7 @@ const TradeLine = (props) => {
   }, [plot]);
 
   const calculateMajWeight = () => {
-    if (zoomLevel <= 3) return 2;
+    if (zoomLevel <= 3) return 4;
     if (zoomLevel === 4) return 5;
     if (zoomLevel === 5) return 6;
     if (zoomLevel === 6) return 8;
@@ -58,10 +58,25 @@ const TradeLine = (props) => {
     weight: calculateMajWeight(),
     opacity: 1,
     color: color || "white",
+	};
+
+	const calculateMidWeight = () => {
+    if (zoomLevel <= 3) return 0.6;
+    if (zoomLevel === 4) return 3;
+    if (zoomLevel === 5) return 4;
+    if (zoomLevel === 6) return 5;
+    if (zoomLevel === 7) return 7;
+    return 8;
+  };
+
+  const midStyle = {
+    weight: calculateMidWeight(),
+    opacity: 1,
+    color: color || "white",
   };
 
   const calculateMinWeight = () => {
-    if (zoomLevel <= 3) return 0.5;
+    if (zoomLevel <= 3) return 0.2;
     if (zoomLevel === 4) return 1;
     if (zoomLevel === 5) return 2;
     if (zoomLevel === 6) return 3;
@@ -109,6 +124,8 @@ const TradeLine = (props) => {
     switch (lineStyle) {
       case "majStyle":
         return majStyle;
+      case "midStyle":
+        return midStyle;
       case "minStyle":
         return minStyle;
       case "dashStyle":
@@ -130,8 +147,8 @@ const TradeLine = (props) => {
           <Polyline
             className="marker-animate"
             positions={positions}
-						pathOptions={style}
-						zIndex={4}
+            pathOptions={style}
+            zIndex={4}
           />
         </div>
       ) : null}

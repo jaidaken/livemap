@@ -7,7 +7,7 @@ import { CRS } from "leaflet";
 import GridLayer from "./components/shapes/GridLayer.jsx";
 import Key from "./components/ui/Key.jsx";
 import Patreon from "./components/ui/Patreon.jsx";
-// import AddSystemForm from "./components/AddSystem.jsx";
+import AddSystemForm from "./components/AddSystem.jsx";
 import { SystemProvider } from "./components/functions/SystemProvider.jsx";
 
 const Markers = React.lazy(() => import("./components/Markers.jsx"));
@@ -87,22 +87,22 @@ function App() {
           }}
         >
           <SystemProvider>
-            {/* <TileLayer attribution="" url="/src/assets/images/{z}/{x}/{y}.jpg" opacity={0.6} /> */}
+            <TileLayer attribution="" url="/src/assets/images/{z}/{x}/{y}.jpg" opacity={0.6} />
             <TileLayer attribution="" url="" />
             <Patreon />
             <Key />
             <Suspense fallback={<div>Loading Markers...</div>}>
               <Markers />
             </Suspense>
-            {/* <AddSystemForm /> */}
+            <AddSystemForm />
             <MapEvents />
             <GridLayer
               bottomLeftCoord={bottomLeftCoord}
               lineColor="#ffffff"
-              lineOpacity={0.04}
+              lineOpacity={0.001}
               labelFont="Arial, sans-serif"
               labelColor="#ffffff"
-              labelOpacity={0.2}
+              labelOpacity={0.1}
               squareSize={squareSize}
             />
           </SystemProvider>
