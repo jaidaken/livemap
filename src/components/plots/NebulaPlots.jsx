@@ -10,7 +10,7 @@ function NebulaPlots() {
         color="#A080A2"
         line="transparent"
         opacity={0.4}
-        lineOpacity={1}
+        lineopacity={0.4}
       />
       <TradeNames
         color="#A080A2"
@@ -24,7 +24,7 @@ function NebulaPlots() {
         color="#A080A2"
         line="transparent"
         opacity={0.4}
-        lineOpacity={1}
+        lineopacity={0.4}
       />
       <TradeNames
         color="#A080A2"
@@ -38,7 +38,7 @@ function NebulaPlots() {
         color="#A080A2"
         line="transparent"
         opacity={0.4}
-        lineOpacity={1}
+        lineopacity={0.4}
       />
       <TradeNames
         color="#A080A2"
@@ -52,8 +52,8 @@ function NebulaPlots() {
         plot="rata"
         color="#A080A2"
         line="transparent"
-        opacity={1}
-        lineOpacity={1}
+        opacity={0.4}
+        lineopacity={0.4}
       />
       <TradeNames
         color="#A080A2"
@@ -67,8 +67,8 @@ function NebulaPlots() {
         plot="quelugan"
         color="#A080A2"
         line="transparent"
-        opacity={1}
-        lineOpacity={1}
+        opacity={0.4}
+        lineopacity={0.4}
       />
       <TradeNames
         color="#A080A2"
@@ -82,8 +82,8 @@ function NebulaPlots() {
         plot="zavian"
         color="#A080A2"
         line="transparent"
-        opacity={1}
-        lineOpacity={1}
+        opacity={0.4}
+        lineopacity={0.4}
       />
       <TradeNames
         color="#A080A2"
@@ -97,8 +97,8 @@ function NebulaPlots() {
         plot="llon"
         color="#A080A2"
         line="transparent"
-        opacity={1}
-        lineOpacity={1}
+        opacity={0.4}
+        lineopacity={0.4}
       />
       <TradeNames
         color="#A080A2"
@@ -112,8 +112,8 @@ function NebulaPlots() {
         plot="vulpinus"
         color="#A080A2"
         line="transparent"
-        opacity={1}
-        lineOpacity={1}
+        opacity={0.4}
+        lineopacity={0.4}
       />
       <TradeNames
         color="#A080A2"
@@ -127,8 +127,8 @@ function NebulaPlots() {
         plot="koornacht"
         color="#A080A2"
         line="transparent"
-        opacity={1}
-        lineOpacity={1}
+        opacity={0.4}
+        lineopacity={0.4}
       />
       <TradeNames
         color="#A080A2"
@@ -142,8 +142,8 @@ function NebulaPlots() {
         plot="ringall"
         color="#A080A2"
         line="transparent"
-        opacity={1}
-        lineOpacity={1}
+        opacity={0.4}
+        lineopacity={0.4}
       />
       <TradeNames
         color="#A080A2"
@@ -157,8 +157,8 @@ function NebulaPlots() {
         plot="osssorck"
         color="#A080A2"
         line="transparent"
-        opacity={1}
-        lineOpacity={1}
+        opacity={0.4}
+        lineopacity={0.4}
       />
       <TradeNames
         color="#A080A2"
@@ -172,8 +172,8 @@ function NebulaPlots() {
         plot="byrnum"
         color="#A080A2"
         line="transparent"
-        opacity={1}
-        lineOpacity={1}
+        opacity={0.4}
+        lineopacity={0.4}
       />
       <TradeNames
         color="#A080A2"
@@ -187,8 +187,8 @@ function NebulaPlots() {
         plot="ryyk"
         color="#A080A2"
         line="transparent"
-        opacity={1}
-        lineOpacity={1}
+        opacity={0.4}
+        lineopacity={0.4}
       />
       <TradeNames
         color="#A080A2"
@@ -201,8 +201,8 @@ function NebulaPlots() {
         plot="almegest"
         color="#A080A2"
         line="transparent"
-        opacity={1}
-        lineOpacity={1}
+        opacity={0.4}
+        lineopacity={0.4}
       />
       <TradeNames
         color="#A080A2"
@@ -216,8 +216,8 @@ function NebulaPlots() {
         plot="dragon"
         color="#A080A2"
         line="transparent"
-        opacity={1}
-        lineOpacity={1}
+        opacity={0.4}
+        lineopacity={0.4}
       />
       <TradeNames
         color="#A080A2"
@@ -231,15 +231,15 @@ function NebulaPlots() {
         plot="transitory1"
         color="#A080A2"
         line="transparent"
-        opacity={1}
-        lineOpacity={1}
+        opacity={0.4}
+        lineopacity={0.4}
       />
       <NebulaObject
         plot="transitory2"
         color="#A080A2"
         line="transparent"
-        opacity={1}
-        lineOpacity={1}
+        opacity={0.4}
+        lineopacity={0.4}
       />
       <TradeNames
         color="#A080A2"
@@ -252,8 +252,8 @@ function NebulaPlots() {
         plot="dinarii"
         color="#A080A2"
         line="transparent"
-        opacity={1}
-        lineOpacity={1}
+        opacity={0.4}
+        lineopacity={0.4}
       />
       <TradeNames
         color="#A080A2"
@@ -266,8 +266,8 @@ function NebulaPlots() {
         plot="thandon"
         color="#A080A2"
         line="transparent"
-        opacity={1}
-        lineOpacity={1}
+        opacity={0.4}
+        lineopacity={0.4}
       />
       <TradeNames
         color="#A080A2"
@@ -280,8 +280,8 @@ function NebulaPlots() {
         plot="stygian"
         color="#A080A2"
         line="transparent"
-        opacity={1}
-        lineOpacity={1}
+        opacity={0.4}
+        lineopacity={0.4}
       />
       <TradeNames
         color="#A080A2"
@@ -294,8 +294,8 @@ function NebulaPlots() {
         plot="archeon"
         color="#A080A2"
         line="transparent"
-        opacity={1}
-        lineOpacity={1}
+        opacity={0.4}
+        lineopacity={0.4}
       />
       <TradeNames
         color="#A080A2"
@@ -308,8 +308,8 @@ function NebulaPlots() {
         plot="starcave"
         color="#A080A2"
         line="transparent"
-        opacity={1}
-        lineOpacity={1}
+        opacity={0.4}
+        lineopacity={0.4}
       />
       <TradeNames
         color="#A080A2"
