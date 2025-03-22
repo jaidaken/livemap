@@ -145,9 +145,11 @@ const Star = (props) => {
   };
 
   const calculateMajorStroke = () => {
-    if (zoomLevel <= 4) return "0.6px black";
-    if (zoomLevel === 5) return "0.7px black";
-    if (zoomLevel === 6) return "0.8px black";
+    if (zoomLevel <= 4) return "0.8px";
+    if (zoomLevel === 5) return "0.8px";
+    if (zoomLevel === 6) return "1px";
+    if (zoomLevel === 7) return "1.2px";
+    if (zoomLevel === 8) return "1.5px";
     return "1px black";
   };
 
@@ -176,9 +178,9 @@ const Star = (props) => {
   };
 
   const calculateMidStroke = () => {
-    if (zoomLevel <= 4) return "0.6px black";
-    if (zoomLevel === 5) return "0.7px black";
-    if (zoomLevel === 6) return "0.8px black";
+    if (zoomLevel <= 4) return "0.6px";
+    if (zoomLevel === 5) return "0.7px";
+    if (zoomLevel === 6) return "0.8px";
     return "1px black";
   };
 
@@ -199,7 +201,7 @@ const Star = (props) => {
   };
 
   const calculateMicroStroke = () => {
-    if (zoomLevel <= 7) return "0.8px black";
+    if (zoomLevel <= 7) return "0.8px";
     return "0.8px black";
   };
 
@@ -232,10 +234,10 @@ const Star = (props) => {
   };
 
   const calculateStroke = () => {
-    if (zoomLevel === 5) return "0.8px";
-    if (zoomLevel === 6) return "1px";
-    if (zoomLevel === 7) return "1.5px";
-    if (zoomLevel === 8) return "1.8px";
+    if (zoomLevel === 5) return "0.5px";
+    if (zoomLevel === 6) return "0.8px";
+    if (zoomLevel === 7) return "1px";
+    if (zoomLevel === 8) return "1.5px";
     return "1px";
   };
 
@@ -280,7 +282,7 @@ const Star = (props) => {
             : isCanon && isLegends
             ? "#E3B687"
             : "#C7303A",
-          WebkitTextStroke: calculateMajorStroke(),
+          WebkitTextStroke: `${calculateMajorStroke()} black`,
           textAlign: "left",
           zIndex: hasError
             ? 11
@@ -309,7 +311,7 @@ const Star = (props) => {
             : isCanon && isLegends
             ? "#E3B687"
             : "#C7303A",
-          WebkitTextStroke: calculateMidStroke(),
+          WebkitTextStroke: `${calculateMidStroke()} black`,
           textAlign: "left",
           zIndex: hasError
             ? 11
@@ -338,7 +340,7 @@ const Star = (props) => {
             : isCanon && isLegends
             ? "#E3B687"
             : "#C7303A",
-          WebkitTextStroke: calculateMicroStroke(),
+          WebkitTextStroke: `${calculateMicroStroke()} black`,
           textAlign: "left",
           zIndex: hasError
             ? 11
