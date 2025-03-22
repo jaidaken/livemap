@@ -23,28 +23,28 @@ const Star = (props) => {
 
   const markerRef = useRef(null);
 
-  const [zoomLevel, setZoomLevel] = useState(() => {
-    const savedZoom = localStorage.getItem("zoomLevel");
-    return savedZoom ? parseInt(savedZoom) : 5;
-  });
+	const [zoomLevel, setZoomLevel] = useState(() => {
+		const savedZoom = localStorage.getItem("zoomLevel");
+		return savedZoom ? parseInt(savedZoom) : 5;
+	});
 
-  useEffect(() => {
-    const handleZoomChange = () => {
-      const updatedZoom = parseInt(localStorage.getItem("zoomLevel") || "5");
-      setZoomLevel(updatedZoom);
-    };
+	useEffect(() => {
+		const handleZoomChange = () => {
+			const updatedZoom = parseInt(localStorage.getItem("zoomLevel") || "5");
+			setZoomLevel(updatedZoom);
+		};
 
-    window.addEventListener("storage", handleZoomChange);
-    window.addEventListener("zoomend", handleZoomChange);
+		window.addEventListener("storage", handleZoomChange);
+		window.addEventListener("zoomend", handleZoomChange);
 
-    const interval = setInterval(handleZoomChange, 500);
+		const interval = setInterval(handleZoomChange, 500);
 
-    return () => {
-      window.removeEventListener("storage", handleZoomChange);
-      window.removeEventListener("zoomend", handleZoomChange);
-      clearInterval(interval);
-    };
-  }, []);
+		return () => {
+			window.removeEventListener("storage", handleZoomChange);
+			window.removeEventListener("zoomend", handleZoomChange);
+			clearInterval(interval);
+		};
+	}, []);
 
   const calculateIcon = () => {
     let markerIcon;
@@ -72,7 +72,7 @@ const Star = (props) => {
     if (hasError) {
       iconSize = [10, 10];
     } else if (starType === "MajorStar") {
-      iconSize = calculateMajorIconSize();
+			iconSize = calculateMajorIconSize();
     } else if (starType === "MidStar") {
       iconSize = calculateMidIconSize();
     } else if (starType === "MicroStar") {
@@ -85,20 +85,25 @@ const Star = (props) => {
   };
 
   const calculateMajorIconSize = () => {
-    if (zoomLevel <= 3) return [15, 15];
+    if (zoomLevel <= 3) return [20, 20];
     if (zoomLevel === 4) return [20, 20];
     if (zoomLevel === 5) return [30, 30];
-    if (zoomLevel === 6) return [40, 40];
+		if (zoomLevel === 6) return [40, 40];
+		if (zoomLevel === 7) return [40, 40];
+		if (zoomLevel === 8) return [40, 40];
+		if (zoomLevel === 9) return [40, 40];
     return [55, 55];
-  };
+	};
 
-  const calculateMidIconSize = () => {
-    if (zoomLevel <= 4) return [18, 18];
-    if (zoomLevel === 5) return [22, 22];
-    if (zoomLevel === 6) return [30, 30];
-    if (zoomLevel === 7) return [40, 40];
-    return [55, 55];
-  };
+	const calculateMidIconSize = () => {
+		if (zoomLevel <= 4) return [18, 18];
+		if (zoomLevel === 5) return [22, 22];
+		if (zoomLevel === 6) return [30, 30];
+		if (zoomLevel === 7) return [40, 40];
+		if (zoomLevel === 8) return [55, 55];
+		if (zoomLevel === 9) return [70, 70];
+		return [55, 55];
+	};
 
   const calculateMicroIconSize = () => {
     if (zoomLevel <= 5) return [0, 0];
@@ -109,10 +114,11 @@ const Star = (props) => {
   };
 
   const calculateMinIconSize = () => {
-    if (zoomLevel <= 5) return [10, 10];
-    if (zoomLevel === 6) return [20, 20];
-    if (zoomLevel === 7) return [25, 25];
-    if (zoomLevel === 8) return [30, 30];
+    if (zoomLevel <= 5) return [15, 15];
+    if (zoomLevel === 6) return [25, 25];
+    if (zoomLevel === 7) return [30, 30];
+		if (zoomLevel === 8) return [35, 35];
+		if (zoomLevel === 9) return [40, 40];
     return [20, 20];
   };
 
@@ -210,7 +216,8 @@ const Star = (props) => {
     if (zoomLevel === 5) return "2px";
     if (zoomLevel === 6) return "6px";
     if (zoomLevel === 7) return "10px";
-    if (zoomLevel === 8) return "14px";
+		if (zoomLevel === 8) return "14px";
+		if (zoomLevel === 9) return "18px";
     return "8px";
   };
 
@@ -219,7 +226,8 @@ const Star = (props) => {
     if (zoomLevel === 5) return "2px";
     if (zoomLevel === 6) return "8px";
     if (zoomLevel === 7) return "10px";
-    if (zoomLevel === 8) return "12px";
+		if (zoomLevel === 8) return "12px";
+		if (zoomLevel === 9) return "18px";
     return "8px";
   };
 
@@ -238,9 +246,25 @@ const Star = (props) => {
     iconUrl: markerIcon !== null ? markerIcon : markerIconError,
     iconSize: iconSize,
     iconAnchor: iconAnchor,
-    popupAnchor: [7, -10],
-  });
+		popupAnchor: [7, -10],
+		className: 'icon-shadow'
+	});
 
+	useEffect(() => {
+		const applyStrokeStyles = () => {
+			const svgElements = document.querySelectorAll('.icon-shadow');
+			svgElements.forEach(svg => {
+				svg.style.stroke = 'black';
+				svg.style.strokeWidth = '12px';
+			});
+		};
+
+		// Apply styles after a short delay
+		const timeoutId = setTimeout(applyStrokeStyles, 100);
+
+		// Cleanup timeout on unmount
+		return () => clearTimeout(timeoutId);
+	}, []);
   // Apply different styles based on starType
   const starStyle =
     starType === "MajorStar"
@@ -377,7 +401,7 @@ const Star = (props) => {
               opacity={1}
               permanent
             >
-              <div className="marker-popup marker-animate" style={starStyle}>
+              <div className="marker-popup marker-animate name-shadow" style={starStyle}>
                 {name}
               </div>
             </Tooltip>
@@ -389,7 +413,7 @@ const Star = (props) => {
               opacity={1}
               permanent
             >
-              <div className="marker-popup marker-animate" style={starStyle}>
+              <div className="marker-popup marker-animate name-shadow" style={starStyle}>
                 {name}
               </div>
             </Tooltip>
@@ -401,7 +425,7 @@ const Star = (props) => {
               opacity={1}
               permanent
             >
-              <div className="marker-popup marker-animate" style={starStyle}>
+              <div className="marker-popup marker-animate name-shadow" style={starStyle}>
                 {name}
               </div>
             </Tooltip>
