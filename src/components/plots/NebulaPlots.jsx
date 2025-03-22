@@ -290,13 +290,13 @@ function NebulaPlots() {
         rotation={"-30deg"}
         textStyle="nebStyle"
       />
-      {/* <NebulaObject
+      <NebulaObject
         plot="archeon"
         color="#A080A2"
         line="transparent"
         opacity={1}
         lineOpacity={1}
-      /> */}
+      />
       <TradeNames
         color="#A080A2"
         coords={[-81.25, 229.546875]}
@@ -304,13 +304,13 @@ function NebulaPlots() {
         rotation={"-56deg"}
         textStyle="nebStyle"
       />
-      {/* <NebulaObject
+      <NebulaObject
         plot="starcave"
         color="#A080A2"
         line="transparent"
         opacity={1}
         lineOpacity={1}
-      /> */}
+      />
       <TradeNames
         color="#A080A2"
         coords={[-97.17321283134211, 230.92245747429826]}

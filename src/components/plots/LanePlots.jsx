@@ -163,9 +163,9 @@ function LanePlots() {
             rotation="65deg"
             textStyle="majStyle"
           />
-				</div>
+        </div>
 
-				<TradeLine plot="hoth" lineStyle="majStyle" />
+        <TradeLine plot="hoth" lineStyle="majStyle" />
       </div>
 
       <div className="MinorLanes">
@@ -256,7 +256,7 @@ function LanePlots() {
           text="Chasdemonus Route"
           rotation="-10deg"
           textStyle="minStyle"
-				/>
+        />
         <TradeLine plot="entralla" lineStyle="minStyle" />
         <TradeNames
           color="white"
@@ -264,14 +264,14 @@ function LanePlots() {
           text="Entralla Route"
           rotation="94deg"
           textStyle="minStyle"
-				/>
+        />
         <TradeNames
           color="white"
           coords={[-71.71875, 125.59375]}
           text="Entralla Route"
           rotation="60deg"
           textStyle="minStyle"
-				/>
+        />
         <TradeLine plot="braxant" lineStyle="minStyle" />
         <TradeNames
           color="white"
@@ -279,32 +279,46 @@ function LanePlots() {
           text="Braxant Run"
           rotation="0deg"
           textStyle="minStyle"
-				/>
-				<TradeLine plot="listehol" lineStyle="minStyle" />
-				<TradeNames
+        />
+        <TradeLine plot="listehol" lineStyle="minStyle" />
+        <TradeNames
           color="white"
           coords={[-47.875, 204.53125]}
           text="Listehol Run"
           rotation="10deg"
           textStyle="minStyle"
-				/>
-				<TradeLine plot="shaltin" lineStyle="minStyle" />
-				<TradeNames
+        />
+        <TradeLine plot="shaltin" lineStyle="minStyle" />
+        <TradeNames
           color="white"
           coords={[-50.546875, 209.453125]}
           text="Shaltin Tunnels"
           rotation="-65deg"
           textStyle="minStyle"
-				/>
-				<TradeLine plot="overic" lineStyle="minStyle" />
-				<TradeNames
+        />
+        <TradeLine plot="overic" lineStyle="minStyle" />
+        <TradeNames
           color="white"
           coords={[-59.5546875, 220.296875]}
           text="Overic Griplink"
           rotation="40deg"
           textStyle="minStyle"
-				/>
-
+        />
+        <TradeLine plot="desevran" lineStyle="minStyle" />
+        <TradeNames
+          color="white"
+          coords={[-68.5703125, 218.7734375]}
+          text="Desevran Trace"
+          rotation="90deg"
+          textStyle="minStyle"
+        />
+        <TradeNames
+          color="white"
+          coords={[-93.5546875, 233.0234375]}
+          text="Falko	Run"
+          rotation="0deg"
+          textStyle="minStyle"
+        />
       </div>
 
       <div className="MinorLanes2">
@@ -381,26 +395,25 @@ function LanePlots() {
         <TradeLine plot="ashas" lineStyle="minStyle" />
         <TradeLine plot="ree" lineStyle="minStyle" />
         <TradeLine plot="korriz" lineStyle="minStyle" />
-				<TradeLine plot="yutusk" lineStyle="minStyle" />
-				<TradeLine plot="stenos" lineStyle="minStyle" />
-				<TradeLine plot="tothis" lineStyle="minStyle" />
-				<TradeLine plot="mossak" lineStyle="minStyle" />
-				<TradeLine plot="arcan" lineStyle="minStyle" />
-				<TradeLine plot="desevro" lineStyle="minStyle" />
-				<TradeLine plot="gadon" lineStyle="minStyle" />
-				<TradeLine plot="estaria" lineStyle="minStyle" />
-				<TradeLine plot="rudrig" lineStyle="minStyle" />
-				<TradeLine plot="pakuuni" lineStyle="minStyle" />
-				<TradeLine plot="belderone" lineStyle="minStyle" />
-				<TradeLine plot="pasmin" lineStyle="minStyle" />
-				<TradeLine plot="sy" lineStyle="minStyle" />
-				<TradeLine plot="balshebr" lineStyle="minStyle" />
-				<TradeLine plot="astigone" lineStyle="minStyle" />
-				<TradeLine plot="eridicon" lineStyle="minStyle" />
-				<TradeLine plot="poseidenna" lineStyle="minStyle" />
-				<TradeLine plot="starcave" lineStyle="minStyle" />
-      </div>
+        <TradeLine plot="yutusk" lineStyle="minStyle" />
+        <TradeLine plot="stenos" lineStyle="minStyle" />
+        <TradeLine plot="tothis" lineStyle="minStyle" />
+        <TradeLine plot="mossak" lineStyle="minStyle" />
+        <TradeLine plot="arcan" lineStyle="minStyle" />
 
+        <TradeLine plot="gadon" lineStyle="minStyle" />
+        <TradeLine plot="estaria" lineStyle="minStyle" />
+        <TradeLine plot="rudrig" lineStyle="minStyle" />
+        <TradeLine plot="pakuuni" lineStyle="minStyle" />
+        <TradeLine plot="belderone" lineStyle="minStyle" />
+        <TradeLine plot="pasmin" lineStyle="minStyle" />
+        <TradeLine plot="sy" lineStyle="minStyle" />
+        <TradeLine plot="balshebr" lineStyle="minStyle" />
+        <TradeLine plot="astigone" lineStyle="minStyle" />
+        <TradeLine plot="eridicon" lineStyle="minStyle" />
+        <TradeLine plot="poseidenna" lineStyle="minStyle" />
+        <TradeLine plot="starcave" lineStyle="minStyle" />
+      </div>
 
       <div className="MicroLanes">
         <div className="micro-lanes">
