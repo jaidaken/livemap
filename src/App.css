@@ -341,6 +341,10 @@
 
 }
 
+.marker-animate {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -350,9 +354,20 @@
   }
 }
 
-.marker-animate {
-  animation: fadeIn 0.5s ease-in-out;
+.marker-fade-out {
+  animation: fadeOut 0.5s ease-in-out;
 }
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+
 
 .name-shadow {
 

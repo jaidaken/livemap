@@ -38,18 +38,17 @@ export default function Markers() {
     }
   }, []);
 
-	useEffect(() => {
-		const debouncedFetchAllData = debounce(() => {
-			fetchAllData();
-		}, 100);
+  useEffect(() => {
+    const debouncedFetchAllData = debounce(() => {
+      fetchAllData();
+    }, 100);
 
-		debouncedFetchAllData();
+    debouncedFetchAllData();
 
-		return () => {
-			// Cleanup the debounced function if the component unmounts
-			debouncedFetchAllData.cancel && debouncedFetchAllData.cancel();
-		};
-	}, [fetchAllData]);
+    return () => {
+      debouncedFetchAllData.cancel && debouncedFetchAllData.cancel();
+    };
+  }, [fetchAllData]);
 
   useEffect(() => {
     if (newSystemAdded) {
@@ -59,28 +58,29 @@ export default function Markers() {
     }
   }, [newSystemAdded, fetchAllData, handleAddSystem]);
 
-  const updateVisibleMarkers = useCallback(() => {
-    if (!map || allSystems.length === 0) return;
+	const updateVisibleMarkers = useCallback(() => {
+		if (!map || allSystems.length === 0) return;
 
-    const bounds = map.getBounds();
+		const bounds = map.getBounds();
+		const simpleBounds = {
+			north: bounds.getNorth(),
+			south: bounds.getSouth(),
+			east: bounds.getEast(),
+			west: bounds.getWest(),
+		};
 
-    const filtered = allSystems.filter(
-      ({ latitude, longitude, isCanon, isLegends }) => {
-        const inView = bounds.contains([latitude, longitude]);
-        const matchesFilter =
-          (isCanon && activeFilters.includes("canon")) ||
-          (isLegends && activeFilters.includes("legends"))
+		const worker = new Worker(new URL("./workers/markerWorker.js", import.meta.url));
+		worker.postMessage({ allSystems, bounds: simpleBounds, activeFilters });
 
-        return inView && matchesFilter;
-      }
-    );
-
-    setVisibleMarkers(filtered.map((marker) => ({ ...marker, animate: true })));
-  }, [map, allSystems, activeFilters]);
+		worker.onmessage = function (e) {
+			setVisibleMarkers(e.data.map((marker) => ({ ... marker})));
+			worker.terminate();
+		};
+	}, [map, allSystems, activeFilters]);
 
   const handleMapChange = useCallback(() => {
     setZoomLevel(map.getZoom());
-		updateVisibleMarkers();
+    updateVisibleMarkers();
     localStorage.setItem(
       "mapCenter",
       JSON.stringify([map.getCenter().lat, map.getCenter().lng])
@@ -133,7 +133,6 @@ export default function Markers() {
             isLegends,
             hasError,
             alignRight,
-            animate,
           }) => {
             return (
               <React.Suspense key={id} fallback={<div>Loading...</div>}>
@@ -146,7 +145,6 @@ export default function Markers() {
                   isLegends={isLegends}
                   hasError={hasError}
                   alignRight={alignRight}
-                  className={animate ? "marker-animate" : ""}
                 />
               </React.Suspense>
             );

@@ -6,8 +6,6 @@ import markerIconCanon from "../../assets/marker-canon.svg";
 import markerIconLegends from "../../assets/marker-legends.svg";
 import markerIconShared from "../../assets/marker-shared.svg";
 import markerIconError from "../../assets/marker-error.svg";
-// import markerIconMajor from "../../assets/marker-icon-major.svg";
-// import markerIconMid from "../../assets/marker-icon-mid.svg";
 
 const Star = (props) => {
   const {
@@ -21,12 +19,19 @@ const Star = (props) => {
     starType,
   } = props;
 
-	const markerRef = useRef(null);
+  const markerRef = useRef(null);
+  const workerRef = useRef(null);
 
   const [zoomLevel, setZoomLevel] = useState(() => {
     const savedZoom = localStorage.getItem("zoomLevel");
     return savedZoom ? parseInt(savedZoom) : 5;
   });
+
+  const [iconSize, setIconSize] = useState([10, 10]);
+  const [fontSize, setFontSize] = useState(12);
+  const [strokeSize, setStrokeSize] = useState("1px black");
+  const [marginLeft, setMarginLeft] = useState("0px");
+  const [marginRight, setMarginRight] = useState("0px");
 
   useEffect(() => {
     const handleZoomChange = () => {
@@ -45,6 +50,31 @@ const Star = (props) => {
       clearInterval(interval);
     };
   }, []);
+
+  useEffect(() => {
+    if (!workerRef.current) {
+      workerRef.current = new Worker(
+        new URL("../workers/star/styleWorker.js", import.meta.url)
+      );
+    }
+
+    workerRef.current.postMessage({ zoomLevel, starType, hasError });
+
+    workerRef.current.onmessage = function (e) {
+      setIconSize(e.data.iconSize);
+      setFontSize(e.data.fontSize);
+      setStrokeSize(e.data.strokeSize);
+      setMarginLeft(e.data.marginLeft);
+      setMarginRight(e.data.marginRight);
+    };
+
+    return () => {
+      if (workerRef.current) {
+        workerRef.current.terminate();
+        workerRef.current = null;
+      }
+    };
+  }, [zoomLevel, starType, hasError]);
 
   const calculateIcon = () => {
     let markerIcon;
@@ -66,194 +96,13 @@ const Star = (props) => {
 
   const markerIcon = calculateIcon();
 
-  const calculateIconSize = () => {
-    let iconSize;
-
-    if (hasError) {
-      iconSize = [10, 10];
-    } else if (starType === "MajorStar") {
-      iconSize = calculateMajorIconSize();
-    } else if (starType === "MidStar") {
-      iconSize = calculateMidIconSize();
-    } else if (starType === "MicroStar") {
-      iconSize = calculateMicroIconSize();
-    } else {
-      iconSize = calculateMinIconSize();
-    }
-
-    return iconSize;
-  };
-
-  const calculateMajorIconSize = () => {
-    if (zoomLevel <= 2) return [10, 10];
-    if (zoomLevel === 3) return [16, 16];
-    if (zoomLevel === 4) return [20, 20];
-    if (zoomLevel === 5) return [30, 30];
-    if (zoomLevel === 6) return [40, 40];
-    if (zoomLevel === 7) return [40, 40];
-    if (zoomLevel === 8) return [40, 40];
-    if (zoomLevel === 9) return [40, 40];
-    return [55, 55];
-  };
-
-  const calculateMidIconSize = () => {
-    if (zoomLevel <= 3) return [10, 10];
-    if (zoomLevel === 4) return [18, 18];
-    if (zoomLevel === 5) return [22, 22];
-    if (zoomLevel === 6) return [30, 30];
-    if (zoomLevel === 7) return [40, 40];
-    if (zoomLevel === 8) return [55, 55];
-    if (zoomLevel === 9) return [70, 70];
-    return [55, 55];
-  };
-
-  const calculateMicroIconSize = () => {
-    if (zoomLevel <= 5) return [0, 0];
-    if (zoomLevel === 6) return [15, 15];
-    if (zoomLevel === 7) return [20, 20];
-    if (zoomLevel === 8) return [22, 22];
-    return [20, 20];
-  };
-
-  const calculateMinIconSize = () => {
-    if (zoomLevel <= 2) return [6, 6];
-    if (zoomLevel === 3) return [10, 10];
-    if (zoomLevel === 4) return [10, 10];
-    if (zoomLevel === 5) return [15, 15];
-    if (zoomLevel === 6) return [25, 25];
-    if (zoomLevel === 7) return [30, 30];
-    if (zoomLevel === 8) return [35, 35];
-    if (zoomLevel === 9) return [40, 40];
-    return [20, 20];
-  };
-
-  const calculateMajorFontSize = () => {
-    if (zoomLevel === 3) return 30;
-    if (zoomLevel === 4) return 30;
-    if (zoomLevel === 5) return 35;
-    if (zoomLevel === 6) return 40;
-    return 55;
-  };
-
-  const calculateMajorMargin = () => {
-    if (zoomLevel <= 4) return "6px";
-    if (zoomLevel === 5) return "12px";
-    if (zoomLevel === 6) return "16px";
-    return "24px";
-  };
-
-  const calculateMajorMarginRight = () => {
-    if (zoomLevel <= 4) return "6px";
-    if (zoomLevel === 5) return "12px";
-    if (zoomLevel === 6) return "18px";
-    return "24px";
-  };
-
-  const calculateMajorStroke = () => {
-    if (zoomLevel <= 4) return "0.8px";
-    if (zoomLevel === 5) return "0.8px";
-    if (zoomLevel === 6) return "1px";
-    if (zoomLevel === 7) return "1.2px";
-    if (zoomLevel === 8) return "1.5px";
-    return "1px black";
-  };
-
-  const calculateMidFontSize = () => {
-    if (zoomLevel === 4) return 18;
-    if (zoomLevel === 5) return 22;
-    if (zoomLevel === 6) return 30;
-    if (zoomLevel === 7) return 40;
-    return 55;
-  };
-
-  const calculateMidMargin = () => {
-    if (zoomLevel <= 4) return "6px";
-    if (zoomLevel === 5) return "10px";
-    if (zoomLevel === 6) return "12px";
-    if (zoomLevel === 7) return "18px";
-    return "26px";
-  };
-
-  const calculateMidMarginRight = () => {
-    if (zoomLevel <= 4) return "6px";
-    if (zoomLevel === 5) return "10px";
-    if (zoomLevel === 6) return "12px";
-    if (zoomLevel === 7) return "18px";
-    return "26px";
-  };
-
-  const calculateMidStroke = () => {
-    if (zoomLevel <= 4) return "0.6px";
-    if (zoomLevel === 5) return "0.7px";
-    if (zoomLevel === 6) return "0.8px";
-    return "1px black";
-  };
-
-  const calculateMicroFontSize = () => {
-    if (zoomLevel <= 6) return 0;
-    if (zoomLevel === 7) return 22;
-    return 30;
-  };
-
-  const calculateMicroMargin = () => {
-    if (zoomLevel <= 7) return "8px";
-    return "10px";
-  };
-
-  const calculateMicroMarginRight = () => {
-    if (zoomLevel <= 7) return "8px";
-    return "10px";
-  };
-
-  const calculateMicroStroke = () => {
-    if (zoomLevel <= 7) return "0.8px";
-    return "0.8px black";
-  };
-
-  const calculateFontSize = () => {
-    if (zoomLevel === 5) return 21;
-    if (zoomLevel === 6) return 35;
-    if (zoomLevel === 7) return 40;
-    if (zoomLevel >= 8) return 45;
-    return 30;
-  };
-
-  const calculateMarginLeft = () => {
-    if (zoomLevel <= 4) return "0px";
-    if (zoomLevel === 5) return "4px";
-    if (zoomLevel === 6) return "10px";
-    if (zoomLevel === 7) return "12px";
-    if (zoomLevel === 8) return "14px";
-    if (zoomLevel === 9) return "18px";
-    return "8px";
-  };
-
-  const calculateMarginRight = () => {
-    if (zoomLevel <= 4) return "0px";
-    if (zoomLevel === 5) return "4px";
-    if (zoomLevel === 6) return "10px";
-    if (zoomLevel === 7) return "12px";
-    if (zoomLevel === 8) return "14px";
-    if (zoomLevel === 9) return "18px";
-    return "8px";
-  };
-
-  const calculateStroke = () => {
-    if (zoomLevel === 5) return "0.5px";
-    if (zoomLevel === 6) return "0.8px";
-    if (zoomLevel === 7) return "1px";
-    if (zoomLevel === 8) return "1.5px";
-    return "1px";
-	};
-
-  const iconSize = calculateIconSize();
   const iconAnchor = iconSize.map((dim) => dim / 2);
 
   const icon = new Icon({
     iconUrl: markerIcon !== null ? markerIcon : markerIconError,
     iconSize: iconSize,
     iconAnchor: iconAnchor,
-		popupAnchor: [7, -10],
+    popupAnchor: [7, -10],
   });
 
   useEffect(() => {
@@ -265,129 +114,39 @@ const Star = (props) => {
       });
     };
 
-    // Apply styles after a short delay
-    const timeoutId = setTimeout(applyStrokeStyles, 100);
+    const timeoutId = setTimeout(applyStrokeStyles, 0);
 
-    // Cleanup timeout on unmount
     return () => clearTimeout(timeoutId);
   }, []);
-  // Apply different styles based on starType
-  const starStyle =
-    starType === "MajorStar"
-      ? {
-          fontSize: calculateMajorFontSize(),
-          fontWeight: "bold",
-          color: hasError
-            ? "#C7303A"
-            : isCanon && !isLegends
-            ? "#F6A6CA"
-            : !isCanon && isLegends
-            ? "#529DD4"
-            : isCanon && isLegends
-            ? "#E3B687"
-            : "#C7303A",
-          WebkitTextStroke: `${calculateMajorStroke()} black`,
-          textAlign: "left",
-          zIndex: hasError
-            ? 11
-            : isCanon && !isLegends
-            ? 9
-            : !isCanon && isLegends
-            ? 8
-            : isCanon && isLegends
-            ? 10
-            : 7,
-          position: "relative",
-          marginTop: "-5px",
-          marginRight: calculateMajorMarginRight(),
-          marginLeft: calculateMajorMargin(),
-        }
-      : starType === "MidStar"
-      ? {
-          fontSize: calculateMidFontSize(),
-          fontWeight: "bold",
-          color: hasError
-            ? "#C7303A"
-            : isCanon && !isLegends
-            ? "#F6A6CA"
-            : !isCanon && isLegends
-            ? "#529DD4"
-            : isCanon && isLegends
-            ? "#E3B687"
-            : "#C7303A",
-          WebkitTextStroke: `${calculateMidStroke()} black`,
-          textAlign: "left",
-          zIndex: hasError
-            ? 11
-            : isCanon && !isLegends
-            ? 9
-            : !isCanon && isLegends
-            ? 8
-            : isCanon && isLegends
-            ? 10
-            : 7,
-          position: "relative",
-          marginTop: "-5px",
-          marginRight: calculateMidMarginRight(),
-          marginLeft: calculateMidMargin(),
-        }
-      : starType === "MicroStar"
-      ? {
-          fontSize: calculateMicroFontSize(),
-          fontWeight: "bold",
-          color: hasError
-            ? "#C7303A"
-            : isCanon && !isLegends
-            ? "#F6A6CA"
-            : !isCanon && isLegends
-            ? "#529DD4"
-            : isCanon && isLegends
-            ? "#E3B687"
-            : "#C7303A",
-          WebkitTextStroke: `${calculateMicroStroke()} black`,
-          textAlign: "left",
-          zIndex: hasError
-            ? 11
-            : isCanon && !isLegends
-            ? 9
-            : !isCanon && isLegends
-            ? 8
-            : isCanon && isLegends
-            ? 10
-            : 7,
-          position: "relative",
-          marginTop: "-5px",
-          marginRight: calculateMicroMarginRight(),
-          marginLeft: calculateMicroMargin(),
-        }
-      : {
-          fontSize: calculateFontSize(),
-          fontWeight: "bold",
-          color: hasError
-            ? "#C7303A"
-            : isCanon && !isLegends
-            ? "#F6A6CA"
-            : !isCanon && isLegends
-            ? "#529DD4"
-            : isCanon && isLegends
-            ? "#E3B687"
-            : "#C7303A",
-          WebkitTextStroke: `${calculateStroke()} black`,
-          textAlign: alignRight ? "right" : "left",
-          marginTop: zoomLevel >= 7 ? "-4px" : "0px",
-          marginRight: calculateMarginRight(),
-          marginLeft: calculateMarginLeft(),
-          position: "relative",
-          zIndex: hasError
-            ? 11
-            : isCanon && !isLegends
-            ? 9
-            : !isCanon && isLegends
-            ? 8
-            : isCanon && isLegends
-            ? 10
-            : 7,
-        };
+
+  const starStyle = {
+    fontSize: `${fontSize}px`,
+    fontWeight: "bold",
+    color: hasError
+      ? "#C7303A"
+      : isCanon && !isLegends
+      ? "#F6A6CA"
+      : !isCanon && isLegends
+      ? "#529DD4"
+      : isCanon && isLegends
+      ? "#E3B687"
+      : "#C7303A",
+    WebkitTextStroke: strokeSize,
+    textAlign: alignRight ? "right" : "left",
+    marginTop: "0px",
+    marginRight: marginRight,
+    marginLeft: marginLeft,
+    position: "relative",
+    zIndex: hasError
+      ? 11
+      : isCanon && !isLegends
+      ? 9
+      : !isCanon && isLegends
+      ? 8
+      : isCanon && isLegends
+      ? 10
+      : 7,
+  };
 
   const onTooltipClick = () => {
     if (markerRef.current) {
