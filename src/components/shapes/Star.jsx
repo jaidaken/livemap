@@ -311,7 +311,8 @@ const Star = (props) => {
 	);
 
 	const calculateGrowthLeft = () => {
-		if (zoomLevel <= 4) return "0px";
+		if (zoomLevel <= 3) return "4px";
+		if (zoomLevel === 4) return "4px";
 		if (zoomLevel === 5) return "4px";
 		if (zoomLevel === 6) return "10px";
 		if (zoomLevel === 7) return "12px";
