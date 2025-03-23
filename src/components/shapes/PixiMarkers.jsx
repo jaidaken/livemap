@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 import PixiOverlay from "react-leaflet-pixi-overlay";
 
 // Import your SVGs as raw strings:
-import sharedSvg from "../../assets/marker-shared.min.svg?raw";
-import canonSvg from "../../assets/marker-canon.min.svg?raw";
-import legendsSvg from "../../assets/marker-legends.min.svg?raw";
-import errorSvg from "../../assets/marker-error.svg?raw";
+import sharedSvg from "../../assets/marker-shared2.svg?raw";
+import canonSvg from "../../assets/marker-canon2.svg?raw";
+import legendsSvg from "../../assets/marker-legends2.svg?raw";
+import errorSvg from "../../assets/marker-error2.svg?raw";
 
 // Helper: update SVG width and height attributes
 const updateSvgSize = (svg, width, height) => {
@@ -55,7 +55,6 @@ export default function PixiMarkers({ allSystems, activeFilters, map, zoomLevel 
 						chosenSvg = errorSvg;
 					}
 
-
 					const [w, h] = calculateIconSize(zoomLevel);
 
           const sizedSvg = updateSvgSize(chosenSvg, w, h);
@@ -73,11 +72,6 @@ export default function PixiMarkers({ allSystems, activeFilters, map, zoomLevel 
 								: "legends-svg-icon"
 						}-zoom-${zoomLevel}`,
             iconSize: [w, h],
-            popup: `<a href="${system.wiki}" target="_blank" rel="noreferrer">${system.name} wiki page</a>`,
-            onClick: () => {
-              console.log(`Marker ${system.id} clicked`);
-              map.flyTo([system.latitude, system.longitude], 10);
-            },
           };
         });
       setVisibleMarkers(newMarkers);
