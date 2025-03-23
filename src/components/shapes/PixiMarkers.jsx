@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Marker, useMap } from "react-leaflet";
 import { createPortal } from "react-dom";
 import L from "leaflet";
@@ -17,7 +17,6 @@ function LabelOverlay({ markers }) {
   const [container, setContainer] = useState(null);
 
   useEffect(() => {
-    // Create a container in the overlay pane once the map is available.
     const pane = map.getPanes().overlayPane;
     const div = document.createElement("div");
     div.className = "label-overlay-container";
@@ -30,27 +29,26 @@ function LabelOverlay({ markers }) {
 
   if (!container) return null;
 
-	return createPortal(
-		<div>
-			{markers.map((marker) => {
-				const point = map.latLngToLayerPoint(marker.position);
-				const style = {
-					position: "absolute",
-					left: point.x,
-					top: point.y,
-					transform: "translate(-50%, 0)",
-					zIndex: 3000,
-				};
-				// Use marker.id safely as a key
-				return (
-					<div key={`label-${marker.id}`} className="custom-label" style={style}>
-						{marker.name}
-					</div>
-				);
-			})}
-		</div>,
-		container
-	);
+  return createPortal(
+    <div style={{ position: "relative"}}>
+      {markers.map((marker) => {
+        const point = map.latLngToLayerPoint(marker.position);
+        const style = {
+          position: "absolute",
+          left: point.x,
+          top: point.y,
+          transform: "translate(-50%, 0)",
+          zIndex: 2001,
+        };
+        return (
+          <div key={`label-${marker.id}`} className="custom-label" style={style}>
+            {marker.name}
+          </div>
+        );
+      })}
+    </div>,
+    container
+  );
 }
 
 LabelOverlay.propTypes = {
@@ -100,58 +98,77 @@ export default function PixiMarkers({ allSystems, activeFilters, map, zoomLevel 
 		label: PropTypes.string.isRequired,
 	};
 
+	const updateVisibleMarkers = useCallback(() => {
+    if (allSystems.length === 0) return;
+    const bounds = map.getBounds();
+
+    const newMarkers = allSystems
+      .filter((system) => {
+        if (activeFilters.includes("shared") && system.isCanon && system.isLegends)
+          return true;
+        if (activeFilters.includes("canon") && system.isCanon && !system.isLegends)
+          return true;
+        if (activeFilters.includes("legends") && !system.isCanon && system.isLegends)
+          return true;
+        return false;
+      })
+      .filter((system) => {
+        // Only include markers whose coordinates are within the current map bounds.
+        return bounds.contains(L.latLng(system.latitude, system.longitude));
+      })
+      .map((system) => {
+        let chosenSvg;
+        if (system.isCanon && system.isLegends) {
+          chosenSvg = sharedSvg;
+        } else if (system.isCanon) {
+          chosenSvg = canonSvg;
+        } else if (system.isLegends) {
+          chosenSvg = legendsSvg;
+        } else {
+          chosenSvg = errorSvg;
+        }
+
+        const [w, h] = calculateIconSize(zoomLevel);
+        const sizedSvg = updateSvgSize(chosenSvg, w, h);
+
+        return {
+          id: system.id,
+          name: system.name,
+          position: [system.latitude, system.longitude],
+          customIcon: sizedSvg,
+          markerSpriteAnchor: [0.5, 0.5],
+          iconId: `${
+            chosenSvg === sharedSvg
+              ? "shared-svg-icon"
+              : chosenSvg === canonSvg
+              ? "canon-svg-icon"
+              : "legends-svg-icon"
+          }-zoom-${zoomLevel}`,
+          iconSize: [w, h],
+        };
+      });
+    setVisibleMarkers(newMarkers);
+	}, [allSystems, activeFilters, map, zoomLevel]);
+
+	useEffect(() => {
+    updateVisibleMarkers();
+  }, [allSystems, activeFilters, zoomLevel, updateVisibleMarkers]);
+
+  // Update visible markers on every map moveend (panning/zooming)
   useEffect(() => {
-    if (allSystems.length > 0) {
-      const newMarkers = allSystems
-        .filter((system) => {
-          if (activeFilters.includes("shared") && system.isCanon && system.isLegends)
-            return true;
-          if (activeFilters.includes("canon") && system.isCanon && !system.isLegends)
-            return true;
-          if (activeFilters.includes("legends") && !system.isCanon && system.isLegends)
-            return true;
-          return false;
-        })
-				.map((system) => {
-
-					let chosenSvg;
-					if (system.isCanon && system.isLegends) {
-						chosenSvg = sharedSvg;
-					} else if (system.isCanon) {
-						chosenSvg = canonSvg;
-					} else if (system.isLegends) {
-						chosenSvg = legendsSvg;
-					} else {
-						chosenSvg = errorSvg;
-					}
-
-					const [w, h] = calculateIconSize(zoomLevel);
-
-          const sizedSvg = updateSvgSize(chosenSvg, w, h);
-
-          return {
-						id: system.id,
-						name: system.name,
-            position: [system.latitude, system.longitude],
-            customIcon: sizedSvg,
-            markerSpriteAnchor: [0.5, 0.5],
-						iconId: `${
-							chosenSvg === sharedSvg
-								? "shared-svg-icon"
-								: chosenSvg === canonSvg
-								? "canon-svg-icon"
-								: "legends-svg-icon"
-						}-zoom-${zoomLevel}`,
-            iconSize: [w, h],
-          };
-        });
-      setVisibleMarkers(newMarkers);
-    }
-  }, [allSystems, activeFilters, map, zoomLevel]);
+    map.on("moveend", updateVisibleMarkers);
+    return () => {
+      map.off("moveend", updateVisibleMarkers);
+    };
+  }, [map, updateVisibleMarkers]);
 
   return (
     <>
-			<PixiOverlay markers={visibleMarkers} />
+      <PixiOverlay markers={visibleMarkers} />
+      <LabelOverlay markers={visibleMarkers} />
+    </>
+  );
+}
 
       {/* {visibleMarkers.map((marker) => (
         <LabelMarker
@@ -161,11 +178,6 @@ export default function PixiMarkers({ allSystems, activeFilters, map, zoomLevel 
         />
 			))} */}
 
-			<LabelOverlay markers={visibleMarkers} />
-
-    </>
-  );
-}
 
 PixiMarkers.propTypes = {
   allSystems: PropTypes.array.isRequired,
