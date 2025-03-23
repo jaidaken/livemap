@@ -392,11 +392,6 @@ height: 0;
   filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 1));
 }
 
-.leaflet-marker-icon {
-  filter:
-    drop-shadow(0px 0px 6px rgba(0, 0, 0, 1));
-}
-
 .hovered {
   transform: scale(1.2);
   transition: transform 0.3s ease-in-out;

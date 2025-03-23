@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Marker } from "react-leaflet";
+import { Marker, useMap } from "react-leaflet";
+import { createPortal } from "react-dom";
 import L from "leaflet";
 import PropTypes from "prop-types";
 import PixiOverlay from "react-leaflet-pixi-overlay";
@@ -9,6 +10,59 @@ import sharedSvg from "../../assets/marker-shared2.svg?raw";
 import canonSvg from "../../assets/marker-canon2.svg?raw";
 import legendsSvg from "../../assets/marker-legends2.svg?raw";
 import errorSvg from "../../assets/marker-error2.svg?raw";
+
+
+function LabelOverlay({ markers }) {
+  const map = useMap();
+  const [container, setContainer] = useState(null);
+
+  useEffect(() => {
+    // Create a container in the overlay pane once the map is available.
+    const pane = map.getPanes().overlayPane;
+    const div = document.createElement("div");
+    div.className = "label-overlay-container";
+    pane.appendChild(div);
+    setContainer(div);
+    return () => {
+      pane.removeChild(div);
+    };
+  }, [map]);
+
+  if (!container) return null;
+
+	return createPortal(
+		<div>
+			{markers.map((marker) => {
+				const point = map.latLngToLayerPoint(marker.position);
+				const style = {
+					position: "absolute",
+					left: point.x,
+					top: point.y,
+					transform: "translate(-50%, 0)",
+					zIndex: 3000,
+				};
+				// Use marker.id safely as a key
+				return (
+					<div key={`label-${marker.id}`} className="custom-label" style={style}>
+						{marker.name}
+					</div>
+				);
+			})}
+		</div>,
+		container
+	);
+}
+
+LabelOverlay.propTypes = {
+  markers: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.any,
+      name: PropTypes.string,
+      position: PropTypes.arrayOf(PropTypes.number),
+    })
+  ).isRequired,
+};
+
 
 // Helper: update SVG width and height attributes
 const updateSvgSize = (svg, width, height) => {
@@ -97,14 +151,18 @@ export default function PixiMarkers({ allSystems, activeFilters, map, zoomLevel 
 
   return (
     <>
-      <PixiOverlay markers={visibleMarkers} />
-      {visibleMarkers.map((marker) => (
+			<PixiOverlay markers={visibleMarkers} />
+
+      {/* {visibleMarkers.map((marker) => (
         <LabelMarker
           key={`label-${marker.id}`}
           position={marker.position}
           label={marker.name}
         />
-      ))}
+			))} */}
+
+			<LabelOverlay markers={visibleMarkers} />
+
     </>
   );
 }
