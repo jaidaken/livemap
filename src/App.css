@@ -401,3 +401,10 @@ height: 0;
   transform: scale(1.2);
   transition: transform 0.3s ease-in-out;
 }
+
+.leaflet-pixi-overlay {
+	z-index: 2000;
+}
+.leaflet-pixi-overlay canvas {
+	z-index: 2001;
+}

@@ -74,7 +74,7 @@ function App() {
     <div className="App">
       <div className="map-container">
         <MapContainer
-          // preferCanvas={true}
+          preferCanvas={true}
           crs={CRS.Simple}
           center={initialCenter}
           zoom={initialZoom}
@@ -95,7 +95,7 @@ function App() {
               <Markers />
             </Suspense>
             {/* <AddSystemForm /> */}
-            <MapEvents />
+						<MapEvents />
             <GridLayer
               bottomLeftCoord={bottomLeftCoord}
               lineColor="#ffffff"
