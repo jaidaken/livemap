@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { Marker } from "react-leaflet";
+import L from "leaflet";
 import PropTypes from "prop-types";
 import PixiOverlay from "react-leaflet-pixi-overlay";
 
@@ -28,7 +30,21 @@ export default function PixiMarkers({ allSystems, activeFilters, map, zoomLevel 
     if (zoomLevel === 8) return [70, 70];
     if (zoomLevel === 9) return [200, 200];
     return [70, 70];
-  };
+	};
+
+	function LabelMarker({ position, label }) {
+		const icon = L.divIcon({
+			className: "custom-label",
+			html: `<div>${label}</div>`,
+			iconAnchor: [0, 0],
+		});
+		return <Marker position={position} icon={icon} interactive={false} />;
+	}
+
+	LabelMarker.propTypes = {
+		position: PropTypes.arrayOf(PropTypes.number).isRequired,
+		label: PropTypes.string.isRequired,
+	};
 
   useEffect(() => {
     if (allSystems.length > 0) {
@@ -60,7 +76,8 @@ export default function PixiMarkers({ allSystems, activeFilters, map, zoomLevel 
           const sizedSvg = updateSvgSize(chosenSvg, w, h);
 
           return {
-            id: system.id,
+						id: system.id,
+						name: system.name,
             position: [system.latitude, system.longitude],
             customIcon: sizedSvg,
             markerSpriteAnchor: [0.5, 0.5],
@@ -78,8 +95,18 @@ export default function PixiMarkers({ allSystems, activeFilters, map, zoomLevel 
     }
   }, [allSystems, activeFilters, map, zoomLevel]);
 
-  // Use zoomLevel as key to force remounting if needed.
-  return <PixiOverlay markers={visibleMarkers} />;
+  return (
+    <>
+      <PixiOverlay markers={visibleMarkers} />
+      {visibleMarkers.map((marker) => (
+        <LabelMarker
+          key={`label-${marker.id}`}
+          position={marker.position}
+          label={marker.name}
+        />
+      ))}
+    </>
+  );
 }
 
 PixiMarkers.propTypes = {
