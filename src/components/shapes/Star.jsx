@@ -19,8 +19,7 @@ const debounce = (func, wait) => {
   }
   debounced.cancel = () => clearTimeout(timeout);
   return debounced;
-}
-
+};
 
 const Star = (props) => {
   const {
@@ -47,23 +46,23 @@ const Star = (props) => {
   const [marginLeft, setMarginLeft] = useState("0px");
   const [marginRight, setMarginRight] = useState("0px");
 
-	useEffect(() => {
-		const handleZoomChange = debounce(() => {
-			const updatedZoom = parseInt(localStorage.getItem("zoomLevel") || "5");
-			setZoomLevel(updatedZoom);
-		}, 300);
+  useEffect(() => {
+    const handleZoomChange = debounce(() => {
+      const updatedZoom = parseInt(localStorage.getItem("zoomLevel") || "5");
+      setZoomLevel(updatedZoom);
+    }, 300);
 
-		window.addEventListener("storage", handleZoomChange);
-		window.addEventListener("zoomend", handleZoomChange);
+    window.addEventListener("storage", handleZoomChange);
+    window.addEventListener("zoomend", handleZoomChange);
 
-		const interval = setInterval(handleZoomChange, 500);
+    const interval = setInterval(handleZoomChange, 500);
 
-		return () => {
-			window.removeEventListener("storage", handleZoomChange);
-			window.removeEventListener("zoomend", handleZoomChange);
-			clearInterval(interval);
-		};
-	}, []);
+    return () => {
+      window.removeEventListener("storage", handleZoomChange);
+      window.removeEventListener("zoomend", handleZoomChange);
+      clearInterval(interval);
+    };
+  }, []);
 
   useEffect(() => {
     const calculateIconSize = () => {
@@ -264,6 +263,8 @@ const Star = (props) => {
       return "8px";
     };
 
+
+
     setIconSize(calculateIconSize());
     setFontSize(calculateFontSize());
     setStrokeSize(calculateStrokeSize());
@@ -277,22 +278,69 @@ const Star = (props) => {
     return icon;
   };
 
-	const markerIcon = useMemo(() => {
-		if (hasError) return loadIcon(markerIconError);
-		if (isCanon && !isLegends) return loadIcon(markerIconCanon);
-		if (!isCanon && isLegends) return loadIcon(markerIconLegends);
-		if (isCanon && isLegends) return loadIcon(markerIconShared);
-		return loadIcon(markerIconError);
-	}, [hasError, isCanon, isLegends]);
+  const markerIcon = useMemo(() => {
+    if (hasError) return loadIcon(markerIconError);
+    if (isCanon && !isLegends) return loadIcon(markerIconCanon);
+    if (!isCanon && isLegends) return loadIcon(markerIconLegends);
+    if (isCanon && isLegends) return loadIcon(markerIconShared);
+    return loadIcon(markerIconError);
+  }, [hasError, isCanon, isLegends]);
 
-	const iconAnchor = useMemo(() => iconSize.map((dim) => dim / 2), [iconSize]);
+  const [isHovered, setIsHovered] = useState(false);
 
-	const icon = useMemo(() => new Icon({
-		iconUrl: markerIcon !== null ? markerIcon.src : markerIconError,
-		iconSize: iconSize,
-		iconAnchor: iconAnchor,
-		popupAnchor: [7, -10],
-	}), [markerIcon, iconSize, iconAnchor]);
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
+
+  const iconAnchor = useMemo(() => iconSize.map((dim) => dim / 2), [iconSize]);
+
+  const icon = useMemo(
+    () =>
+      new Icon({
+        iconUrl: markerIcon !== null ? markerIcon.src : markerIconError,
+        iconSize: isHovered ? iconSize.map((dim) => dim * 1.4) : iconSize,
+        iconAnchor: iconAnchor,
+        popupAnchor: [7, -10],
+        className: "leaflet-marker-icon-transition", // Add class for transition
+      }),
+    [markerIcon, iconSize, iconAnchor, isHovered]
+	);
+
+	const calculateGrowthLeft = () => {
+		if (zoomLevel <= 4) return "0px";
+		if (zoomLevel === 5) return "4px";
+		if (zoomLevel === 6) return "10px";
+		if (zoomLevel === 7) return "12px";
+		if (zoomLevel === 8) return "14px";
+		if (zoomLevel === 9) return "18px";
+		return "8px";
+	};
+
+	const calculateGrowthRight = () => {
+		if (zoomLevel <= 4) return "0px";
+		if (zoomLevel === 5) return "-1px";
+		if (zoomLevel >= 6) return "-4px";
+		return "-4px";
+	};
+
+  // Add this useEffect to apply the transition style
+  useEffect(() => {
+    const style = document.createElement("style");
+    style.innerHTML = `
+			.leaflet-marker-icon-transition {
+				transition: all 0.5s ease;
+				transformOrigin: alignRight ? "top right" : "top left",
+			}
+		`;
+    document.head.appendChild(style);
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []);
 
   useEffect(() => {
     const applyStrokeStyles = () => {
@@ -321,10 +369,9 @@ const Star = (props) => {
       ? "#E3B687"
       : "#C7303A",
     WebkitTextStroke: strokeSize,
-    textAlign: alignRight ? "right" : "left",
     marginTop: "0px",
-    marginRight: marginRight,
-    marginLeft: marginLeft,
+    marginRight: alignRight ? marginRight : 0,
+    marginLeft: !alignRight ? marginLeft : 0,
     position: "relative",
     zIndex: hasError
       ? 11
@@ -335,6 +382,13 @@ const Star = (props) => {
       : isCanon && isLegends
       ? 10
       : 7,
+    transition: "transform 0.5s ease",
+    transform: isHovered
+      ? alignRight
+        ? `scale(1.2)  translateX(${calculateGrowthRight()})`
+        : `scale(1.2)  translateX(${calculateGrowthLeft()})`
+      : "scale(1)",
+    transformOrigin: alignRight ? "top right" : "top left",
   };
 
   const onTooltipClick = () => {
@@ -343,64 +397,87 @@ const Star = (props) => {
     }
   };
 
+  if (zoomLevel < 2) {
+    return null;
+  }
+
   return (
-    <div className="">
-      {zoomLevel >= 2 ? (
-        <Marker ref={markerRef} position={position} icon={icon}>
-          {zoomLevel >= 3 && starType === "MajorStar" ? (
-            <Tooltip
-              interactive={true}
-              onClick={onTooltipClick}
-              direction={alignRight === true ? "left" : "right"}
-              opacity={1}
-              permanent
-            >
-              <div
-                className="marker-popup marker-animate name-shadow"
-                style={starStyle}
-              >
-                {name}
-              </div>
-            </Tooltip>
-          ) : zoomLevel >= 4 && starType === "MidStar" ? (
-            <Tooltip
-              interactive={true}
-              onClick={onTooltipClick}
-              direction={alignRight === true ? "left" : "right"}
-              opacity={1}
-              permanent
-            >
-              <div
-                className="marker-popup marker-animate name-shadow"
-                style={starStyle}
-              >
-                {name}
-              </div>
-            </Tooltip>
-          ) : zoomLevel >= 5 ? (
-            <Tooltip
-              interactive={true}
-              onClick={onTooltipClick}
-              direction={alignRight === true ? "left" : "right"}
-              opacity={1}
-              permanent
-            >
-              <div
-                className="marker-popup marker-animate name-shadow"
-                style={starStyle}
-              >
-                {name}
-              </div>
-            </Tooltip>
-          ) : null}
-          <Popup>
-            <a href={`${wiki}`} target="_blank" rel="noreferrer">
-              {name} wiki page
-            </a>
-          </Popup>
-        </Marker>
+    <Marker
+      ref={markerRef}
+      position={position}
+      icon={icon}
+      eventHandlers={{
+        mouseover: handleMouseEnter,
+        mouseout: handleMouseLeave,
+      }}
+    >
+      {zoomLevel >= 3 && starType === "MajorStar" ? (
+        <Tooltip
+          interactive={true}
+          onClick={onTooltipClick}
+          direction={alignRight === true ? "left" : "right"}
+          className={alignRight ? "align-right" : "align-left"}
+          opacity={1}
+          permanent
+        >
+          <div
+            className={
+              alignRight
+                ? "marker-popup marker-animate name-shadow align-right"
+                : "marker-popup marker-animate name-shadow align-left"
+            }
+            style={starStyle}
+          >
+            {name}
+          </div>
+        </Tooltip>
+      ) : zoomLevel >= 4 && starType === "MidStar" ? (
+        <Tooltip
+          interactive={true}
+          onClick={onTooltipClick}
+          direction={alignRight === true ? "left" : "right"}
+          className={alignRight ? "align-right" : "align-left"}
+          opacity={1}
+          permanent
+        >
+          <div
+            className={
+              alignRight
+                ? "marker-popup marker-animate name-shadow align-right"
+                : "marker-popup marker-animate name-shadow align-left"
+            }
+            style={starStyle}
+          >
+            {name}
+          </div>
+        </Tooltip>
+      ) : zoomLevel >= 5 ? (
+        <Tooltip
+          interactive={true}
+          onClick={onTooltipClick}
+          direction={alignRight === true ? "left" : "right"}
+          className={alignRight ? "align-right" : "align-left"}
+          opacity={1}
+          permanent
+        >
+          <div
+            className={
+              alignRight
+                ? "marker-popup marker-animate name-shadow align-right"
+                : "marker-popup marker-animate name-shadow align-left"
+            }
+            style={starStyle}
+          >
+            {name}
+          </div>
+        </Tooltip>
       ) : null}
-    </div>
+      <Popup>
+        <a href={`${wiki}`} target="_blank" rel="noreferrer">
+          {name} wiki page
+        </a>
+      </Popup>
+    </Marker>
   );
 };
 

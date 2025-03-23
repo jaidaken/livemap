@@ -20,21 +20,54 @@
 }
 
 .leaflet-tooltip {
+	display: flex;
+	position: absolute;
+  align-items: center;
+  width: 100%;
+  height: 100%;
   background-color: transparent;
   font-family: "myriad-pro-condensed", sans-serif;
-  font-weight: 700;
-  font-style: normal;
-  position: absolute;
-  padding: 0px;
   border: none;
+	text-align: left;
   border-radius: 3px;
-  color: transparent;
-  white-space: nowrap;
-  box-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
+	margin: 0;
+}
+
+.align-right {
+  justify-content: right !important;
+	align-items: right !important;
+	text-align: right !important;
+}
+
+.align-left {
+  justify-content: left !important;
+	align-items: left !important;
+	text-align: left !important;
+}
+
+.leaflet-tooltip.align-right {
+  text-align: right !important;
+}
+
+.leaflet-tooltip.align-left {
+  text-align: left !important;
+}
+
+.align-right::before {
+width: 0;
+height: 0;
+}
+
+.align-left::before {
+	width: 0;
+	height: 0;
 }
 
 .leaflet-tooltip::before {
   border-color: transparent;
+	margin: 0;
+	width: 0;
+	height: 0;
 }
 
 .leaflet-zoom-anim .leaflet-zoom-animated {
@@ -354,29 +387,17 @@
   }
 }
 
-.marker-fade-out {
-  animation: fadeOut 0.5s ease-in-out;
-}
-
-@keyframes fadeOut {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
-
-
-
 .name-shadow {
-
-  filter: drop-shadow(0px 0px 1.5px rgba(0, 0, 0, 0.5));
+	transition: all 0.3s ease-in-out;
+  filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 1));
 }
 
 .leaflet-marker-icon {
-  animation: fadeIn 0.5s ease-in-out;
   filter:
     drop-shadow(0px 0px 6px rgba(0, 0, 0, 1));
 }
 
+.hovered {
+  transform: scale(1.2);
+  transition: transform 0.3s ease-in-out;
+}
