@@ -5,6 +5,8 @@ import TradeNames from "../shapes/TradeNames.jsx";
 function LanePlots() {
   return (
     <div className="lanes">
+      {/* <TradeLine plot="csilla" lineStyle="majStyle" /> */}
+
       <div className="MajorLanes">
         <div className="lane corellian-run">
           <TradeLine plot="corellian" lineStyle="majStyle" />
@@ -181,105 +183,9 @@ function LanePlots() {
         <TradeLine plot="hoth" lineStyle="majStyle" />
       </div>
 
-      <div className="MinorLanes">
-        <TradeLine plot="byssRun" lineStyle="minStyle" />
-        <TradeNames
-          color="white"
-          coords={[-122.487, 121.25]}
-          text="Byss Run"
-          rotation="-35deg"
-          textStyle="minStyle"
-        />
-
-        <TradeLine plot="mandalorian" lineStyle="minStyle" />
-        <TradeNames
-          color="white"
-          coords={[-78.28125, 166.84375]}
-          text="Mandalorian Road"
-          rotation="30deg"
-          textStyle="minStyle"
-        />
-
-        <TradeLine plot="schesa" lineStyle="minStyle" />
-        <TradeNames
-          color="white"
-          coords={[-90.328, 70.015]}
-          text="Way of Schesa"
-          rotation="-20deg"
-          textStyle="minStyle"
-        />
-
-        <TradeLine plot="houses" lineStyle="minStyle" />
-        <TradeNames
-          color="white"
-          coords={[-99.4218, 60.429]}
-          text="Path of the Houses"
-          rotation="35deg"
-          textStyle="minStyle"
-        />
-
-        <TradeLine plot="Vaagari" lineStyle="minStyle" />
-        <TradeNames
-          color="white"
-          coords={[-99.156, 65.187]}
-          text="Vaagari Corridor"
-          rotation="8deg"
-          textStyle="minStyle"
-        />
-
-        <TradeLine plot="cressus" lineStyle="minStyle" />
-        <TradeNames
-          color="white"
-          coords={[-98.125, 50.976]}
-          text="Cressus Route"
-          rotation="-45deg"
-          textStyle="minStyle"
-        />
-
-        <TradeLine plot="chasdemonus" lineStyle="minStyle" />
-        <TradeNames
-          color="white"
-          coords={[-90.609, 54.593]}
-          text="Chasdemonus Route"
-          rotation="-10deg"
-          textStyle="minStyle"
-        />
-
-        <TradeNames
-          color="white"
-          coords={[-71.71875, 125.59375]}
-          text="Entralla Route"
-          rotation="60deg"
-          textStyle="minStyle"
-        />
-
-        <TradeLine plot="listehol" lineStyle="minStyle" />
-        <TradeNames
-          color="white"
-          coords={[-47.875, 204.53125]}
-          text="Listehol Run"
-          rotation="10deg"
-          textStyle="minStyle"
-        />
-
-        <TradeNames
-          color="white"
-          coords={[-93.5546875, 233.0234375]}
-          text="Falko	Run"
-          rotation="0deg"
-          textStyle="minStyle"
-        />
-        <TradeLine plot="ilosian" lineStyle="minStyle" />
-        <TradeNames
-          color="white"
-          coords={[-113.125, 208.125]}
-          text="Ilosian Spur"
-          rotation="90deg"
-          textStyle="minStyle"
-        />
-      </div>
-
-      <div className="midLanes">
+			<div className="midLanes">
+			<TradeLine plot="kinyen" lineStyle="midStyle" />
+        <TradeLine plot="naboo" lineStyle="midStyle" />
         <TradeLine plot="desevran" lineStyle="midStyle" />
         <TradeNames
           color="white"
@@ -383,10 +289,11 @@ function LanePlots() {
         <TradeLine plot="quellorrun" lineStyle="midStyle" />
         <TradeLine plot="zeltose" lineStyle="midStyle" />
         <TradeLine plot="shag" lineStyle="midStyle" />
-				<TradeLine plot="hollastin" lineStyle="midStyle" />
-				<TradeLine plot="kaaga" lineStyle="midStyle" />
+        <TradeLine plot="hollastin" lineStyle="midStyle" />
+        <TradeLine plot="kaaga" lineStyle="midStyle" />
+        <TradeLine plot="wroona" lineStyle="midStyle" />
 
-				<TradeNames
+        <TradeNames
           color="white"
           coords={[-144.4375, 217.6875]}
           text="Hollastin Run"
@@ -409,7 +316,107 @@ function LanePlots() {
         />
       </div>
 
-      <div className="MinorLanes2">
+      <div className="MinorLanes">
+        <TradeLine plot="byssRun" lineStyle="minStyle" />
+        <TradeNames
+          color="white"
+          coords={[-122.487, 121.25]}
+          text="Byss Run"
+          rotation="-35deg"
+          textStyle="minStyle"
+        />
+
+        <TradeLine plot="mandalorian" lineStyle="minStyle" />
+        <TradeNames
+          color="white"
+          coords={[-78.28125, 166.84375]}
+          text="Mandalorian Road"
+          rotation="30deg"
+          textStyle="minStyle"
+        />
+
+        <TradeLine plot="schesa" lineStyle="minStyle" />
+        <TradeNames
+          color="white"
+          coords={[-90.328, 70.015]}
+          text="Way of Schesa"
+          rotation="-20deg"
+          textStyle="minStyle"
+        />
+
+        <TradeLine plot="houses" lineStyle="minStyle" />
+        <TradeNames
+          color="white"
+          coords={[-99.4218, 60.429]}
+          text="Path of the Houses"
+          rotation="35deg"
+          textStyle="minStyle"
+        />
+
+        <TradeLine plot="Vaagari" lineStyle="minStyle" />
+        <TradeNames
+          color="white"
+          coords={[-99.156, 65.187]}
+          text="Vaagari Corridor"
+          rotation="8deg"
+          textStyle="minStyle"
+        />
+
+        <TradeLine plot="cressus" lineStyle="minStyle" />
+        <TradeNames
+          color="white"
+          coords={[-98.125, 50.976]}
+          text="Cressus Route"
+          rotation="-45deg"
+          textStyle="minStyle"
+        />
+
+        <TradeLine plot="chasdemonus" lineStyle="minStyle" />
+        <TradeNames
+          color="white"
+          coords={[-90.609, 54.593]}
+          text="Chasdemonus Route"
+          rotation="-10deg"
+          textStyle="minStyle"
+        />
+
+        <TradeNames
+          color="white"
+          coords={[-71.71875, 125.59375]}
+          text="Entralla Route"
+          rotation="60deg"
+          textStyle="minStyle"
+        />
+
+        <TradeLine plot="listehol" lineStyle="minStyle" />
+        <TradeNames
+          color="white"
+          coords={[-47.875, 204.53125]}
+          text="Listehol Run"
+          rotation="10deg"
+          textStyle="minStyle"
+        />
+
+        <TradeNames
+          color="white"
+          coords={[-93.5546875, 233.0234375]}
+          text="Falko	Run"
+          rotation="0deg"
+          textStyle="minStyle"
+        />
+        <TradeLine plot="ilosian" lineStyle="minStyle" />
+        <TradeNames
+          color="white"
+          coords={[-113.125, 208.125]}
+          text="Ilosian Spur"
+          rotation="90deg"
+          textStyle="minStyle"
+        />
+      </div>
+
+			<div className="MinorLanes2">
+			<TradeLine plot="csilla" lineStyle="minStyle" />
+			<TradeLine plot="kira" lineStyle="minStyle" />
         <TradeLine plot="goluud" lineStyle="minStyle" />
         <TradeLine plot="metellost" lineStyle="minStyle" />
         <TradeLine plot="widek" lineStyle="minStyle" />
@@ -500,26 +507,28 @@ function LanePlots() {
         <TradeLine plot="moralan" lineStyle="minStyle" />
         <TradeLine plot="kessel" lineStyle="minStyle" />
         <TradeLine plot="deysum" lineStyle="minStyle" />
-			</div>
+        <TradeLine plot="thearterra" lineStyle="minStyle" />
+      </div>
 
 			<div className="dashLines">
-				<TradeLine plot="kesselrun" lineStyle="dashStyle" />
-				<TradeNames
+			<TradeLine plot="itani" lineStyle="dashStyle" />
+        <TradeLine plot="kesselrun" lineStyle="dashStyle" />
+        <TradeNames
           color="#c75d16"
           coords={[-112.86328125, 227.6796875]}
           text="Kessel Run"
           rotation="0deg"
           textStyle="minStyle"
         />
-				<TradeLine plot="carbonite" lineStyle="dashStyle" />
-				<TradeNames
+        <TradeLine plot="carbonite" lineStyle="dashStyle" />
+        <TradeNames
           color="#c75d16"
           coords={[-117.36328125, 132.87109375]}
           text="Carbonite Run"
           rotation="15deg"
           textStyle="minStyle"
         />
-			</div>
+      </div>
 
       <div className="MicroLanes">
         <div className="micro-lanes">

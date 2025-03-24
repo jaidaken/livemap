@@ -84,7 +84,7 @@ export default function Markers() {
   const handleSystemSelect = useCallback(
     (selectedSystem) => {
       const { latitude, longitude } = selectedSystem;
-      map.flyTo([latitude, longitude], 10);
+      map.flyTo([latitude, longitude], 7);
     },
     [map]
   );
