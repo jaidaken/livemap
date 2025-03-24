@@ -59,24 +59,29 @@ export default function Markers() {
     }
   }, [newSystemAdded, fetchAllData, handleAddSystem]);
 
-  const handleMapChange = useCallback(() => {
-    setZoomLevel(map.getZoom());
-    // updateVisibleMarkers();
-    localStorage.setItem(
-      "mapCenter",
-      JSON.stringify([map.getCenter().lat, map.getCenter().lng])
-    );
-  }, [map]);
+	const handleZoomEnd = useCallback(() => {
+		const currentZoom = map.getZoom();
+		console.log("Zoom changed to:", currentZoom);
+		setZoomLevel(currentZoom);
+	}, [map]);
 
-  useEffect(() => {
-    map.on("zoomend", handleMapChange);
-    map.on("moveend", handleMapChange);
+	const handleMoveEnd = useCallback(() => {
+		localStorage.setItem(
+			"mapCenter",
+			JSON.stringify([map.getCenter().lat, map.getCenter().lng])
+		);
+		// console.log("center changed");
+	}, [map]);
 
-    return () => {
-      map.off("zoomend", handleMapChange);
-      map.off("moveend", handleMapChange);
-    };
-  }, [map, loading, handleMapChange]);
+	useEffect(() => {
+		map.on("zoomend", handleZoomEnd);
+		map.on("moveend", handleMoveEnd);
+
+		return () => {
+			map.off("zoomend", handleZoomEnd);
+			map.off("moveend", handleMoveEnd);
+		};
+	}, [map, handleZoomEnd, handleMoveEnd]);
 
   const handleSystemSelect = useCallback(
     (selectedSystem) => {

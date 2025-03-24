@@ -1,9 +1,10 @@
 import { useEffect, useState, useCallback } from "react";
-import { Marker, useMap } from "react-leaflet";
+import { useMap } from "react-leaflet";
 import { createPortal } from "react-dom";
 import L from "leaflet";
 import PropTypes from "prop-types";
 import PixiOverlay from "react-leaflet-pixi-overlay";
+import * as PIXI from "pixi.js";
 
 // Import your SVGs as raw strings:
 import sharedSvg from "../../assets/marker-shared2.svg?raw";
@@ -11,8 +12,59 @@ import canonSvg from "../../assets/marker-canon2.svg?raw";
 import legendsSvg from "../../assets/marker-legends2.svg?raw";
 import errorSvg from "../../assets/marker-error2.svg?raw";
 
+const getMarkerColor = (marker) => {
+  if (marker.iconId.startsWith("shared-svg-icon")) return "#e3b685"; // orange for shared
+  if (marker.iconId.startsWith("canon-svg-icon")) return "#f6ade7"; // blue for canon
+  if (marker.iconId.startsWith("legends-svg-icon")) return "#00a8f2"; // green for legends
+  return "red";
+};
 
-function LabelOverlay({ markers }) {
+const calculateZIndex = (starType) => {
+  if (starType === "MajorStar") {
+    return 3003;
+  } else if (starType === "MinorStar") {
+    return 3002;
+  } else if (starType === "MicroStar") {
+    return 3001;
+  } else {
+    return 3000;
+  }
+};
+
+const calculateLabelFontSize = (zoomLevel, starType, hasError) => {
+  if (hasError) return 30;
+  if (starType === "MajorStar") {
+    if (zoomLevel === 2) return 0;
+    if (zoomLevel === 3) return 20;
+    if (zoomLevel === 4) return 30;
+    if (zoomLevel === 5) return 35;
+    if (zoomLevel === 6) return 40;
+    return 55;
+  } else if (starType === "MinorStar") {
+    if (zoomLevel <= 4) return 0;
+    if (zoomLevel === 5) return 21;
+    if (zoomLevel === 6) return 35;
+    if (zoomLevel === 7) return 40;
+    if (zoomLevel === 8) return 40;
+    if (zoomLevel >= 9) return 55;
+    return 55;
+  } else if (starType === "MicroStar") {
+    if (zoomLevel <= 6) return 0;
+    if (zoomLevel === 7) return 18;
+    if (zoomLevel === 8) return 20;
+    if (zoomLevel >= 9) return 28;
+    return 30;
+  }
+  // default fallback
+  if (zoomLevel <= 4) return 0;
+  if (zoomLevel === 5) return 21;
+  if (zoomLevel === 6) return 35;
+  if (zoomLevel === 7) return 40;
+  if (zoomLevel >= 8) return 45;
+  return 30;
+};
+
+function LabelOverlay({ markers, zoomLevel }) {
   const map = useMap();
   const [container, setContainer] = useState(null);
 
@@ -30,19 +82,113 @@ function LabelOverlay({ markers }) {
   if (!container) return null;
 
   return createPortal(
-    <div style={{ position: "relative"}}>
-      {markers.map((marker) => {
+    <div style={{ position: "relative" }}>
+      {/* {markers.map((marker) => {
+      const point = map.latLngToLayerPoint(marker.position);
+      const color = getMarkerColor(marker);
+				const containerStyle = {
+				zIndex:2001,
+        position: "absolute",
+        left: point.x,
+        top: point.y,
+        // transform: "translate(-50%, -50%)", // centers container on marker
+      };
+
+        // Use the icon size (or default to zero) and add a constant offset (e.g., 4px)
+        const offset = 4;
+        const halfIconWidth = marker.iconSize ? marker.iconSize[0] / 2 : 0;
+
+
+        const labelLeft = marker.alignRight
+          ? point.x - halfIconWidth - offset
+					: point.x - halfIconWidth - offset;
+
+        const transform = marker.alignRight
+          ? "translate(-100%, -50%)"
+          : "translate(25px, -50%)";
+        const textAlign = marker.alignRight ? "right" : "left";
+
+        const computedFontSize = calculateLabelFontSize(
+          zoomLevel,
+          marker.starType,
+          marker.hasError
+        );
+        const computedZIndex = calculateZIndex(marker.starType);
+        const labelStyle = {
+          position: "relative",
+					left: marker.alignRight ? "10px" : "-10px", // adjust these values as needed
+					textAlign: marker.alignRight ? "left" : "right",
+          top: point.y,
+          // transform,
+          zIndex: computedZIndex,
+          color: color,
+          padding: "0px 0px",
+          borderRadius: "4%",
+          whiteSpace: "nowrap",
+          fontSize: `${computedFontSize}px`,
+          fontWeight: "bold",
+          fontFamily: "myriad-pro-condensed, sans-serif",
+					WebkitTextStroke: "1px black",
+        };
+				return (
+					<div key={`label-${marker.id}`} style={containerStyle}>
+						<div className="custom-label" style={labelStyle}>
+							{marker.name}
+						</div>
+					</div>
+				);
+			})}
+		</div>,
+		container
+	);
+}  */}
+
+{markers.map((marker) => {
         const point = map.latLngToLayerPoint(marker.position);
-        const style = {
+        const color = getMarkerColor(marker);
+        // Determine half the icon's width (if provided)
+        const halfIconWidth = marker.iconSize ? marker.iconSize[0] / 2 : 0;
+        // A constant offset for spacing (adjust as needed)
+        const offset = 4;
+        const computedFontSize = calculateLabelFontSize(
+          zoomLevel,
+          marker.starType,
+          marker.hasError
+        );
+        const computedZIndex = calculateZIndex(marker.starType);
+
+        // The outer container is absolutely positioned at the marker
+        const containerStyle = {
           position: "absolute",
           left: point.x,
           top: point.y,
-          transform: "translate(-50%, 0)",
-          zIndex: 2001,
+          transform: "translate(-50%, -50%)",
+          zIndex: computedZIndex + 1,
         };
+
+        const labelStyle = {
+          position: "absolute",
+          // Use left or right property based on alignRight
+          ...(marker.alignRight
+            ? { right: `${halfIconWidth + offset}px`, textAlign: "right" }
+            : { left: `${halfIconWidth + offset}px`, textAlign: "left" }),
+          transform: "translate(0, -50%)", // vertical centering
+          zIndex: computedZIndex,
+          color: color,
+          padding: "0px 0px",
+          borderRadius: "4%",
+          whiteSpace: "nowrap",
+          fontSize: `${computedFontSize}px`,
+          fontWeight: "bold",
+          fontFamily: "myriad-pro-condensed, sans-serif",
+					WebkitTextStroke: "0.025em black",
+        };
+
         return (
-          <div key={`label-${marker.id}`} className="custom-label" style={style}>
-            {marker.name}
+          <div key={`label-${marker.id}`} style={containerStyle}>
+            <div className="custom-label" style={labelStyle}>
+              {marker.name}
+            </div>
           </div>
         );
       })}
@@ -57,58 +203,94 @@ LabelOverlay.propTypes = {
       id: PropTypes.any,
       name: PropTypes.string,
       position: PropTypes.arrayOf(PropTypes.number),
+      iconId: PropTypes.string,
+      iconSize: PropTypes.arrayOf(PropTypes.number),
+      starType: PropTypes.string,
+      hasError: PropTypes.bool,
     })
   ).isRequired,
+  zoomLevel: PropTypes.number.isRequired,
 };
-
 
 // Helper: update SVG width and height attributes
 const updateSvgSize = (svg, width, height) => {
-  let updatedSvg = svg.replace(/width="[^"]*"/, `width="${width}"`);
-  updatedSvg = updatedSvg.replace(/height="[^"]*"/, `height="${height}"`);
+  let updatedSvg = svg.replace(/width="[^"]*"/g, `width="${width}"`);
+  updatedSvg = updatedSvg.replace(/height="[^"]*"/g, `height="${height}"`);
   return updatedSvg;
 };
 
-export default function PixiMarkers({ allSystems, activeFilters, map, zoomLevel }) {
+export default function PixiMarkers({
+  allSystems,
+  activeFilters,
+  map,
+  zoomLevel,
+}) {
   const [visibleMarkers, setVisibleMarkers] = useState([]);
 
-  const calculateIconSize = (zoomLevel) => {
-    if (zoomLevel <= 2) return [4, 4];
-    if (zoomLevel === 3) return [10, 10];
-    if (zoomLevel === 4) return [15, 15];
-    if (zoomLevel === 5) return [25, 25];
-    if (zoomLevel === 6) return [45, 45];
-    if (zoomLevel === 7) return [60, 60];
-    if (zoomLevel === 8) return [70, 70];
-    if (zoomLevel === 9) return [200, 200];
-    return [70, 70];
-	};
-
-	function LabelMarker({ position, label }) {
-		const icon = L.divIcon({
-			className: "custom-label",
-			html: `<div>${label}</div>`,
-			iconAnchor: [0, 0],
-		});
-		return <Marker position={position} icon={icon} interactive={false} />;
-	}
-
-	LabelMarker.propTypes = {
-		position: PropTypes.arrayOf(PropTypes.number).isRequired,
-		label: PropTypes.string.isRequired,
-	};
-
-	const updateVisibleMarkers = useCallback(() => {
+  const updateVisibleMarkers = useCallback(() => {
+    PIXI.settings.CACHE_BASE_TEXTURES = false;
     if (allSystems.length === 0) return;
     const bounds = map.getBounds();
 
+    const calculateIconSize = (zoomLevel, starType, hasError) => {
+      if (hasError) return [100, 100];
+      if (starType === "MajorStar") return calculateMajorIconSize(zoomLevel);
+      if (starType === "MinorStar") return calculateMinorIconSize(zoomLevel);
+      if (starType === "MicroStar") return calculateMicroIconSize(zoomLevel);
+      return [80, 80];
+    };
+
+    const calculateMajorIconSize = (zoomLevel) => {
+      if (zoomLevel <= 2) return [10, 10];
+      if (zoomLevel === 3) return [16, 16];
+      if (zoomLevel === 4) return [20, 20];
+      if (zoomLevel === 5) return [30, 30];
+      if (zoomLevel === 6) return [40, 40];
+      if (zoomLevel === 7) return [45, 45];
+      if (zoomLevel === 8) return [50, 50];
+      if (zoomLevel >= 9) return [60, 60];
+      return [55, 55];
+    };
+
+    const calculateMinorIconSize = (zoomLevel) => {
+      if (zoomLevel <= 4) return [10, 10];
+      if (zoomLevel === 5) return [18, 18];
+      if (zoomLevel === 6) return [22, 22];
+      if (zoomLevel === 7) return [30, 30];
+      if (zoomLevel === 8) return [40, 40];
+      if (zoomLevel >= 9) return [50, 50];
+      return [55, 55];
+    };
+
+    const calculateMicroIconSize = (zoomLevel) => {
+      if (zoomLevel <= 4) return [0, 0];
+      if (zoomLevel === 5) return [8, 8];
+      if (zoomLevel === 6) return [10, 10];
+      if (zoomLevel === 7) return [14, 14];
+      if (zoomLevel === 8) return [22, 22];
+      if (zoomLevel >= 9) return [42, 42];
+      return [0, 0];
+    };
+
     const newMarkers = allSystems
       .filter((system) => {
-        if (activeFilters.includes("shared") && system.isCanon && system.isLegends)
+        if (
+          activeFilters.includes("shared") &&
+          system.isCanon &&
+          system.isLegends
+        )
           return true;
-        if (activeFilters.includes("canon") && system.isCanon && !system.isLegends)
+        if (
+          activeFilters.includes("canon") &&
+          system.isCanon &&
+          !system.isLegends
+        )
           return true;
-        if (activeFilters.includes("legends") && !system.isCanon && system.isLegends)
+        if (
+          activeFilters.includes("legends") &&
+          !system.isCanon &&
+          system.isLegends
+        )
           return true;
         return false;
       })
@@ -127,10 +309,14 @@ export default function PixiMarkers({ allSystems, activeFilters, map, zoomLevel 
         } else {
           chosenSvg = errorSvg;
         }
+        const [w, h] = calculateIconSize(
+          zoomLevel,
+          system.starType,
+          system.hasError
+        );
 
-        const [w, h] = calculateIconSize(zoomLevel);
+        if (w === 0 && h === 0) return null;
         const sizedSvg = updateSvgSize(chosenSvg, w, h);
-
         return {
           id: system.id,
           name: system.name,
@@ -138,19 +324,26 @@ export default function PixiMarkers({ allSystems, activeFilters, map, zoomLevel 
           customIcon: sizedSvg,
           markerSpriteAnchor: [0.5, 0.5],
           iconId: `${
-            chosenSvg === sharedSvg
+            system.isCanon && system.isLegends
               ? "shared-svg-icon"
-              : chosenSvg === canonSvg
+              : system.isCanon
               ? "canon-svg-icon"
-              : "legends-svg-icon"
-          }-zoom-${zoomLevel}`,
+              : system.isLegends
+              ? "legends-svg-icon"
+              : "error-svg-icon"
+          }-zoom-${zoomLevel}-${w}x${h}`,
           iconSize: [w, h],
+          starType: system.starType,
+					hasError: system.hasError,
+					alignRight: system.alignRight || false,
         };
-      });
-    setVisibleMarkers(newMarkers);
-	}, [allSystems, activeFilters, map, zoomLevel]);
+      })
+      .filter((marker) => marker !== null);
 
-	useEffect(() => {
+    setVisibleMarkers(newMarkers);
+  }, [allSystems, activeFilters, map, zoomLevel]);
+
+  useEffect(() => {
     updateVisibleMarkers();
   }, [allSystems, activeFilters, zoomLevel, updateVisibleMarkers]);
 
@@ -165,19 +358,10 @@ export default function PixiMarkers({ allSystems, activeFilters, map, zoomLevel 
   return (
     <>
       <PixiOverlay markers={visibleMarkers} />
-      <LabelOverlay markers={visibleMarkers} />
+      <LabelOverlay markers={visibleMarkers} zoomLevel={zoomLevel} />
     </>
   );
 }
-
-      {/* {visibleMarkers.map((marker) => (
-        <LabelMarker
-          key={`label-${marker.id}`}
-          position={marker.position}
-          label={marker.name}
-        />
-			))} */}
-
 
 PixiMarkers.propTypes = {
   allSystems: PropTypes.array.isRequired,
