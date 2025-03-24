@@ -183,8 +183,11 @@ function LanePlots() {
         <TradeLine plot="hoth" lineStyle="majStyle" />
       </div>
 
-			<div className="midLanes">
-			<TradeLine plot="kinyen" lineStyle="midStyle" />
+      <div className="midLanes">
+
+        <TradeLine plot="manda" lineStyle="midStyle" />
+        <TradeLine plot="kinyen" lineStyle="midStyle" />
+        <TradeLine plot="daalang" lineStyle="midStyle" />
         <TradeLine plot="naboo" lineStyle="midStyle" />
         <TradeLine plot="desevran" lineStyle="midStyle" />
         <TradeNames
@@ -258,7 +261,17 @@ function LanePlots() {
           rotation="-70deg"
           textStyle="minStyle"
         />
-        <TradeLine plot="sleheyron" lineStyle="midStyle" />
+				<TradeLine plot="sleheyron" lineStyle="midStyle" />
+
+				<TradeLine plot="llanic" lineStyle="midStyle" />
+        <TradeNames
+          color="white"
+          coords={[-201.65625, 185.78125]}
+          text="Llanic Spice Run"
+          rotation="-45deg"
+          textStyle="minStyle"
+        />
+
         <TradeLine plot="ootmian" lineStyle="midStyle" />
         <TradeNames
           color="white"
@@ -415,8 +428,10 @@ function LanePlots() {
       </div>
 
 			<div className="MinorLanes2">
-			<TradeLine plot="csilla" lineStyle="minStyle" />
-			<TradeLine plot="kira" lineStyle="minStyle" />
+
+        <TradeLine plot="excarga" lineStyle="minStyle" />
+        <TradeLine plot="csilla" lineStyle="minStyle" />
+        <TradeLine plot="kira" lineStyle="minStyle" />
         <TradeLine plot="goluud" lineStyle="minStyle" />
         <TradeLine plot="metellost" lineStyle="minStyle" />
         <TradeLine plot="widek" lineStyle="minStyle" />
@@ -510,8 +525,8 @@ function LanePlots() {
         <TradeLine plot="thearterra" lineStyle="minStyle" />
       </div>
 
-			<div className="dashLines">
-			<TradeLine plot="itani" lineStyle="dashStyle" />
+      <div className="dashLines">
+        <TradeLine plot="itani" lineStyle="dashStyle" />
         <TradeLine plot="kesselrun" lineStyle="dashStyle" />
         <TradeNames
           color="#c75d16"

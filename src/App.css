@@ -6,6 +6,7 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
+	cursor: none;
 }
 
 .map-container {
@@ -114,6 +115,10 @@ height: 0;
   border-radius: 5px;
   width: 100%;
   margin: 0px;
+	cursor: none;
+}
+canvas {
+	cursor: none;
 }
 
 .search-bar {
@@ -135,7 +140,6 @@ height: 0;
 }
 
 .search-bar li {
-  cursor: pointer;
   margin: 4px 0 4px 2px;
   font-family: "Myriad Pro", sans-serif;
   font-size: 1.2rem;
@@ -299,7 +303,7 @@ height: 0;
 		width: 100dvw;
 		height: 100dvh; /* or 100svh, depending on your preference */
 	}
-	
+
   .leaflet-container {
     height: 100dvh;
 		width: 100dvw;
@@ -412,6 +416,15 @@ height: 0;
 }
 .leaflet-pixi-overlay {
 	animation: fadeIn 0.8s ease-in-out;
+	cursor: none;
+}
+
+.leaflet-container canvas {
+  cursor: none !important;
+}
+
+.leaflet-pixi-overlay canvas {
+  cursor: none !important;
 }
 
 .hovered {

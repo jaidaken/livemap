@@ -138,7 +138,7 @@ function LabelOverlay({ markers, zoomLevel, setActivePopup, hoveredMarkerId }) {
           transform: "translate(-50%, -50%)",
           zIndex: computedZIndex + 1,
           pointerEvents: "auto",
-          cursor: "pointer",
+          cursor: "none",
         };
 
         const labelStyle = {
@@ -157,7 +157,7 @@ function LabelOverlay({ markers, zoomLevel, setActivePopup, hoveredMarkerId }) {
           fontFamily: "myriad-pro-condensed, sans-serif",
           WebkitTextStroke: "0.025em black",
           pointerEvents: "auto",
-          cursor: "pointer",
+          cursor: "none",
         };
 
         return (
