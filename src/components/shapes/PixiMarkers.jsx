@@ -288,7 +288,7 @@ export default function PixiMarkers({
 
       let nearestMarkerId = null;
       let minDistanceSquared = Infinity;
-      const hoverRadiusPx = 15;
+      const hoverRadiusPx = 20;
 
       visibleMarkers.forEach((m) => {
         const markerPoint = map.latLngToLayerPoint(m.position);
