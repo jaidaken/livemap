@@ -1,7 +1,7 @@
 import React, { useEffect, useState, Suspense } from "react";
 import "leaflet/dist/leaflet.css";
 import "./App.css";
-import { MapContainer, TileLayer, useMapEvents } from "react-leaflet";
+import { MapContainer, TileLayer, useMapEvents, useMap } from "react-leaflet";
 import { CRS } from "leaflet";
 
 import GridLayer from "./components/shapes/GridLayer.jsx";
@@ -30,6 +30,36 @@ const MapEvents = () => {
   });
   return null;
 };
+
+function FixIOSLayout() {
+  const map = useMap();
+
+  useEffect(() => {
+    // Simple iOS Safari detection
+    function isIosSafari() {
+      const ua = window.navigator.userAgent;
+      // Check for iPhone/iPad/iPod and Safari (excluding Chrome)
+      const iOSDevice = /iPad|iPhone|iPod/.test(ua);
+      const safariBrowser = /Safari/.test(ua) && !/Chrome/.test(ua);
+      return iOSDevice && safariBrowser;
+    }
+
+    if (!isIosSafari()) {
+      // If it's NOT iOS Safari, do nothing
+      return;
+    }
+
+    // Otherwise, run the fix after a short delay
+    const timer = setTimeout(() => {
+      map.invalidateSize();
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [map]);
+
+  return null;
+}
+
 
 const minZoom = 2;
 const maxZoom = 9;
@@ -90,7 +120,8 @@ function App() {
             {/* <TileLayer attribution="" url="/src/assets/images/{z}/{x}/{y}.jpg" opacity={0.6} /> */}
             <TileLayer attribution="" url="" />
             <Patreon />
-            <Key />
+						<Key />
+						<FixIOSLayout />
             <Suspense fallback={<div>Loading Markers...</div>}>
               <Markers />
             </Suspense>
