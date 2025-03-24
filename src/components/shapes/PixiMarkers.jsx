@@ -64,7 +64,7 @@ const calculateLabelFontSize = (zoomLevel, starType, hasError) => {
   return 30;
 };
 
-function LabelOverlay({ markers, zoomLevel }) {
+function LabelOverlay({ markers, zoomLevel, setActivePopup }) {
   const map = useMap();
   const [container, setContainer] = useState(null);
 
@@ -83,67 +83,7 @@ function LabelOverlay({ markers, zoomLevel }) {
 
   return createPortal(
     <div style={{ position: "relative" }}>
-      {/* {markers.map((marker) => {
-      const point = map.latLngToLayerPoint(marker.position);
-      const color = getMarkerColor(marker);
-				const containerStyle = {
-				zIndex:2001,
-        position: "absolute",
-        left: point.x,
-        top: point.y,
-        // transform: "translate(-50%, -50%)", // centers container on marker
-      };
-
-        // Use the icon size (or default to zero) and add a constant offset (e.g., 4px)
-        const offset = 4;
-        const halfIconWidth = marker.iconSize ? marker.iconSize[0] / 2 : 0;
-
-
-        const labelLeft = marker.alignRight
-          ? point.x - halfIconWidth - offset
-					: point.x - halfIconWidth - offset;
-
-        const transform = marker.alignRight
-          ? "translate(-100%, -50%)"
-          : "translate(25px, -50%)";
-        const textAlign = marker.alignRight ? "right" : "left";
-
-        const computedFontSize = calculateLabelFontSize(
-          zoomLevel,
-          marker.starType,
-          marker.hasError
-        );
-        const computedZIndex = calculateZIndex(marker.starType);
-        const labelStyle = {
-          position: "relative",
-					left: marker.alignRight ? "10px" : "-10px", // adjust these values as needed
-					textAlign: marker.alignRight ? "left" : "right",
-          top: point.y,
-          // transform,
-          zIndex: computedZIndex,
-          color: color,
-          padding: "0px 0px",
-          borderRadius: "4%",
-          whiteSpace: "nowrap",
-          fontSize: `${computedFontSize}px`,
-          fontWeight: "bold",
-          fontFamily: "myriad-pro-condensed, sans-serif",
-					WebkitTextStroke: "1px black",
-        };
-				return (
-					<div key={`label-${marker.id}`} style={containerStyle}>
-						<div className="custom-label" style={labelStyle}>
-							{marker.name}
-						</div>
-					</div>
-				);
-			})}
-		</div>,
-		container
-	);
-}  */}
-
-{markers.map((marker) => {
+      {markers.map((marker) => {
         const point = map.latLngToLayerPoint(marker.position);
         const color = getMarkerColor(marker);
         // Determine half the icon's width (if provided)
@@ -164,6 +104,8 @@ function LabelOverlay({ markers, zoomLevel }) {
           top: point.y,
           transform: "translate(-50%, -50%)",
           zIndex: computedZIndex + 1,
+          pointerEvents: "auto", // allow label clicks
+          cursor: "pointer", // indicate interactivity
         };
 
         const labelStyle = {
@@ -181,12 +123,28 @@ function LabelOverlay({ markers, zoomLevel }) {
           fontSize: `${computedFontSize}px`,
           fontWeight: "bold",
           fontFamily: "myriad-pro-condensed, sans-serif",
-					WebkitTextStroke: "0.025em black",
+          WebkitTextStroke: "0.025em black",
+          pointerEvents: "auto", // allow label clicks
+          cursor: "pointer", // indicate interactivity
         };
 
         return (
           <div key={`label-${marker.id}`} style={containerStyle}>
-            <div className="custom-label" style={labelStyle}>
+            <div
+              className="custom-label"
+              style={labelStyle}
+              onClick={() => {
+                setActivePopup((prev) =>
+                  prev?.id === marker.id
+                    ? null
+                    : {
+                        id: marker.id,
+                        position: marker.position,
+                        content: `<a href="${marker.wiki}" target="_blank" style="color: #0645AD; text-decoration: underline;">${marker.name} Wiki Page</a>`,
+                      }
+                );
+              }}
+            >
               {marker.name}
             </div>
           </div>
@@ -210,6 +168,7 @@ LabelOverlay.propTypes = {
     })
   ).isRequired,
   zoomLevel: PropTypes.number.isRequired,
+  setActivePopup: PropTypes.func.isRequired,
 };
 
 // Helper: update SVG width and height attributes
@@ -226,6 +185,7 @@ export default function PixiMarkers({
   zoomLevel,
 }) {
   const [visibleMarkers, setVisibleMarkers] = useState([]);
+  const [activePopup, setActivePopup] = useState(null);
 
   const updateVisibleMarkers = useCallback(() => {
     PIXI.settings.CACHE_BASE_TEXTURES = false;
@@ -334,14 +294,96 @@ export default function PixiMarkers({
           }-zoom-${zoomLevel}-${w}x${h}`,
           iconSize: [w, h],
           starType: system.starType,
-					hasError: system.hasError,
-					alignRight: system.alignRight || false,
+          hasError: system.hasError,
+          wiki: system.wiki,
+          alignRight: system.alignRight || false,
+          onClick: () => {
+            setActivePopup((current) => {
+              const isSame = current?.id === system.id;
+              return isSame
+                ? null
+                : {
+                    id: system.id,
+                    position: [system.latitude, system.longitude],
+                    content: `<a href="${system.wiki}" target="_blank" style="color: inherit; text-decoration: none;">${system.name} Wiki Page</a>`,
+                  };
+            });
+          },
         };
       })
       .filter((marker) => marker !== null);
 
     setVisibleMarkers(newMarkers);
   }, [allSystems, activeFilters, map, zoomLevel]);
+
+  function CustomPopupOverlay({ popup, map, onClose }) {
+    if (!popup) return null;
+    const point = map.latLngToLayerPoint(popup.position);
+
+    const popupContainerStyle = {
+      position: "absolute",
+      left: point.x,
+      top: point.y,
+      transform: "translate(-50%, -140%)",
+      background: "white",
+      padding: "10px 20px",
+      border: "1px solid transparent",
+      borderRadius: "8px",
+      pointerEvents: "auto",
+      zIndex: 4000,
+      whiteSpace: "nowrap",
+      display: "inline-block",
+      textAlign: "center",
+      fontSize: "24px",
+      fontWeight: "bold",
+      color: "#2a7ae2",
+      textDecoration: "underline",
+      maxWidth: "calc(100vw - 40px)",
+    };
+
+    const arrowStyle = {
+      position: "absolute",
+      left: "50%",
+      bottom: "-10px",
+      transform: "translateX(-50%)",
+      width: 0,
+      height: 0,
+      borderLeft: "10px solid transparent",
+      borderRight: "10px solid transparent",
+      borderTop: "10px solid white",
+    };
+
+    return createPortal(
+      <div
+        style={popupContainerStyle}
+        onClick={(e) => e.stopPropagation()}
+        onDoubleClick={onClose}
+      >
+        <div dangerouslySetInnerHTML={{ __html: popup.content }}></div>
+        <div style={arrowStyle}></div>
+      </div>,
+      map.getPanes().overlayPane
+    );
+  }
+
+  useEffect(() => {
+    let clickHandler;
+
+    if (activePopup) {
+      // Delay setting up the click handler to allow marker click to finish
+      clickHandler = () => {
+        setActivePopup(null);
+      };
+      const timeoutId = setTimeout(() => {
+        map.on("click", clickHandler);
+      }, 0);
+
+      return () => {
+        clearTimeout(timeoutId);
+        map.off("click", clickHandler);
+      };
+    }
+  }, [map, activePopup]);
 
   useEffect(() => {
     updateVisibleMarkers();
@@ -357,8 +399,45 @@ export default function PixiMarkers({
 
   return (
     <>
-      <PixiOverlay markers={visibleMarkers} />
-      <LabelOverlay markers={visibleMarkers} zoomLevel={zoomLevel} />
+      <PixiOverlay
+        markers={visibleMarkers}
+        setup={({ pixiContainer, markers }) => {
+          markers.forEach((marker) => {
+            const texture = PIXI.Texture.from(marker.customIcon);
+            const sprite = new PIXI.Sprite(texture);
+
+            sprite.anchor.set(...(marker.markerSpriteAnchor || [0.5, 0.5]));
+            sprite.x = marker._point.x;
+            sprite.y = marker._point.y;
+
+            sprite.interactive = true;
+            sprite.buttonMode = true;
+
+            sprite.on("pointertap", (e) => {
+              if (
+                e.data &&
+                e.data.originalEvent &&
+                typeof e.data.originalEvent.stopPropagation === "function"
+              ) {
+                e.data.originalEvent.stopPropagation(); // Prevent map click from firing
+              }
+              if (marker.onClick) marker.onClick(e);
+            });
+
+            pixiContainer.addChild(sprite);
+          });
+        }}
+      />
+      <LabelOverlay
+        markers={visibleMarkers}
+        zoomLevel={zoomLevel}
+        setActivePopup={setActivePopup}
+      />
+      <CustomPopupOverlay
+        popup={activePopup}
+        map={map}
+        onClose={() => setActivePopup(null)}
+      />
     </>
   );
 }
@@ -368,4 +447,6 @@ PixiMarkers.propTypes = {
   activeFilters: PropTypes.array.isRequired,
   map: PropTypes.object.isRequired,
   zoomLevel: PropTypes.number.isRequired,
+  popup: PropTypes.string,
+  onClose: PropTypes.string,
 };

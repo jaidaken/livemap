@@ -70,7 +70,7 @@ export default function Markers() {
 			"mapCenter",
 			JSON.stringify([map.getCenter().lat, map.getCenter().lng])
 		);
-		// console.log("center changed");
+		console.log("center changed");
 	}, [map]);
 
 	useEffect(() => {
