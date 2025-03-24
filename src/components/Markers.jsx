@@ -61,7 +61,6 @@ export default function Markers() {
 
 	const handleZoomEnd = useCallback(() => {
 		const currentZoom = map.getZoom();
-		console.log("Zoom changed to:", currentZoom);
 		setZoomLevel(currentZoom);
 	}, [map]);
 
@@ -70,7 +69,6 @@ export default function Markers() {
 			"mapCenter",
 			JSON.stringify([map.getCenter().lat, map.getCenter().lng])
 		);
-		console.log("center changed");
 	}, [map]);
 
 	useEffect(() => {
