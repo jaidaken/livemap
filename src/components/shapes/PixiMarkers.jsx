@@ -4,35 +4,46 @@ import { createPortal } from "react-dom";
 import L from "leaflet";
 import PropTypes from "prop-types";
 import PixiOverlay from "react-leaflet-pixi-overlay";
-import * as PIXI from "pixi.js";
 
-// Import your SVGs as raw strings:
+// SVGs as raw strings
 import sharedSvg from "../../assets/marker-shared2.svg?raw";
 import canonSvg from "../../assets/marker-canon2.svg?raw";
 import legendsSvg from "../../assets/marker-legends2.svg?raw";
 import errorSvg from "../../assets/marker-error2.svg?raw";
 
-const getMarkerColor = (marker) => {
-  if (marker.iconId.startsWith("shared-svg-icon")) return "#e3b685"; // orange for shared
-  if (marker.iconId.startsWith("canon-svg-icon")) return "#f6ade7"; // blue for canon
-  if (marker.iconId.startsWith("legends-svg-icon")) return "#00a8f2"; // green for legends
-  return "red";
-};
-
-const calculateZIndex = (starType) => {
-  if (starType === "MajorStar") {
-    return 3003;
-  } else if (starType === "MinorStar") {
-    return 3002;
-  } else if (starType === "MicroStar") {
-    return 3001;
-  } else {
-    return 3000;
+// --- Suppress Pixi's "BaseTexture added to the cache..." warnings ---
+const originalWarn = console.warn;
+console.warn = (...args) => {
+  if (
+    typeof args[0] === "string" &&
+    args[0].includes(" added to the cache with an id")
+  ) {
+    return;
   }
+  originalWarn(...args);
 };
 
-const calculateLabelFontSize = (zoomLevel, starType, hasError) => {
+// --------------------------------------------------------------------
+// Helper Functions
+// --------------------------------------------------------------------
+
+function getMarkerColor(marker) {
+  if (marker.iconId.startsWith("shared-svg-icon")) return "#e3b685"; // orange
+  if (marker.iconId.startsWith("canon-svg-icon")) return "#f6ade7"; // blue
+  if (marker.iconId.startsWith("legends-svg-icon")) return "#00a8f2"; // green
+  return "red";
+}
+
+function calculateZIndex(starType) {
+  if (starType === "MajorStar") return 3003;
+  if (starType === "MinorStar") return 3002;
+  if (starType === "MicroStar") return 3001;
+  return 3000;
+}
+
+function calculateLabelFontSize(zoomLevel, starType, hasError) {
   if (hasError) return 30;
+
   if (starType === "MajorStar") {
     if (zoomLevel === 2) return 0;
     if (zoomLevel === 3) return 20;
@@ -42,9 +53,9 @@ const calculateLabelFontSize = (zoomLevel, starType, hasError) => {
     return 55;
   } else if (starType === "MinorStar") {
     if (zoomLevel <= 4) return 0;
-    if (zoomLevel === 5) return 21;
-    if (zoomLevel === 6) return 35;
-    if (zoomLevel === 7) return 40;
+    if (zoomLevel === 5) return 18;
+    if (zoomLevel === 6) return 25;
+    if (zoomLevel === 7) return 35;
     if (zoomLevel === 8) return 40;
     if (zoomLevel >= 9) return 55;
     return 55;
@@ -55,16 +66,26 @@ const calculateLabelFontSize = (zoomLevel, starType, hasError) => {
     if (zoomLevel >= 9) return 28;
     return 30;
   }
-  // default fallback
+
+  // Default fallback
   if (zoomLevel <= 4) return 0;
   if (zoomLevel === 5) return 21;
   if (zoomLevel === 6) return 35;
   if (zoomLevel === 7) return 40;
   if (zoomLevel >= 8) return 45;
   return 30;
-};
+}
 
-function LabelOverlay({ markers, zoomLevel, setActivePopup }) {
+function updateSvgSize(svg, width, height) {
+  let updatedSvg = svg.replace(/width="[^"]*"/g, `width="${width}"`);
+  updatedSvg = updatedSvg.replace(/height="[^"]*"/g, `height="${height}"`);
+  return updatedSvg;
+}
+
+// --------------------------------------------------------------------
+// Label Overlay Component
+// --------------------------------------------------------------------
+function LabelOverlay({ markers, zoomLevel, setActivePopup, hoveredMarkerId }) {
   const map = useMap();
   const [container, setContainer] = useState(null);
 
@@ -74,6 +95,7 @@ function LabelOverlay({ markers, zoomLevel, setActivePopup }) {
     div.className = "label-overlay-container";
     pane.appendChild(div);
     setContainer(div);
+
     return () => {
       pane.removeChild(div);
     };
@@ -85,47 +107,57 @@ function LabelOverlay({ markers, zoomLevel, setActivePopup }) {
     <div style={{ position: "relative" }}>
       {markers.map((marker) => {
         const point = map.latLngToLayerPoint(marker.position);
-        const color = getMarkerColor(marker);
-        // Determine half the icon's width (if provided)
-        const halfIconWidth = marker.iconSize ? marker.iconSize[0] / 2 : 0;
-        // A constant offset for spacing (adjust as needed)
-        const offset = 4;
         const computedFontSize = calculateLabelFontSize(
           zoomLevel,
           marker.starType,
           marker.hasError
         );
+
+        // Hover logic
+        const isHovered = marker.id === hoveredMarkerId;
+        const hoveredFontSize = Math.round(computedFontSize * 1.4);
+        const finalFontSize = isHovered ? hoveredFontSize : computedFontSize;
+
+        // For horizontally shifting the label on hover
+        const finalTransform = isHovered
+          ? marker.alignRight
+            ? -12
+            : 12
+          : 0;
+
+        // Colors & layout
+        const color = getMarkerColor(marker);
+        const halfIconWidth = marker.iconSize ? marker.iconSize[0] / 2 : 0;
+        const offset = 4;
         const computedZIndex = calculateZIndex(marker.starType);
 
-        // The outer container is absolutely positioned at the marker
         const containerStyle = {
           position: "absolute",
           left: point.x,
           top: point.y,
           transform: "translate(-50%, -50%)",
           zIndex: computedZIndex + 1,
-          pointerEvents: "auto", // allow label clicks
-          cursor: "pointer", // indicate interactivity
+          pointerEvents: "auto",
+          cursor: "pointer",
         };
 
         const labelStyle = {
           position: "absolute",
-          // Use left or right property based on alignRight
           ...(marker.alignRight
             ? { right: `${halfIconWidth + offset}px`, textAlign: "right" }
             : { left: `${halfIconWidth + offset}px`, textAlign: "left" }),
-          transform: "translate(0, -50%)", // vertical centering
+          transform: `translate(${finalTransform}px, -50%)`,
           zIndex: computedZIndex,
-          color: color,
+          color,
           padding: "0px 0px",
           borderRadius: "4%",
           whiteSpace: "nowrap",
-          fontSize: `${computedFontSize}px`,
+          fontSize: `${finalFontSize}px`,
           fontWeight: "bold",
           fontFamily: "myriad-pro-condensed, sans-serif",
           WebkitTextStroke: "0.025em black",
-          pointerEvents: "auto", // allow label clicks
-          cursor: "pointer", // indicate interactivity
+          pointerEvents: "auto",
+          cursor: "pointer",
         };
 
         return (
@@ -169,15 +201,75 @@ LabelOverlay.propTypes = {
   ).isRequired,
   zoomLevel: PropTypes.number.isRequired,
   setActivePopup: PropTypes.func.isRequired,
+  hoveredMarkerId: PropTypes.any,
 };
 
-// Helper: update SVG width and height attributes
-const updateSvgSize = (svg, width, height) => {
-  let updatedSvg = svg.replace(/width="[^"]*"/g, `width="${width}"`);
-  updatedSvg = updatedSvg.replace(/height="[^"]*"/g, `height="${height}"`);
-  return updatedSvg;
+// --------------------------------------------------------------------
+// Custom Popup Overlay Component
+// --------------------------------------------------------------------
+function CustomPopupOverlay({ popup, map, onClose }) {
+  if (!popup) return null;
+  const point = map.latLngToLayerPoint(popup.position);
+
+  const popupContainerStyle = {
+    position: "absolute",
+    left: point.x,
+    top: point.y,
+    transform: "translate(-50%, -140%)",
+    background: "white",
+    padding: "10px 20px",
+    border: "1px solid transparent",
+    borderRadius: "8px",
+    pointerEvents: "auto",
+    zIndex: 4000,
+    whiteSpace: "nowrap",
+    display: "inline-block",
+    textAlign: "center",
+    fontSize: "24px",
+    fontWeight: "bold",
+    color: "#2a7ae2",
+    textDecoration: "underline",
+    maxWidth: "calc(100vw - 40px)",
+  };
+
+  const arrowStyle = {
+    position: "absolute",
+    left: "50%",
+    bottom: "-10px",
+    transform: "translateX(-50%)",
+    width: 0,
+    height: 0,
+    borderLeft: "10px solid transparent",
+    borderRight: "10px solid transparent",
+    borderTop: "10px solid white",
+  };
+
+  return createPortal(
+    <div
+      style={popupContainerStyle}
+      onClick={(e) => e.stopPropagation()}
+      onDoubleClick={onClose}
+    >
+      <div dangerouslySetInnerHTML={{ __html: popup.content }}></div>
+      <div style={arrowStyle}></div>
+    </div>,
+    map.getPanes().overlayPane
+  );
+}
+
+CustomPopupOverlay.propTypes = {
+  popup: PropTypes.shape({
+    id: PropTypes.any,
+    position: PropTypes.arrayOf(PropTypes.number),
+    content: PropTypes.string,
+  }),
+  map: PropTypes.object.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
 
+// --------------------------------------------------------------------
+// Main PixiMarkers Component
+// --------------------------------------------------------------------
 export default function PixiMarkers({
   allSystems,
   activeFilters,
@@ -186,80 +278,103 @@ export default function PixiMarkers({
 }) {
   const [visibleMarkers, setVisibleMarkers] = useState([]);
   const [activePopup, setActivePopup] = useState(null);
+  const [hoveredMarkerId, setHoveredMarkerId] = useState(null);
 
-	const updateVisibleMarkers = useCallback(() => {
+  // Hover detection via distance check
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      const { latlng } = e;
+      const mousePoint = map.latLngToLayerPoint(latlng);
 
-		if (allSystems.length === 0) return;
-		
-    const bounds = map.getBounds();
+      let nearestMarkerId = null;
+      let minDistanceSquared = Infinity;
+      const hoverRadiusPx = 15;
 
-    const calculateIconSize = (zoomLevel, starType, hasError) => {
-      if (hasError) return [100, 100];
-      if (starType === "MajorStar") return calculateMajorIconSize(zoomLevel);
-      if (starType === "MinorStar") return calculateMinorIconSize(zoomLevel);
-      if (starType === "MicroStar") return calculateMicroIconSize(zoomLevel);
-      return [80, 80];
+      visibleMarkers.forEach((m) => {
+        const markerPoint = map.latLngToLayerPoint(m.position);
+        const dx = mousePoint.x - markerPoint.x;
+        const dy = mousePoint.y - markerPoint.y;
+        const distSq = dx * dx + dy * dy;
+        if (distSq < hoverRadiusPx * hoverRadiusPx && distSq < minDistanceSquared) {
+          minDistanceSquared = distSq;
+          nearestMarkerId = m.id;
+        }
+      });
+
+      setHoveredMarkerId((prev) => (prev === nearestMarkerId ? prev : nearestMarkerId));
     };
 
-    const calculateMajorIconSize = (zoomLevel) => {
-      if (zoomLevel <= 2) return [10, 10];
-      if (zoomLevel === 3) return [16, 16];
-      if (zoomLevel === 4) return [20, 20];
-      if (zoomLevel === 5) return [30, 30];
-      if (zoomLevel === 6) return [40, 40];
-      if (zoomLevel === 7) return [45, 45];
-      if (zoomLevel === 8) return [50, 50];
-      if (zoomLevel >= 9) return [60, 60];
-      return [55, 55];
+    map.on("mousemove", handleMouseMove);
+    return () => {
+      map.off("mousemove", handleMouseMove);
     };
+  }, [map, visibleMarkers]);
 
-    const calculateMinorIconSize = (zoomLevel) => {
-      if (zoomLevel <= 4) return [10, 10];
-      if (zoomLevel === 5) return [18, 18];
-      if (zoomLevel === 6) return [22, 22];
-      if (zoomLevel === 7) return [30, 30];
-      if (zoomLevel === 8) return [40, 40];
-      if (zoomLevel >= 9) return [50, 50];
-      return [55, 55];
-    };
+  // Calculate marker sizes
+  const calculateMajorIconSize = (zoom) => {
+    if (zoom <= 2) return [10, 10];
+    if (zoom === 3) return [18, 18];
+    if (zoom === 4) return [20, 20];
+    if (zoom === 5) return [25, 25];
+    if (zoom === 6) return [30, 30];
+    if (zoom === 7) return [40, 40];
+    if (zoom === 8) return [45, 45];
+    if (zoom >= 9) return [50, 50];
+    return [55, 55];
+  };
 
-    const calculateMicroIconSize = (zoomLevel) => {
-      if (zoomLevel <= 4) return [0, 0];
-      if (zoomLevel === 5) return [8, 8];
-      if (zoomLevel === 6) return [10, 10];
-      if (zoomLevel === 7) return [14, 14];
-      if (zoomLevel === 8) return [22, 22];
-      if (zoomLevel >= 9) return [42, 42];
-      return [0, 0];
-    };
+  const calculateMinorIconSize = (zoom) => {
+    if (zoom <= 4) return [10, 10];
+    if (zoom === 5) return [15, 15];
+    if (zoom === 6) return [18, 18];
+    if (zoom === 7) return [25, 25];
+    if (zoom === 8) return [35, 35];
+    if (zoom >= 9) return [45, 45];
+    return [55, 55];
+  };
+
+  const calculateMicroIconSize = (zoom) => {
+    if (zoom <= 3) return [0, 0];
+    if (zoom === 4) return [3, 3];
+    if (zoom === 5) return [8, 8];
+    if (zoom === 6) return [10, 10];
+    if (zoom === 7) return [14, 14];
+    if (zoom === 8) return [22, 22];
+    if (zoom >= 9) return [42, 42];
+    return [0, 0];
+  };
+
+  // Build markers
+  const updateVisibleMarkers = useCallback(() => {
+    if (!allSystems.length) return;
+		const bounds = map.getBounds();
+
+		const calculateIconSize = (zoom, starType, hasError) => {
+			if (hasError) return [100, 100];
+			if (starType === "MajorStar") return calculateMajorIconSize(zoom);
+			if (starType === "MinorStar") return calculateMinorIconSize(zoom);
+			if (starType === "MicroStar") return calculateMicroIconSize(zoom);
+			return [80, 80];
+		};
 
     const newMarkers = allSystems
       .filter((system) => {
-        if (
-          activeFilters.includes("shared") &&
-          system.isCanon &&
-          system.isLegends
-        )
+        if (activeFilters.includes("shared") && system.isCanon && system.isLegends) {
           return true;
-        if (
-          activeFilters.includes("canon") &&
-          system.isCanon &&
-          !system.isLegends
-        )
+        }
+        if (activeFilters.includes("canon") && system.isCanon && !system.isLegends) {
           return true;
-        if (
-          activeFilters.includes("legends") &&
-          !system.isCanon &&
-          system.isLegends
-        )
+        }
+        if (activeFilters.includes("legends") && !system.isCanon && system.isLegends) {
           return true;
+        }
         return false;
       })
       .filter((system) => {
-        // Only include markers whose coordinates are within the current map bounds.
         return bounds.contains(L.latLng(system.latitude, system.longitude));
       })
       .map((system) => {
+        // Decide which raw SVG
         let chosenSvg;
         if (system.isCanon && system.isLegends) {
           chosenSvg = sharedSvg;
@@ -270,29 +385,34 @@ export default function PixiMarkers({
         } else {
           chosenSvg = errorSvg;
         }
-        const [w, h] = calculateIconSize(
-          zoomLevel,
-          system.starType,
-          system.hasError
-        );
 
+        // Calculate size
+        const [w, h] = calculateIconSize(zoomLevel, system.starType, system.hasError);
         if (w === 0 && h === 0) return null;
+
+        // If hovered, pick a bigger version
+        const isHovered = system.id === hoveredMarkerId;
+        const bigSvg = updateSvgSize(chosenSvg, w + 20, h + 20);
         const sizedSvg = updateSvgSize(chosenSvg, w, h);
+
+        // Unique icon ID for caching
+        const finalIconId = `${
+          system.isCanon && system.isLegends
+            ? "shared-svg-icon"
+            : system.isCanon
+            ? "canon-svg-icon"
+            : system.isLegends
+            ? "legends-svg-icon"
+            : "error-svg-icon"
+        }-zoom-${zoomLevel}-${w}x${h}${isHovered ? "-hover" : ""}`;
+
         return {
           id: system.id,
           name: system.name,
           position: [system.latitude, system.longitude],
-          customIcon: sizedSvg,
+          customIcon: isHovered ? bigSvg : sizedSvg,
           markerSpriteAnchor: [0.5, 0.5],
-          iconId: `${
-            system.isCanon && system.isLegends
-              ? "shared-svg-icon"
-              : system.isCanon
-              ? "canon-svg-icon"
-              : system.isLegends
-              ? "legends-svg-icon"
-              : "error-svg-icon"
-          }-zoom-${zoomLevel}-${w}x${h}`,
+          iconId: finalIconId,
           iconSize: [w, h],
           starType: system.starType,
           hasError: system.hasError,
@@ -312,69 +432,36 @@ export default function PixiMarkers({
           },
         };
       })
-      .filter((marker) => marker !== null);
+      .filter((m) => m !== null);
 
     setVisibleMarkers(newMarkers);
-  }, [allSystems, activeFilters, map, zoomLevel]);
+  }, [
+    allSystems,
+    activeFilters,
+    map,
+    zoomLevel,
+    hoveredMarkerId,
+		setActivePopup,
+  ]);
 
-  function CustomPopupOverlay({ popup, map, onClose }) {
-    if (!popup) return null;
-    const point = map.latLngToLayerPoint(popup.position);
+  // Recompute markers
+  useEffect(() => {
+    updateVisibleMarkers();
+  }, [allSystems, activeFilters, zoomLevel, updateVisibleMarkers]);
 
-    const popupContainerStyle = {
-      position: "absolute",
-      left: point.x,
-      top: point.y,
-      transform: "translate(-50%, -140%)",
-      background: "white",
-      padding: "10px 20px",
-      border: "1px solid transparent",
-      borderRadius: "8px",
-      pointerEvents: "auto",
-      zIndex: 4000,
-      whiteSpace: "nowrap",
-      display: "inline-block",
-      textAlign: "center",
-      fontSize: "24px",
-      fontWeight: "bold",
-      color: "#2a7ae2",
-      textDecoration: "underline",
-      maxWidth: "calc(100vw - 40px)",
+  // Recompute on map move
+  useEffect(() => {
+    map.on("moveend", updateVisibleMarkers);
+    return () => {
+      map.off("moveend", updateVisibleMarkers);
     };
+  }, [map, updateVisibleMarkers]);
 
-    const arrowStyle = {
-      position: "absolute",
-      left: "50%",
-      bottom: "-10px",
-      transform: "translateX(-50%)",
-      width: 0,
-      height: 0,
-      borderLeft: "10px solid transparent",
-      borderRight: "10px solid transparent",
-      borderTop: "10px solid white",
-    };
-
-    return createPortal(
-      <div
-        style={popupContainerStyle}
-        onClick={(e) => e.stopPropagation()}
-        onDoubleClick={onClose}
-      >
-        <div dangerouslySetInnerHTML={{ __html: popup.content }}></div>
-        <div style={arrowStyle}></div>
-      </div>,
-      map.getPanes().overlayPane
-    );
-  }
-
+  // Close the popup if user clicks elsewhere
   useEffect(() => {
     let clickHandler;
-
     if (activePopup) {
-      // Delay setting up the click handler to allow marker click to finish
-      clickHandler = () => {
-        setActivePopup(null);
-      };
+      clickHandler = () => setActivePopup(null);
       const timeoutId = setTimeout(() => {
         map.on("click", clickHandler);
       }, 0);
@@ -386,27 +473,15 @@ export default function PixiMarkers({
     }
   }, [map, activePopup]);
 
-  useEffect(() => {
-    updateVisibleMarkers();
-  }, [allSystems, activeFilters, zoomLevel, updateVisibleMarkers]);
-
-  // Update visible markers on every map moveend (panning/zooming)
-  useEffect(() => {
-    map.on("moveend", updateVisibleMarkers);
-    return () => {
-      map.off("moveend", updateVisibleMarkers);
-    };
-  }, [map, updateVisibleMarkers]);
-
+  // Render
   return (
     <>
-      <PixiOverlay
-        markers={visibleMarkers}
-      />
+      <PixiOverlay markers={visibleMarkers} />
       <LabelOverlay
         markers={visibleMarkers}
         zoomLevel={zoomLevel}
         setActivePopup={setActivePopup}
+        hoveredMarkerId={hoveredMarkerId}
       />
       <CustomPopupOverlay
         popup={activePopup}
@@ -417,6 +492,9 @@ export default function PixiMarkers({
   );
 }
 
+// --------------------------------------------------------------------
+// Prop Types
+// --------------------------------------------------------------------
 PixiMarkers.propTypes = {
   allSystems: PropTypes.array.isRequired,
   activeFilters: PropTypes.array.isRequired,
