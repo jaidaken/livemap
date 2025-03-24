@@ -4,20 +4,21 @@ import { fetchSystems } from "./functions/fetch.jsx";
 import { useSystemContext } from "./functions/useSystemContext.jsx";
 import SearchBarUI from "./ui/SearchBarUI.jsx";
 import Filter from "./ui/filter.jsx";
+import PixiOverlay from "react-leaflet-pixi-overlay";
 
-import PixiMarkers from "./shapes/PixiMarkers.jsx";
-
-import MemoAreaPlots from "./plots/AreaPlots.jsx";
-import MemoTerritoryPlots from "./plots/TerritoryPlots.jsx";
-import MemoNebulaPlots from "./plots/NebulaPlots.jsx";
-import MemoLanePlots from "./plots/LanePlots.jsx";
-// import MemoizedStar from "./shapes/Star.jsx";
+// Helper: determine icon color based on system properties
+const getIconColor = (system) => {
+  if (system.hasError) return "#C7303A";
+  if (system.isCanon && !system.isLegends) return "#F6A6CA";
+  if (!system.isCanon && system.isLegends) return "#529DD4";
+  if (system.isCanon && system.isLegends) return "#E3B687";
+  return "#C7303A";
+};
 
 export default function Markers() {
   const map = useMap();
   const { newSystemAdded, handleAddSystem } = useSystemContext();
 
-  const [zoomLevel, setZoomLevel] = useState(map.getZoom());
   const [allSystems, setAllSystems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeFilters, setActiveFilters] = useState([
@@ -25,6 +26,7 @@ export default function Markers() {
     "canon",
     "shared",
   ]);
+  const [markers, setMarkers] = useState([]);
 
   const fetchAllData = useCallback(async () => {
     try {
@@ -39,49 +41,55 @@ export default function Markers() {
     }
   }, []);
 
+  // Debounce fetching data
   useEffect(() => {
-    const debouncedFetchAllData = debounce(() => {
+    const debouncedFetch = debounce(() => {
       fetchAllData();
     }, 100);
-
-    debouncedFetchAllData();
-
+    debouncedFetch();
     return () => {
-      debouncedFetchAllData.cancel && debouncedFetchAllData.cancel();
+      debouncedFetch.cancel && debouncedFetch.cancel();
     };
   }, [fetchAllData]);
 
+  // Refetch if a new system is added
   useEffect(() => {
     if (newSystemAdded) {
       console.log("New system added, fetching data...");
       fetchAllData();
-      handleAddSystem(); // Reset state after fetching
+      handleAddSystem(); // Reset the flag after fetching
     }
   }, [newSystemAdded, fetchAllData, handleAddSystem]);
 
-	const handleZoomEnd = useCallback(() => {
-		const currentZoom = map.getZoom();
-		console.log("Zoom changed to:", currentZoom);
-		setZoomLevel(currentZoom);
-	}, [map]);
+  // Prepare markers based on allSystems and activeFilters
+  useEffect(() => {
+    if (allSystems.length > 0) {
+      const filteredSystems = allSystems.filter((system) => {
+        // Apply filtering logic based on activeFilters
+        if (activeFilters.includes("shared") && system.isCanon && system.isLegends)
+          return true;
+        if (activeFilters.includes("canon") && system.isCanon && !system.isLegends)
+          return true;
+        if (activeFilters.includes("legends") && !system.isCanon && system.isLegends)
+          return true;
+        return false;
+      });
 
-	const handleMoveEnd = useCallback(() => {
-		localStorage.setItem(
-			"mapCenter",
-			JSON.stringify([map.getCenter().lat, map.getCenter().lng])
-		);
-		console.log("center changed");
-	}, [map]);
+      const newMarkers = filteredSystems.map((system) => ({
+        id: system.id,
+        position: [system.latitude, system.longitude],
+        iconColor: getIconColor(system),
+        tooltip: system.name,
+        popup: `<a href="${system.wiki}" target="_blank" rel="noreferrer">${system.name} wiki page</a>`,
+        onClick: () => {
+          console.log(`Marker ${system.id} clicked`);
+          map.flyTo([system.latitude, system.longitude], 10);
+        },
+      }));
 
-	useEffect(() => {
-		map.on("zoomend", handleZoomEnd);
-		map.on("moveend", handleMoveEnd);
-
-		return () => {
-			map.off("zoomend", handleZoomEnd);
-			map.off("moveend", handleMoveEnd);
-		};
-	}, [map, handleZoomEnd, handleMoveEnd]);
+      setMarkers(newMarkers);
+    }
+  }, [allSystems, activeFilters, map]);
 
   const handleSystemSelect = useCallback(
     (selectedSystem) => {
@@ -102,29 +110,11 @@ export default function Markers() {
   return (
     <div>
       {loading && <div>Loading...</div>}
-
-      {!loading && (
-        <PixiMarkers
-          key="pixi-markers" // explicitly stable key
-          allSystems={allSystems}
-          activeFilters={activeFilters}
-          map={map}
-          zoomLevel={zoomLevel}
-          loading={loading}
-        />
-      )}
-
       <SearchBarUI systems={allSystems} onSystemSelect={handleSystemSelect} />
+      <Filter activeFilters={activeFilters} onFilterChange={handleFilterChange} />
 
-      <Filter
-        activeFilters={activeFilters}
-        onFilterChange={handleFilterChange}
-      />
-
-      <MemoAreaPlots zoomLevel={zoomLevel} />
-      <MemoTerritoryPlots zoomLevel={zoomLevel} />
-      <MemoNebulaPlots zoomLevel={zoomLevel} />
-      <MemoLanePlots zoomLevel={zoomLevel} />
+      {/* Pass marker data to PixiMarkers */}
+      {!loading && markers.length > 0 && <PixiOverlay markers={markers} />}
     </div>
   );
 }
