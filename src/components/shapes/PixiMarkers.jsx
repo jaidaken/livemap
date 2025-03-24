@@ -187,9 +187,10 @@ export default function PixiMarkers({
   const [visibleMarkers, setVisibleMarkers] = useState([]);
   const [activePopup, setActivePopup] = useState(null);
 
-  const updateVisibleMarkers = useCallback(() => {
-    PIXI.settings.CACHE_BASE_TEXTURES = false;
-    if (allSystems.length === 0) return;
+	const updateVisibleMarkers = useCallback(() => {
+
+		if (allSystems.length === 0) return;
+		
     const bounds = map.getBounds();
 
     const calculateIconSize = (zoomLevel, starType, hasError) => {
@@ -401,32 +402,6 @@ export default function PixiMarkers({
     <>
       <PixiOverlay
         markers={visibleMarkers}
-        setup={({ pixiContainer, markers }) => {
-          markers.forEach((marker) => {
-            const texture = PIXI.Texture.from(marker.customIcon);
-            const sprite = new PIXI.Sprite(texture);
-
-            sprite.anchor.set(...(marker.markerSpriteAnchor || [0.5, 0.5]));
-            sprite.x = marker._point.x;
-            sprite.y = marker._point.y;
-
-            sprite.interactive = true;
-            sprite.buttonMode = true;
-
-            sprite.on("pointertap", (e) => {
-              if (
-                e.data &&
-                e.data.originalEvent &&
-                typeof e.data.originalEvent.stopPropagation === "function"
-              ) {
-                e.data.originalEvent.stopPropagation(); // Prevent map click from firing
-              }
-              if (marker.onClick) marker.onClick(e);
-            });
-
-            pixiContainer.addChild(sprite);
-          });
-        }}
       />
       <LabelOverlay
         markers={visibleMarkers}
