@@ -9,6 +9,7 @@ import Key from "./components/ui/Key.jsx";
 import Patreon from "./components/ui/Patreon.jsx";
 // import AddSystemForm from "./components/AddSystem.jsx";
 import { SystemProvider } from "./components/functions/SystemProvider.jsx";
+import CustomCursor from './components/cursor/cursor.jsx';
 
 const Markers = React.lazy(() => import("./components/Markers.jsx"));
 
@@ -124,8 +125,9 @@ function App() {
 						<FixIOSLayout />
             <Suspense fallback={<div>Loading Markers...</div>}>
               <Markers />
-            </Suspense>
-            {/* <AddSystemForm /> */}
+						</Suspense>
+						<CustomCursor />
+            <AddSystemForm />
 						<MapEvents />
             <GridLayer
               bottomLeftCoord={bottomLeftCoord}
