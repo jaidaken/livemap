@@ -1,6 +1,18 @@
 @import url('https://fonts.cdnfonts.com/css/myriad-pro?styles=947,949,948,20533,946,945,952,953,950,951');
 @import url("https://use.typekit.net/noa6bvc.css");
 @import url('https://fonts.cdnfonts.com/css/univers-next-pro-extended');
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.map-container {
+  width: 100%;
+  height: 100%;
+}
+
 .tradeName {
 	font-weight: 400;
 	font-family: 'Univers Next Pro Light Cond', sans-serif !important;
@@ -282,7 +294,8 @@ height: 0;
 
 @media only screen and (max-width: 768px) {
   .leaflet-container {
-    height: 100dvh;
+    height: 100%;
+		width: 100%;
   }
 
   .key-container {
