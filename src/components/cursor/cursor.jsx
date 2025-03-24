@@ -22,7 +22,7 @@ function CustomCursor() {
         pointerEvents: "none",
         /* No translate(-50%, -50%) if you want the top-left corner to be the “tip.” */
         zIndex: 9999,
-				width: "32px",
+				width: "18px",
 				height: "auto",
 				filter: "drop-shadow(2px 6px 8px rgba(0, 0, 0, 0.5))",
       }}
