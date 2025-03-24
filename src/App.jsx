@@ -39,9 +39,9 @@ function FixIOSLayout() {
     function isIosSafari() {
       const ua = window.navigator.userAgent;
       // Check for iPhone/iPad/iPod and Safari (excluding Chrome)
-      const iOSDevice = /iPad|iPhone|iPod/.test(ua);
-      const safariBrowser = /Safari/.test(ua) && !/Chrome/.test(ua);
-      return iOSDevice && safariBrowser;
+      // const iOSDevice = /iPad|iPhone|iPod/.test(ua);
+      const safariBrowser = /Safari/.test(ua);
+      return safariBrowser;
     }
 
     if (!isIosSafari()) {
