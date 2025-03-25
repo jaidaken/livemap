@@ -193,13 +193,31 @@ function LanePlots() {
 				<TradeLine plot="naboo" lineStyle="midStyle" />
 				<TradeLine plot="skynara" lineStyle="midStyle" />
 				<TradeLine plot="triton" lineStyle="midStyle" />
+				<TradeLine plot="starforge" lineStyle="midStyle" />
+				<TradeLine plot="senex" lineStyle="midStyle" />
 
+				<TradeLine plot="lipsec" lineStyle="midStyle" />
+				<TradeNames
+          color="white"
+          coords={[-215.40625, 109.921875]}
+          text="Lipsec Run"
+          rotation="-15deg"
+          textStyle="minStyle"
+        />
 				<TradeLine plot="sanrafsix" lineStyle="midStyle" />
 				<TradeNames
           color="white"
           coords={[-223.25, 158.28125]}
           text="Sanrafsix Corridor"
           rotation="-97deg"
+          textStyle="minStyle"
+        />
+				<TradeLine plot="nothoiin" lineStyle="midStyle" />
+				<TradeNames
+          color="white"
+          coords={[-209.25, 124.984375]}
+          text="Nothoiin Corridor"
+          rotation="18deg"
           textStyle="minStyle"
         />
 				<TradeLine plot="veils" lineStyle="midStyle" />

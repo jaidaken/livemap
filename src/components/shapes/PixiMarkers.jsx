@@ -119,11 +119,7 @@ function LabelOverlay({ markers, zoomLevel, setActivePopup, hoveredMarkerId }) {
         const finalFontSize = isHovered ? hoveredFontSize : computedFontSize;
 
         // For horizontally shifting the label on hover
-        const finalTransform = isHovered
-          ? marker.alignRight
-            ? -12
-            : 12
-          : 0;
+        const finalTransform = isHovered ? (marker.alignRight ? -12 : 12) : 0;
 
         // Colors & layout
         const color = getMarkerColor(marker);
@@ -295,13 +291,18 @@ export default function PixiMarkers({
         const dx = mousePoint.x - markerPoint.x;
         const dy = mousePoint.y - markerPoint.y;
         const distSq = dx * dx + dy * dy;
-        if (distSq < hoverRadiusPx * hoverRadiusPx && distSq < minDistanceSquared) {
+        if (
+          distSq < hoverRadiusPx * hoverRadiusPx &&
+          distSq < minDistanceSquared
+        ) {
           minDistanceSquared = distSq;
           nearestMarkerId = m.id;
         }
       });
 
-      setHoveredMarkerId((prev) => (prev === nearestMarkerId ? prev : nearestMarkerId));
+      setHoveredMarkerId((prev) =>
+        prev === nearestMarkerId ? prev : nearestMarkerId
+      );
     };
 
     map.on("mousemove", handleMouseMove);
@@ -347,25 +348,37 @@ export default function PixiMarkers({
   // Build markers
   const updateVisibleMarkers = useCallback(() => {
     if (!allSystems.length) return;
-		const bounds = map.getBounds();
+    const bounds = map.getBounds();
 
-		const calculateIconSize = (zoom, starType, hasError) => {
-			if (hasError) return [100, 100];
-			if (starType === "MajorStar") return calculateMajorIconSize(zoom);
-			if (starType === "MinorStar") return calculateMinorIconSize(zoom);
-			if (starType === "MicroStar") return calculateMicroIconSize(zoom);
-			return [80, 80];
-		};
+    const calculateIconSize = (zoom, starType, hasError) => {
+      if (hasError) return [100, 100];
+      if (starType === "MajorStar") return calculateMajorIconSize(zoom);
+      if (starType === "MinorStar") return calculateMinorIconSize(zoom);
+      if (starType === "MicroStar") return calculateMicroIconSize(zoom);
+      return [80, 80];
+    };
 
     const newMarkers = allSystems
       .filter((system) => {
-        if (activeFilters.includes("shared") && system.isCanon && system.isLegends) {
+        if (
+          activeFilters.includes("shared") &&
+          system.isCanon &&
+          system.isLegends
+        ) {
           return true;
         }
-        if (activeFilters.includes("canon") && system.isCanon && !system.isLegends) {
+        if (
+          activeFilters.includes("canon") &&
+          system.isCanon &&
+          !system.isLegends
+        ) {
           return true;
         }
-        if (activeFilters.includes("legends") && !system.isCanon && system.isLegends) {
+        if (
+          activeFilters.includes("legends") &&
+          !system.isCanon &&
+          system.isLegends
+        ) {
           return true;
         }
         return false;
@@ -387,7 +400,11 @@ export default function PixiMarkers({
         }
 
         // Calculate size
-        const [w, h] = calculateIconSize(zoomLevel, system.starType, system.hasError);
+        const [w, h] = calculateIconSize(
+          zoomLevel,
+          system.starType,
+          system.hasError
+        );
         if (w === 0 && h === 0) return null;
 
         // If hovered, pick a bigger version
@@ -426,7 +443,13 @@ export default function PixiMarkers({
                 : {
                     id: system.id,
                     position: [system.latitude, system.longitude],
-                    content: `<a href="${system.wiki}" target="_blank" style="color: inherit; text-decoration: none;">${system.name} Wiki Page</a>`,
+                    content: `<a href="${system.wiki}"
+											target="_blank"
+											style="color:
+											inherit;
+											text-decoration: none;">
+											${system.name} Wiki Page
+											</a>`,
                   };
             });
           },
@@ -441,7 +464,7 @@ export default function PixiMarkers({
     map,
     zoomLevel,
     hoveredMarkerId,
-		setActivePopup,
+    setActivePopup,
   ]);
 
   // Recompute markers
