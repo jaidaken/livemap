@@ -183,13 +183,34 @@ function LanePlots() {
         <TradeLine plot="hoth" lineStyle="majStyle" />
       </div>
 
-      <div className="midLanes">
+      <div className="MidLanes">
 
+
+        <TradeLine plot="cov" lineStyle="midStyle" />
         <TradeLine plot="manda" lineStyle="midStyle" />
         <TradeLine plot="kinyen" lineStyle="midStyle" />
         <TradeLine plot="daalang" lineStyle="midStyle" />
-        <TradeLine plot="naboo" lineStyle="midStyle" />
-        <TradeLine plot="desevran" lineStyle="midStyle" />
+				<TradeLine plot="naboo" lineStyle="midStyle" />
+				<TradeLine plot="skynara" lineStyle="midStyle" />
+				<TradeLine plot="triton" lineStyle="midStyle" />
+
+				<TradeLine plot="sanrafsix" lineStyle="midStyle" />
+				<TradeNames
+          color="white"
+          coords={[-223.25, 158.28125]}
+          text="Sanrafsix Corridor"
+          rotation="-97deg"
+          textStyle="minStyle"
+        />
+				<TradeLine plot="veils" lineStyle="midStyle" />
+				<TradeNames
+          color="white"
+          coords={[-206.171875, 174.421875]}
+          text="Five Veils Route"
+          rotation="-12deg"
+          textStyle="minStyle"
+        />
+				<TradeLine plot="desevran" lineStyle="midStyle" />
         <TradeNames
           color="white"
           coords={[-68.5703125, 218.7734375]}
