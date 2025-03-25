@@ -71,7 +71,7 @@ const TradeLine = (props) => {
 
   const midStyle = {
     weight: calculateMidWeight(),
-    opacity: 0.6,
+    opacity: 1,
     color: color || "white",
   };
 
@@ -86,7 +86,7 @@ const TradeLine = (props) => {
 
   const minStyle = {
     weight: calculateMinWeight(),
-    opacity: 0.4,
+    opacity: 1,
     color: color || "white",
   };
 

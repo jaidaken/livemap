@@ -19,7 +19,7 @@ function LanePlots() {
           />
           <TradeNames
             color="white"
-            coords={[-161.44152583527585, 167.921875]}
+            coords={[-160.1875, 166.5625]}
             text="Corellian Run"
             rotation="45deg"
             textStyle="majStyle"
@@ -429,6 +429,11 @@ function LanePlots() {
 
 			<div className="MinorLanes2">
 
+        <TradeLine plot="ryloth" lineStyle="minStyle" />
+        <TradeLine plot="siskeen" lineStyle="minStyle" />
+        <TradeLine plot="vasch" lineStyle="minStyle" />
+        <TradeLine plot="vasch2" lineStyle="minStyle" />
+        <TradeLine plot="pii" lineStyle="minStyle" />
         <TradeLine plot="excarga" lineStyle="minStyle" />
         <TradeLine plot="csilla" lineStyle="minStyle" />
         <TradeLine plot="kira" lineStyle="minStyle" />
