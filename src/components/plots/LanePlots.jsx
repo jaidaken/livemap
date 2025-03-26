@@ -634,14 +634,14 @@ function LanePlots() {
               lineStyle="microStyle"
             />
           ))}
-          {Array.from({ length: 12 }, (_, i) => (
+          {Array.from({ length: 11 }, (_, i) => (
             <TradeLine
               plot={`hapes${i + 1}`}
               lineStyle="microStyle"
               key={`hapes-${i}`}
             />
           ))}
-          {Array.from({ length: 12 }, (_, i) => (
+          {Array.from({ length: 10 }, (_, i) => (
             <TradeLine
               plot={`senex${i + 1}`}
               lineStyle="microStyle"
