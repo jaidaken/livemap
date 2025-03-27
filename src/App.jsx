@@ -9,7 +9,7 @@ import Key from "./components/ui/Key.jsx";
 import Patreon from "./components/ui/Patreon.jsx";
 // import AddSystemForm from "./components/AddSystem.jsx";
 import { SystemProvider } from "./components/functions/SystemProvider.jsx";
-import CustomCursor from './components/cursor/cursor.jsx';
+import CustomCursor from "./components/cursor/cursor.jsx";
 
 const Markers = React.lazy(() => import("./components/Markers.jsx"));
 
@@ -56,11 +56,10 @@ function FixIOSLayout() {
     }, 300);
 
     return () => clearTimeout(timer);
-  }, [map]);
+	}, [map]);
 
   return null;
 }
-
 
 const minZoom = 2;
 const maxZoom = 9;
@@ -99,36 +98,41 @@ function App() {
   const bottomLeftCoord = [
     desiredTopRightCorner[0] - squareSize * 15,
     desiredTopRightCorner[1] - squareSize * 11,
-  ];
-
+	];
   return (
     <div className="App">
       <div className="map-container">
         <MapContainer
           preferCanvas={true}
+          zoomAnimation={false}
+          zoomDelta={0.5}
           crs={CRS.Simple}
           center={initialCenter}
           zoom={initialZoom}
           minZoom={minZoom}
           maxZoom={maxZoom}
-          scrollWheelZoom={true}
+					scrollWheelZoom={true}
           doubleClickZoom={false}
           whenCreated={(map) => {
             map.on("moveend", handleMapMoveEnd);
           }}
         >
           <SystemProvider>
-            {/* <TileLayer attribution="" url="/src/assets/images/{z}/{x}/{y}.jpg" opacity={0.6} /> */}
+            {/* <TileLayer
+              attribution=""
+              url="/src/assets/images/{z}/{x}/{y}.jpg"
+              opacity={0.6}
+            /> */}
             <TileLayer attribution="" url="" />
             <Patreon />
-						<Key />
+            <Key />
 						<FixIOSLayout />
             <Suspense fallback={<div>Loading Markers...</div>}>
               <Markers />
-						</Suspense>
-						<CustomCursor />
+            </Suspense>
+            <CustomCursor />
             {/* <AddSystemForm /> */}
-						<MapEvents />
+            <MapEvents />
             <GridLayer
               bottomLeftCoord={bottomLeftCoord}
               lineColor="#ffffff"
