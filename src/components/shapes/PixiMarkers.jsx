@@ -4,6 +4,7 @@ import { createPortal } from "react-dom";
 import L from "leaflet";
 import PropTypes from "prop-types";
 import PixiOverlay from "react-leaflet-pixi-overlay";
+import { DropShadowFilter } from "pixi-filters";
 
 // SVGs as raw strings
 import sharedSvg from "../../assets/marker-shared2.svg?raw";
@@ -358,46 +359,43 @@ export default function PixiMarkers({
       return [80, 80];
     };
 
-    const newMarkers = allSystems
-      .filter((system) => {
-        if (
-          activeFilters.includes("shared") &&
-          system.isCanon &&
-          system.isLegends
-        ) {
-          return true;
-        }
-        if (
-          activeFilters.includes("canon") &&
-          system.isCanon &&
-          !system.isLegends
-        ) {
-          return true;
-        }
-        if (
-          activeFilters.includes("legends") &&
-          !system.isCanon &&
-          system.isLegends
-        ) {
-          return true;
-        }
-        return false;
-      })
-      .filter((system) => {
-        return bounds.contains(L.latLng(system.latitude, system.longitude));
-      })
-      .map((system) => {
-        // Decide which raw SVG
-        let chosenSvg;
-        if (system.isCanon && system.isLegends) {
-          chosenSvg = sharedSvg;
-        } else if (system.isCanon) {
-          chosenSvg = canonSvg;
-        } else if (system.isLegends) {
-          chosenSvg = legendsSvg;
-        } else {
-          chosenSvg = errorSvg;
-        }
+    const dropShadow = new DropShadowFilter({
+      distance: 5,
+      rotation: 45,
+      alpha: 0.5,
+      blur: 4,
+      quality: 4,
+    });
+
+		const newMarkers = allSystems
+		.filter((system) => {
+			const matchesShared = system.isCanon && system.isLegends;
+			const matchesCanon = system.isCanon && !system.isLegends;
+			const matchesLegends = !system.isCanon && system.isLegends;
+
+			// If system matches a known filter, check if the filter is active
+			if (matchesShared) return activeFilters.includes("shared");
+			if (matchesCanon) return activeFilters.includes("canon");
+			if (matchesLegends) return activeFilters.includes("legends");
+
+			// If the system doesn't match any of the filters above (error state), always render it
+			return true;
+		})
+		.filter((system) => {
+			return bounds.contains(L.latLng(system.latitude, system.longitude));
+		})
+		.map((system) => {
+			// Decide which raw SVG
+			let chosenSvg;
+			if (system.isCanon && system.isLegends) {
+				chosenSvg = sharedSvg;
+			} else if (system.isCanon) {
+				chosenSvg = canonSvg;
+			} else if (system.isLegends) {
+				chosenSvg = legendsSvg;
+			} else {
+				chosenSvg = errorSvg;
+			}
 
         // Calculate size
         const [w, h] = calculateIconSize(
@@ -453,6 +451,7 @@ export default function PixiMarkers({
                   };
             });
           },
+          filters: [dropShadow],
         };
       })
       .filter((m) => m !== null);
@@ -499,7 +498,15 @@ export default function PixiMarkers({
   // Render
   return (
     <>
-      <PixiOverlay markers={visibleMarkers} />
+      <PixiOverlay
+        markers={visibleMarkers}
+        onSpriteCreated={(sprite, marker) => {
+          // Check if the marker has filters defined and apply them.
+          if (marker.filters) {
+            sprite.filters = marker.filters;
+          }
+        }}
+      />
       <LabelOverlay
         markers={visibleMarkers}
         zoomLevel={zoomLevel}
