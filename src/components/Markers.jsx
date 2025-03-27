@@ -1,9 +1,11 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useMap } from "react-leaflet";
 import { fetchSystems } from "./functions/fetch.jsx";
 import { useSystemContext } from "./functions/useSystemContext.jsx";
 import SearchBarUI from "./ui/SearchBarUI.jsx";
 import Filter from "./ui/filter.jsx";
+
+import { latLng } from "leaflet";
 
 import PixiMarkers from "./shapes/PixiMarkers.jsx";
 
@@ -59,32 +61,78 @@ export default function Markers() {
     }
   }, [newSystemAdded, fetchAllData, handleAddSystem]);
 
-	const handleZoomEnd = useCallback(() => {
-		const currentZoom = map.getZoom();
-		setZoomLevel(currentZoom);
-	}, [map]);
+  const handleZoomEnd = useCallback(() => {
+    const currentZoom = map.getZoom();
+    setZoomLevel(currentZoom);
+  }, [map]);
 
-	const handleMoveEnd = useCallback(() => {
-		localStorage.setItem(
-			"mapCenter",
-			JSON.stringify([map.getCenter().lat, map.getCenter().lng])
-		);
-	}, [map]);
+  const handleMoveEnd = useCallback(() => {
+    localStorage.setItem(
+      "mapCenter",
+      JSON.stringify([map.getCenter().lat, map.getCenter().lng])
+    );
+  }, [map]);
 
-	useEffect(() => {
-		map.on("zoomend", handleZoomEnd);
-		map.on("moveend", handleMoveEnd);
+  useEffect(() => {
+    map.on("zoomend", handleZoomEnd);
+    map.on("moveend", handleMoveEnd);
 
-		return () => {
-			map.off("zoomend", handleZoomEnd);
-			map.off("moveend", handleMoveEnd);
-		};
-	}, [map, handleZoomEnd, handleMoveEnd]);
+    return () => {
+      map.off("zoomend", handleZoomEnd);
+      map.off("moveend", handleMoveEnd);
+    };
+  }, [map, handleZoomEnd, handleMoveEnd]);
+
+  // const handleSystemSelect = useCallback(
+  //   (selectedSystem) => {
+  //     const { latitude, longitude } = selectedSystem;
+  //     map.flyTo([latitude, longitude], 7, { animate: false });
+  //   },
+  //   [map]
+  // );
+
+	const ANIMATION_DURATION = 2500; // 2 seconds for gentle smoothness
+	const animationFrame = useRef();
+
+	const easeInOutSine = (t) => -(Math.cos(Math.PI * t) - 1) / 2;
 
   const handleSystemSelect = useCallback(
     (selectedSystem) => {
       const { latitude, longitude } = selectedSystem;
-      map.flyTo([latitude, longitude], 7);
+      const startCenter = map.getCenter();
+      const startZoom = map.getZoom();
+
+      const endCenter = latLng(latitude, longitude);
+      const endZoom = 6;
+
+      const animationStart = performance.now();
+
+      const animate = (now) => {
+        const elapsed = now - animationStart;
+        const progress = Math.min(elapsed / ANIMATION_DURATION, 1);
+
+        // Simple easing (ease-in-out)
+				const easeProgress = easeInOutSine(progress);
+
+        const intermediateLat =
+          startCenter.lat + (endCenter.lat - startCenter.lat) * easeProgress;
+        const intermediateLng =
+          startCenter.lng + (endCenter.lng - startCenter.lng) * easeProgress;
+        const intermediateZoom =
+          startZoom + (endZoom - startZoom) * easeProgress;
+
+        map.setView([intermediateLat, intermediateLng], intermediateZoom, {
+          animate: false,
+        });
+
+        if (progress < 1) {
+          animationFrame.current = requestAnimationFrame(animate);
+        } else {
+          cancelAnimationFrame(animationFrame.current);
+        }
+      };
+
+      animationFrame.current = requestAnimationFrame(animate);
     },
     [map]
   );

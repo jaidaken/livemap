@@ -472,12 +472,15 @@ export default function PixiMarkers({
   }, [allSystems, activeFilters, zoomLevel, updateVisibleMarkers]);
 
   // Recompute on map move
-  useEffect(() => {
-    map.on("moveend", updateVisibleMarkers);
-    return () => {
-      map.off("moveend", updateVisibleMarkers);
-    };
-  }, [map, updateVisibleMarkers]);
+	useEffect(() => {
+		map.on("move", updateVisibleMarkers);
+		map.on("zoom", updateVisibleMarkers);  // ensures markers also reposition correctly during zoom
+
+		return () => {
+			map.off("move", updateVisibleMarkers);
+			map.off("zoom", updateVisibleMarkers);
+		};
+	}, [map, updateVisibleMarkers]);
 
   // Close the popup if user clicks elsewhere
   useEffect(() => {
