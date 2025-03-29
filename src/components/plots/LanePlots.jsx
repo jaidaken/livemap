@@ -11,21 +11,18 @@ function LanePlots() {
         <div className="lane corellian-run">
           <TradeLine plot="corellian" lineStyle="majStyle" />
           <TradeNames
-            color="white"
             coords={[-117.90750291375292, 141.15625]}
             text="Corellian Run"
             rotation="50deg"
             textStyle="majStyle"
           />
           <TradeNames
-            color="white"
             coords={[-160.1875, 166.5625]}
             text="Corellian Run"
             rotation="45deg"
             textStyle="majStyle"
           />
           <TradeNames
-            color="white"
             coords={[-201.90884324009323, 209.3329941860465]}
             text="Corellian Run"
             rotation="38deg"
@@ -36,21 +33,18 @@ function LanePlots() {
         <div className="lane corellian-trade-spine">
           <TradeLine plot="corellianspine" lineStyle="majStyle" />
           <TradeNames
-            color="white"
             coords={[-152.555, 141.487]}
             text="Corellian Trade Spine"
             rotation="-72deg"
             textStyle="majStyle"
           />
           <TradeNames
-            color="white"
             coords={[-190.847, 120.6418]}
             text="Corellian Trade Spine"
             rotation="-71deg"
             textStyle="majStyle"
           />
           <TradeNames
-            color="white"
             coords={[-233.1303, 117.785]}
             text="Corellian Trade Spine"
             rotation="-90deg"
@@ -62,21 +56,18 @@ function LanePlots() {
           <TradeLine plot="rimma" lineStyle="majStyle" />
 
           <TradeNames
-            color="white"
             coords={[-158.2055676961927, 130.93849846390168]}
             text={`Rimma Trade Route`}
             rotation={"50deg"}
             textStyle="majStyle"
           />
           <TradeNames
-            color="white"
             coords={[-183.97075563325564, 143.48843917710195]}
             text={`Rimma Trade Route`}
             rotation={"75deg"}
             textStyle="majStyle"
           />
           <TradeNames
-            color="white"
             coords={[-227.82966686091686, 146.47266882826477]}
             text={`Rimma Trade Route`}
             rotation={"90deg"}
@@ -87,35 +78,30 @@ function LanePlots() {
         <div className="lane hydian-way">
           <TradeLine plot="hydian" lineStyle="majStyle" />
           <TradeNames
-            color="white"
             coords={[-39.64054001554007, 200.93844476744187]}
             text={`Hydian Way`}
             rotation={"0deg"}
             textStyle="majStyle"
           />
           <TradeNames
-            color="white"
             coords={[-83.68949834887334, 148.53339669051877]}
             text={`Hydian Way`}
             rotation={"-30deg"}
             textStyle="majStyle"
           />
           <TradeNames
-            color="white"
             coords={[-116.69232711732712, 142.03481663685153]}
             text={`Hydian Way`}
             rotation={"46deg"}
             textStyle="majStyle"
           />
           <TradeNames
-            color="white"
             coords={[-176.44247037684536, 153.50500894454382]}
             text={`Hydian Way`}
             rotation={"-82deg"}
             textStyle="majStyle"
           />
           <TradeNames
-            color="white"
             coords={[-223.66002573815075, 133.23474396243293]}
             text={`Hydian Way`}
             rotation={"-52deg"}
@@ -126,14 +112,12 @@ function LanePlots() {
         <div className="lane perlemian-route">
           <TradeLine plot="perlemian" lineStyle="majStyle" />
           <TradeNames
-            color="white"
             coords={[-109.0319, 131.0409]}
             text="Perlemian Trade Route"
             rotation="-31deg"
             textStyle="minStyle"
           />
           <TradeNames
-            color="white"
             coords={[-74.236, 206.4574]}
             text="Perlemian Trade Route"
             rotation="-60deg"
@@ -141,7 +125,6 @@ function LanePlots() {
           />
           <TradeLine plot="triellus" lineStyle="majStyle" />
           <TradeNames
-            color="white"
             coords={[-120.46875, 234.21875]}
             text="Triellus Trade Route"
             rotation="65deg"
@@ -149,14 +132,12 @@ function LanePlots() {
           />
           <TradeLine plot="dead" lineStyle="majStyle" />
           <TradeNames
-            color="white"
             coords={[-109.21875, 218.6875]}
             text="The Dead Road"
             rotation="70deg"
             textStyle="majStyle"
           />
           <TradeNames
-            color="white"
             coords={[-125.15625, 225.15625]}
             text="The Dead Road"
             rotation="70deg"
@@ -165,14 +146,12 @@ function LanePlots() {
 
           <TradeLine plot="bootana" lineStyle="majStyle" />
           <TradeNames
-            color="white"
             coords={[-120.6875, 218.609375]}
             text="Bootana Hutta"
             rotation="0deg"
             textStyle="majStyle"
           />
           <TradeNames
-            color="white"
             coords={[-133.25, 212.5625]}
             text="Pabol Hutta"
             rotation="-34deg"
@@ -192,15 +171,14 @@ function LanePlots() {
         <TradeLine plot="skynara" lineStyle="midStyle" />
         <TradeLine plot="triton" lineStyle="midStyle" />
         <TradeLine plot="starforge" lineStyle="midStyle" />
-				<TradeLine plot="senex" lineStyle="midStyle" />
-				<TradeLine plot="veron" lineStyle="midStyle" />
-				<TradeLine plot="endor" lineStyle="midStyle" />
-				<TradeLine plot="batuu" lineStyle="midStyle" />
-				<TradeLine plot="xala" lineStyle="midStyle" />
+        <TradeLine plot="senex" lineStyle="midStyle" />
+        <TradeLine plot="veron" lineStyle="midStyle" />
+        <TradeLine plot="endor" lineStyle="midStyle" />
+        <TradeLine plot="batuu" lineStyle="midStyle" />
+        <TradeLine plot="xala" lineStyle="midStyle" />
 
-				<TradeLine plot="daelgoth" lineStyle="midStyle" />
+        <TradeLine plot="daelgoth" lineStyle="midStyle" />
         <TradeNames
-          color="white"
           coords={[-194.984375, 124.90625]}
           text="D'aelgoth Trade Route"
           rotation="40deg"
@@ -209,7 +187,6 @@ function LanePlots() {
 
         <TradeLine plot="agarix" lineStyle="midStyle" />
         <TradeNames
-          color="white"
           coords={[-205.84375, 124.75]}
           text="Agarix Trade Route"
           rotation="10deg"
@@ -217,7 +194,6 @@ function LanePlots() {
         />
         <TradeLine plot="lipsec" lineStyle="midStyle" />
         <TradeNames
-          color="white"
           coords={[-215.40625, 109.921875]}
           text="Lipsec Run"
           rotation="-15deg"
@@ -225,7 +201,6 @@ function LanePlots() {
         />
         <TradeLine plot="sanrafsix" lineStyle="midStyle" />
         <TradeNames
-          color="white"
           coords={[-223.25, 158.28125]}
           text="Sanrafsix Corridor"
           rotation="-97deg"
@@ -233,7 +208,6 @@ function LanePlots() {
         />
         <TradeLine plot="nothoiin" lineStyle="midStyle" />
         <TradeNames
-          color="white"
           coords={[-209.25, 124.984375]}
           text="Nothoiin Corridor"
           rotation="18deg"
@@ -241,7 +215,6 @@ function LanePlots() {
         />
         <TradeLine plot="veils" lineStyle="midStyle" />
         <TradeNames
-          color="white"
           coords={[-206.171875, 174.421875]}
           text="Five Veils Route"
           rotation="-12deg"
@@ -249,7 +222,6 @@ function LanePlots() {
         />
         <TradeLine plot="desevran" lineStyle="midStyle" />
         <TradeNames
-          color="white"
           coords={[-68.5703125, 218.7734375]}
           text="Desevran Trace"
           rotation="90deg"
@@ -257,7 +229,6 @@ function LanePlots() {
         />
         <TradeLine plot="shaltin" lineStyle="midStyle" />
         <TradeNames
-          color="white"
           coords={[-50.546875, 209.453125]}
           text="Shaltin Tunnels"
           rotation="-65deg"
@@ -265,7 +236,6 @@ function LanePlots() {
         />
         <TradeLine plot="overic" lineStyle="midStyle" />
         <TradeNames
-          color="white"
           coords={[-59.5546875, 220.296875]}
           text="Overic Griplink"
           rotation="40deg"
@@ -273,7 +243,6 @@ function LanePlots() {
         />
         <TradeLine plot="calanon" lineStyle="midStyle" />
         <TradeNames
-          color="white"
           coords={[-59.5, 150]}
           text="Celanon Spur"
           rotation="-12deg"
@@ -281,7 +250,6 @@ function LanePlots() {
         />
         <TradeLine plot="entralla" lineStyle="midStyle" />
         <TradeNames
-          color="white"
           coords={[-54.28125, 117.53125]}
           text="Entralla Route"
           rotation="94deg"
@@ -289,7 +257,6 @@ function LanePlots() {
         />
         <TradeLine plot="veragit" lineStyle="midStyle" />
         <TradeNames
-          color="white"
           coords={[-32.03125, 133.40625]}
           text="Veragit Run"
           rotation="-37deg"
@@ -297,7 +264,6 @@ function LanePlots() {
         />
         <TradeLine plot="braxant" lineStyle="midStyle" />
         <TradeNames
-          color="white"
           coords={[-72.2109375, 159.078125]}
           text="Braxant Run"
           rotation="0deg"
@@ -305,7 +271,6 @@ function LanePlots() {
         />
         <TradeLine plot="phalanx" lineStyle="midStyle" />
         <TradeNames
-          color="white"
           coords={[-94.2656, 72.164]}
           text="Phalanx Route"
           rotation="-12deg"
@@ -313,7 +278,6 @@ function LanePlots() {
         />
         <TradeLine plot="kashyyyk" lineStyle="midStyle" />
         <TradeNames
-          color="white"
           coords={[-119.6875, 209.28125]}
           text="Pabol Kreeta"
           rotation="-70deg"
@@ -323,7 +287,6 @@ function LanePlots() {
 
         <TradeLine plot="llanic" lineStyle="midStyle" />
         <TradeNames
-          color="white"
           coords={[-201.65625, 185.78125]}
           text="Llanic Spice Run"
           rotation="-45deg"
@@ -332,21 +295,18 @@ function LanePlots() {
 
         <TradeLine plot="ootmian" lineStyle="midStyle" />
         <TradeNames
-          color="white"
           coords={[-114, 199.65625]}
           text="Pabol Sleheyron"
           rotation="-10deg"
           textStyle="majStyle"
         />
         <TradeNames
-          color="white"
           coords={[-121.875, 178.34375]}
           text="Ootmian Pabol"
           rotation="-50deg"
           textStyle="majStyle"
         />
         <TradeNames
-          color="white"
           coords={[-125.125, 208.5]}
           text="Ootmian Pabol"
           rotation="63deg"
@@ -365,21 +325,18 @@ function LanePlots() {
         <TradeLine plot="wroona" lineStyle="midStyle" />
 
         <TradeNames
-          color="white"
           coords={[-144.4375, 217.6875]}
           text="Hollastin Run"
           rotation="30deg"
           textStyle="minStyle"
         />
         <TradeNames
-          color="white"
           coords={[-151.71875, 215.359375]}
           text="Pando Spur"
           rotation="75deg"
           textStyle="minStyle"
         />
         <TradeNames
-          color="white"
           coords={[-136.359375, 221.5]}
           text="Shag Pabol"
           rotation="-8deg"
@@ -390,7 +347,6 @@ function LanePlots() {
       <div className="MinorLanes">
         <TradeLine plot="byssRun" lineStyle="minStyle" />
         <TradeNames
-          color="white"
           coords={[-122.487, 121.25]}
           text="Byss Run"
           rotation="-35deg"
@@ -399,7 +355,6 @@ function LanePlots() {
 
         <TradeLine plot="mandalorian" lineStyle="minStyle" />
         <TradeNames
-          color="white"
           coords={[-78.28125, 166.84375]}
           text="Mandalorian Road"
           rotation="30deg"
@@ -408,7 +363,6 @@ function LanePlots() {
 
         <TradeLine plot="schesa" lineStyle="minStyle" />
         <TradeNames
-          color="white"
           coords={[-90.328, 70.015]}
           text="Way of Schesa"
           rotation="-20deg"
@@ -417,7 +371,6 @@ function LanePlots() {
 
         <TradeLine plot="houses" lineStyle="minStyle" />
         <TradeNames
-          color="white"
           coords={[-99.4218, 60.429]}
           text="Path of the Houses"
           rotation="35deg"
@@ -426,7 +379,6 @@ function LanePlots() {
 
         <TradeLine plot="Vaagari" lineStyle="minStyle" />
         <TradeNames
-          color="white"
           coords={[-99.156, 65.187]}
           text="Vaagari Corridor"
           rotation="8deg"
@@ -435,7 +387,6 @@ function LanePlots() {
 
         <TradeLine plot="cressus" lineStyle="minStyle" />
         <TradeNames
-          color="white"
           coords={[-98.125, 50.976]}
           text="Cressus Route"
           rotation="-45deg"
@@ -444,7 +395,6 @@ function LanePlots() {
 
         <TradeLine plot="chasdemonus" lineStyle="minStyle" />
         <TradeNames
-          color="white"
           coords={[-90.609, 54.593]}
           text="Chasdemonus Route"
           rotation="-10deg"
@@ -452,7 +402,6 @@ function LanePlots() {
         />
 
         <TradeNames
-          color="white"
           coords={[-71.71875, 125.59375]}
           text="Entralla Route"
           rotation="60deg"
@@ -461,7 +410,6 @@ function LanePlots() {
 
         <TradeLine plot="listehol" lineStyle="minStyle" />
         <TradeNames
-          color="white"
           coords={[-47.875, 204.53125]}
           text="Listehol Run"
           rotation="10deg"
@@ -469,7 +417,6 @@ function LanePlots() {
         />
 
         <TradeNames
-          color="white"
           coords={[-93.5546875, 233.0234375]}
           text="Falko	Run"
           rotation="0deg"
@@ -477,7 +424,6 @@ function LanePlots() {
         />
         <TradeLine plot="ilosian" lineStyle="minStyle" />
         <TradeNames
-          color="white"
           coords={[-113.125, 208.125]}
           text="Ilosian Spur"
           rotation="90deg"
@@ -485,7 +431,6 @@ function LanePlots() {
         />
         <TradeLine plot="koda" lineStyle="minStyle" />
         <TradeNames
-          color="white"
           coords={[-207.34375, 107.1875]}
           text="Koda Spur"
           rotation="30deg"

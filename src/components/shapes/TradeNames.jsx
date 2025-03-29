@@ -53,7 +53,7 @@ const TradeNames = (props) => {
   };
 
   const majStyle = {
-    color: color || "#231F20",
+    color: color || "#82899e",
     fontSize: calculateMajFontSize(),
     letterSpacing: ".15rem",
     transform: `translate(-53.5%, -5%) rotate(${rotation}) `,
@@ -62,7 +62,7 @@ const TradeNames = (props) => {
   };
 
   const minStyle = {
-    color: color || "#231F20",
+    color: color || "#82899e",
     fontSize: calculateMinFontSize(),
     letterSpacing: ".1rem",
     lineHeight: "1",

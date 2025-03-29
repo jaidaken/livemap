@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { useMap } from "react-leaflet";
 import L from "leaflet";
-import markerIcon from "../../assets/marker-canon.svg";
-import markerShared from "../../assets/marker-shared.svg";
-import markerLegend from "../../assets/marker-legends.svg"
+import markerIcon from "../../assets/marker-canon2.svg";
+import markerShared from "../../assets/marker-shared2.svg";
+import markerLegend from "../../assets/marker-legends2.svg"
 
 const Key = () => {
   const map = useMap();

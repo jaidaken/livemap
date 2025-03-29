@@ -29,9 +29,9 @@ console.warn = (...args) => {
 // --------------------------------------------------------------------
 
 function getMarkerColor(marker) {
-  if (marker.iconId.startsWith("shared-svg-icon")) return "#e3b685"; // orange
-  if (marker.iconId.startsWith("canon-svg-icon")) return "#f6ade7"; // blue
-  if (marker.iconId.startsWith("legends-svg-icon")) return "#00a8f2"; // green
+  if (marker.iconId.startsWith("shared-svg-icon")) return "#e09f58";
+  if (marker.iconId.startsWith("canon-svg-icon")) return "#e072ca";
+  if (marker.iconId.startsWith("legends-svg-icon")) return "#00a8f2";
   return "red";
 }
 
@@ -328,8 +328,8 @@ export default function PixiMarkers({
   const calculateMinorIconSize = (zoom) => {
     if (zoom <= 4) return [10, 10];
     if (zoom === 5) return [15, 15];
-    if (zoom === 6) return [18, 18];
-    if (zoom === 7) return [25, 25];
+    if (zoom === 6) return [25, 25];
+    if (zoom === 7) return [30, 30];
     if (zoom === 8) return [35, 35];
     if (zoom >= 9) return [45, 45];
     return [55, 55];
@@ -337,9 +337,9 @@ export default function PixiMarkers({
 
   const calculateMicroIconSize = (zoom) => {
     if (zoom <= 3) return [0, 0];
-    if (zoom === 4) return [3, 3];
-    if (zoom === 5) return [8, 8];
-    if (zoom === 6) return [10, 10];
+    if (zoom === 4) return [5, 5];
+    if (zoom === 5) return [10, 10];
+    if (zoom === 6) return [12, 12];
     if (zoom === 7) return [14, 14];
     if (zoom === 8) return [22, 22];
     if (zoom >= 9) return [42, 42];
