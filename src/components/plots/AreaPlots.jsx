@@ -72,7 +72,7 @@ function AreaPlots(zoomLevel) {
         <TitleObject
           zoomLevel={zoomLevel}
           color=""
-          coords={[-212.15455516705518, 107.75422535211267]}
+          coords={[-211.8125, 105.9375]}
           text={`O U T E R\nR I M`}
         />
         <TitleObject
