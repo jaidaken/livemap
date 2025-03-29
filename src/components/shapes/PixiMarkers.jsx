@@ -30,7 +30,7 @@ console.warn = (...args) => {
 
 function getMarkerColor(marker) {
   if (marker.iconId.startsWith("shared-svg-icon")) return "#e09f58";
-  if (marker.iconId.startsWith("canon-svg-icon")) return "#e072ca";
+  if (marker.iconId.startsWith("canon-svg-icon")) return "#e087cf";
   if (marker.iconId.startsWith("legends-svg-icon")) return "#00a8f2";
   return "red";
 }
