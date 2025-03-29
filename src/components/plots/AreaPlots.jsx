@@ -7,10 +7,10 @@ function AreaPlots(zoomLevel) {
   return (
     <div className="zones">
       <div className="zone-circles">
-        <PolygonObject plot="outerRim" color="#2D3E6E" opacity={0.2} />
-        <PolygonObject plot="midRim" color="#264476" opacity={0.2} />
-        <PolygonObject plot="expansionRegion" color="#25538A" opacity={0.2} />
-        <PolygonObject plot="innerRim" color="#1B609F" opacity={0.9} />
+        <PolygonObject plot="outerRim" color="#2D3E6E" opacity={1} />
+        <PolygonObject plot="midRim" color="#264476" opacity={1} />
+        <PolygonObject plot="expansionRegion" color="#25538A" opacity={1} />
+        <PolygonObject plot="innerRim" color="#1B609F" opacity={1} />
 
         <CircleObject
           center={[-128.2, 128]}
