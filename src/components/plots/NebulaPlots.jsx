@@ -481,7 +481,7 @@ function NebulaPlots() {
         textStyle="nebStyle"
       />
       <NebulaObject
-        plot="Inamorata"
+        plot="inamorata"
         color="#A080A2"
         line="transparent"
         opacity={0.4}
