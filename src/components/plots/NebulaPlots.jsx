@@ -481,7 +481,7 @@ function NebulaPlots() {
         textStyle="nebStyle"
       />
       <NebulaObject
-        plot="inamorta"
+        plot="Inamorata"
         color="#A080A2"
         line="transparent"
         opacity={0.4}
@@ -490,7 +490,7 @@ function NebulaPlots() {
       <TradeNames
         color="#A080A2"
         coords={[-122.53125, 239.421875]}
-        text={`The Inamorta`}
+        text={`The Inamorata`}
         rotation={"-35deg"}
         textStyle="nebStyle"
       />
