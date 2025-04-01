@@ -47,10 +47,13 @@ function calculateLabelFontSize(zoomLevel, starType, hasError) {
 
   if (starType === "MajorStar") {
     if (zoomLevel === 2) return 0;
-    if (zoomLevel === 3) return 20;
-    if (zoomLevel === 4) return 30;
-    if (zoomLevel === 5) return 35;
-    if (zoomLevel === 6) return 40;
+    if (zoomLevel === 3) return 15;
+    if (zoomLevel === 4) return 25;
+    if (zoomLevel === 5) return 30;
+    if (zoomLevel === 6) return 35;
+    if (zoomLevel === 7) return 40;
+		if (zoomLevel === 8) return 50;
+    if (zoomLevel >= 9) return 55;
     return 55;
   } else if (starType === "MinorStar") {
     if (zoomLevel <= 4) return 0;
@@ -314,8 +317,8 @@ export default function PixiMarkers({
 
   // Calculate marker sizes
   const calculateMajorIconSize = (zoom) => {
-    if (zoom <= 2) return [10, 10];
-    if (zoom === 3) return [18, 18];
+    if (zoom <= 2) return [8, 8];
+    if (zoom === 3) return [15, 15];
     if (zoom === 4) return [20, 20];
     if (zoom === 5) return [25, 25];
     if (zoom === 6) return [30, 30];
@@ -326,7 +329,9 @@ export default function PixiMarkers({
   };
 
   const calculateMinorIconSize = (zoom) => {
-    if (zoom <= 4) return [10, 10];
+    if (zoom <= 2) return [3, 3];
+    if (zoom === 3) return [6, 6];
+    if (zoom === 4) return [10, 10];
     if (zoom === 5) return [15, 15];
     if (zoom === 6) return [25, 25];
     if (zoom === 7) return [30, 30];
