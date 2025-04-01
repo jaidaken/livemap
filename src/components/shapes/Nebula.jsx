@@ -66,9 +66,9 @@ const NebulaObject = (props) => {
 
   const Style = {
     fillColor: color || "#0079C0",
-    fillOpacity: opacity || 1,
+    fillOpacity: opacity || 0.8,
     color: line || "#202933",
-    opacity: lineOpacity || 1,
+    opacity: lineOpacity || 0.95,
     dashArray: dash || calculateDashArray(),
     weight: calculateWeight(),
 		lineCap: "square",

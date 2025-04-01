@@ -56,8 +56,8 @@ const TradeLine = (props) => {
 
   const majStyle = {
     weight: calculateMajWeight(),
-    opacity: 1,
-    color: color || "#82899e",
+    opacity: 0.4,
+    color: color || "white",
 	};
 
 	const calculateMidWeight = () => {
@@ -71,8 +71,8 @@ const TradeLine = (props) => {
 
   const midStyle = {
     weight: calculateMidWeight(),
-    opacity: 1,
-    color: color || "#82899e",
+    opacity: 0.4,
+    color: color || "white",
   };
 
   const calculateMinWeight = () => {
@@ -86,8 +86,8 @@ const TradeLine = (props) => {
 
   const minStyle = {
     weight: calculateMinWeight(),
-    opacity: 1,
-    color: color || "#82899e",
+    opacity: 0.4,
+    color: color || "white",
   };
 
   const calculateDash = () => {
@@ -116,8 +116,8 @@ const TradeLine = (props) => {
 
   const microStyle = {
     weight: calculateMicroWeight(),
-    opacity: 1,
-    color: color || "#82899e",
+    opacity: 0.4,
+    color: color || "white",
   };
 
   const getStyle = (lineStyle) => {

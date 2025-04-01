@@ -53,21 +53,21 @@ const TradeNames = (props) => {
   };
 
   const majStyle = {
-    color: color || "#82899e",
+    color: color || "white",
     fontSize: calculateMajFontSize(),
     letterSpacing: ".15rem",
     transform: `translate(-53.5%, -5%) rotate(${rotation}) `,
-		opacity: 1,
+		opacity: 0.5,
 		zIndex: 4,
   };
 
   const minStyle = {
-    color: color || "#82899e",
+    color: color || "white",
     fontSize: calculateMinFontSize(),
     letterSpacing: ".1rem",
     lineHeight: "1",
     transform: `translate(-53.5%, -5%) rotate(${rotation}) `,
-		opacity: 1,
+		opacity: 0.5,
 		zIndex: 4,
   };
 

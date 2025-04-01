@@ -5,7 +5,6 @@ import TradeNames from "../shapes/TradeNames.jsx";
 function LanePlots() {
   return (
     <div className="lanes">
-      {/* <TradeLine plot="csilla" lineStyle="majStyle" /> */}
 
       <div className="MajorLanes">
         <div className="lane corellian-run">

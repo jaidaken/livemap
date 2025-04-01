@@ -12,6 +12,7 @@ import Patreon from "./components/ui/Patreon.jsx";
 import { SystemProvider } from "./components/functions/SystemProvider.jsx";
 import CustomCursor from "./components/cursor/cursor.jsx";
 
+
 const Markers = React.lazy(() => import("./components/MarkersChosen.jsx"));
 
 const MapEvents = () => {
@@ -104,7 +105,7 @@ function App() {
     <div className="App">
       <div className="map-container">
         <MapContainer
-          preferCanvas={true}
+          preferCanvas={false}
           zoomAnimation={false}
           zoomDelta={0.5}
           crs={CRS.Simple}
@@ -130,7 +131,7 @@ function App() {
             <ChosenKey />
             <FixIOSLayout />
             <Suspense fallback={<div>Loading Markers...</div>}>
-              <Markers />
+							<Markers />
             </Suspense>
             <CustomCursor />
             {/* <AddSystemForm /> */}
