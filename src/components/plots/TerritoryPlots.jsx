@@ -8,7 +8,7 @@ function TerritoryPlots() {
         plot="huttSpace"
         color="#2C446C"
         line="#FF7200"
-        opacity={0.4}
+        opacity={0.8}
         lineOpacity={1}
       />
     </div>

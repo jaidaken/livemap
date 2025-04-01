@@ -65,7 +65,7 @@ const PolygonObject = (props) => {
     fillColor: color || "#0079C0",
     fillOpacity: opacity || 1,
     color: line || "#202933",
-    opacity: lineOpacity || 1,
+    opacity: lineOpacity ?? 1,
     dashArray: dash || calculateDashArray(),
     weight: calculateWeight(),
     lineCap: "square",
