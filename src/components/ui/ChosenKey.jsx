@@ -49,6 +49,10 @@ const ChosenKey = () => {
             <div style="background: #5E0909; width: 20px; height: 20px; border-radius: 50%; display: inline-block; margin-right: 5px;"></div>
             <span>Cult of Maul</span>
           </div>
+					<div class="key-item">
+            <div style="background:rgb(99, 146, 68); width: 20px; height: 20px; border-radius: 50%; display: inline-block; margin-right: 5px;"></div>
+            <span>Mandalore Revolt</span>
+          </div>
         `;
         return div;
       },
