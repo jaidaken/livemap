@@ -1,9 +1,26 @@
-/* @import url("https://use.typekit.net/noa6bvc.css");
-@import url('https://fonts.cdnfonts.com/css/univers-next-pro-extended'); */
-
-* {
+@font-face {
+	font-family: 'Univers Next Pro Light Cond';
+	font-style: normal;
+	font-weight: 300;
+	src: local('Univers Next Pro Light Cond'), url('https://fonts.cdnfonts.com/s/14585/univers-next-pro-light-condensed-58f3aae7e5bce.woff') format('woff');
 	font-display: swap;
 }
+
+@font-face {
+	font-family:"myriad-pro-condensed";
+	src: local('myriad-pro-condensed'), url("https://use.typekit.net/af/c63dde/0000000000000000000170a8/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("woff2"),url("https://use.typekit.net/af/c63dde/0000000000000000000170a8/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("woff"),url("https://use.typekit.net/af/c63dde/0000000000000000000170a8/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("opentype");
+	font-display:swap;font-style:normal;font-weight:700;font-stretch:normal;
+	}
+
+	@font-face {
+	font-family:"myriad-pro";
+	src: local('myriad-pro'), url("https://use.typekit.net/af/1b1b1e/00000000000000000001709e/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("woff2"),url("https://use.typekit.net/af/1b1b1e/00000000000000000001709e/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("woff"),url("https://use.typekit.net/af/1b1b1e/00000000000000000001709e/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("opentype");
+	font-display:swap;
+	font-style:normal;
+	font-weight:700;
+	font-stretch:normal;
+	}
+
 
 html, body {
   height: 100%;
