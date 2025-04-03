@@ -39,11 +39,9 @@ export default function CircleObject(props) {
   const calculateDashArray = (radius, zoomLevel) => {
     const circumference = 4 * Math.PI * radius;
 
-    // Adjust dashCount based on zoom level
     const baseDashCount = 12;
     let zoomAdjustedDashCount = baseDashCount - zoomLevel;
 
-    // Limit the dashCount to avoid too many dashes
     const maxDashCount = 12;
 
     if (zoomAdjustedDashCount < 1) {

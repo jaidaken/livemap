@@ -92,8 +92,6 @@ function AreaPlots(zoomLevel) {
   );
 }
 
-// Memoize the named function component:
 const MemoAreaPlots = React.memo(AreaPlots);
 
-// Export the memoized version:
 export default MemoAreaPlots;

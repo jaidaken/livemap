@@ -289,6 +289,8 @@ function NebulaPlots() {
       />
     </div>
   );
-} // Memoize the named function component:
-const MemoNebulaPlots = React.memo(NebulaPlots); // Export the memoized version:
+}
+
+const MemoNebulaPlots = React.memo(NebulaPlots);
+
 export default MemoNebulaPlots;

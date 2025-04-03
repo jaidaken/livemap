@@ -305,7 +305,7 @@ const Star = (props) => {
         iconSize: isHovered ? iconSize.map((dim) => dim * 1.4) : iconSize,
         iconAnchor: iconAnchor,
         popupAnchor: [7, -10],
-        className: "leaflet-marker-icon-transition", // Add class for transition
+        className: "leaflet-marker-icon-transition",
       }),
     [markerIcon, iconSize, iconAnchor, isHovered]
 	);
@@ -328,7 +328,6 @@ const Star = (props) => {
 		return "-4px";
 	};
 
-  // Add this useEffect to apply the transition style
   useEffect(() => {
     const style = document.createElement("style");
     style.innerHTML = `

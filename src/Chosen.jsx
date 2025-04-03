@@ -40,9 +40,7 @@ function FixIOSLayout() {
   useEffect(() => {
     // Simple iOS Safari detection
     function isIosSafari() {
-      const ua = window.navigator.userAgent;
-      // Check for iPhone/iPad/iPod and Safari (excluding Chrome)
-      // const iOSDevice = /iPad|iPhone|iPod/.test(ua);
+			const ua = window.navigator.userAgent;
       const safariBrowser = /Safari/.test(ua);
       return safariBrowser;
     }
@@ -92,7 +90,6 @@ function App() {
     }
   }, []);
 
-  // Clear cached systems on page load
   useEffect(() => {
     localStorage.removeItem("cachedSystems");
   }, []);

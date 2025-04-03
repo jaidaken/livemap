@@ -598,8 +598,6 @@ function LanePlots() {
   );
 }
 
-// Memoize the named function component:
 const MemoLanePlots = React.memo(LanePlots);
 
-// Export the memoized version:
 export default MemoLanePlots;

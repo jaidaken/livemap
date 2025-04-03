@@ -15,8 +15,6 @@ function TerritoryPlots() {
   );
 }
 
-// Memoize the named function component:
 const MemoTerritoryPlots = React.memo(TerritoryPlots);
 
-// Export the memoized version:
 export default MemoTerritoryPlots;

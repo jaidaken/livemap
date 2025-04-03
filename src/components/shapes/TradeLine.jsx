@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Polyline } from "react-leaflet";
 import PropTypes from "prop-types";
 
-// Ensure TradeLine is declared before usage
 const TradeLine = (props) => {
   const [zoomLevel, setZoomLevel] = useState(() => {
     const savedZoom = localStorage.getItem("zoomLevel");
@@ -137,7 +136,6 @@ const TradeLine = (props) => {
     }
   };
 
-  // const positions = tradelines[plot] || [];
   const style = getStyle(lineStyle) || [];
 
   return (
@@ -162,7 +160,6 @@ TradeLine.propTypes = {
   plot: PropTypes.string,
 };
 
-// Memoize the TradeLine component to prevent unnecessary re-renders
 const MemoizedTradeLine = React.memo(TradeLine);
 
 export default MemoizedTradeLine;

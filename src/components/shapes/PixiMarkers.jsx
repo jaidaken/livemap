@@ -6,13 +6,11 @@ import PropTypes from "prop-types";
 import PixiOverlay from "react-leaflet-pixi-overlay";
 import { DropShadowFilter } from "pixi-filters";
 
-// SVGs as raw strings
 import sharedSvg from "../../assets/marker-shared2.svg?raw";
 import canonSvg from "../../assets/marker-canon2.svg?raw";
 import legendsSvg from "../../assets/marker-legends2.svg?raw";
 import errorSvg from "../../assets/marker-error2.svg?raw";
 
-// --- Suppress Pixi's "BaseTexture added to the cache..." warnings ---
 const originalWarn = console.warn;
 console.warn = (...args) => {
   if (
@@ -23,10 +21,6 @@ console.warn = (...args) => {
   }
   originalWarn(...args);
 };
-
-// --------------------------------------------------------------------
-// Helper Functions
-// --------------------------------------------------------------------
 
 function getMarkerColor(marker) {
   if (marker.iconId.startsWith("shared-svg-icon")) return "#e09f58";
@@ -71,7 +65,6 @@ function calculateLabelFontSize(zoomLevel, starType, hasError) {
     return 30;
   }
 
-  // Default fallback
   if (zoomLevel <= 4) return 0;
   if (zoomLevel === 5) return 21;
   if (zoomLevel === 6) return 35;
@@ -86,9 +79,6 @@ function updateSvgSize(svg, width, height) {
   return updatedSvg;
 }
 
-// --------------------------------------------------------------------
-// Label Overlay Component
-// --------------------------------------------------------------------
 function LabelOverlay({ markers, zoomLevel, setActivePopup, hoveredMarkerId }) {
   const map = useMap();
   const [container, setContainer] = useState(null);
@@ -117,15 +107,12 @@ function LabelOverlay({ markers, zoomLevel, setActivePopup, hoveredMarkerId }) {
           marker.hasError
         );
 
-        // Hover logic
         const isHovered = marker.id === hoveredMarkerId;
         const hoveredFontSize = Math.round(computedFontSize * 1.4);
         const finalFontSize = isHovered ? hoveredFontSize : computedFontSize;
 
-        // For horizontally shifting the label on hover
         const finalTransform = isHovered ? (marker.alignRight ? -12 : 12) : 0;
 
-        // Colors & layout
         const color = getMarkerColor(marker);
         const halfIconWidth = marker.iconSize ? marker.iconSize[0] / 2 : 0;
         const offset = 4;
@@ -204,9 +191,6 @@ LabelOverlay.propTypes = {
   hoveredMarkerId: PropTypes.any,
 };
 
-// --------------------------------------------------------------------
-// Custom Popup Overlay Component
-// --------------------------------------------------------------------
 function CustomPopupOverlay({ popup, map, onClose }) {
   if (!popup) return null;
   const point = map.latLngToLayerPoint(popup.position);
@@ -267,9 +251,6 @@ CustomPopupOverlay.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-// --------------------------------------------------------------------
-// Main PixiMarkers Component
-// --------------------------------------------------------------------
 export default function PixiMarkers({
   allSystems,
   activeFilters,
@@ -280,7 +261,6 @@ export default function PixiMarkers({
   const [activePopup, setActivePopup] = useState(null);
   const [hoveredMarkerId, setHoveredMarkerId] = useState(null);
 
-  // Hover detection via distance check
   useEffect(() => {
     const handleMouseMove = (e) => {
       const { latlng } = e;
@@ -315,7 +295,6 @@ export default function PixiMarkers({
     };
   }, [map, visibleMarkers]);
 
-  // Calculate marker sizes
   const calculateMajorIconSize = (zoom) => {
     if (zoom <= 2) return [8, 8];
     if (zoom === 3) return [15, 15];
@@ -351,7 +330,6 @@ export default function PixiMarkers({
     return [0, 0];
   };
 
-  // Build markers
   const updateVisibleMarkers = useCallback(() => {
     if (!allSystems.length) return;
     const bounds = map.getBounds();
@@ -378,19 +356,16 @@ export default function PixiMarkers({
 			const matchesCanon = system.isCanon && !system.isLegends;
 			const matchesLegends = !system.isCanon && system.isLegends;
 
-			// If system matches a known filter, check if the filter is active
 			if (matchesShared) return activeFilters.includes("shared");
 			if (matchesCanon) return activeFilters.includes("canon");
 			if (matchesLegends) return activeFilters.includes("legends");
 
-			// If the system doesn't match any of the filters above (error state), always render it
 			return true;
 		})
 		.filter((system) => {
 			return bounds.contains(L.latLng(system.latitude, system.longitude));
 		})
 		.map((system) => {
-			// Decide which raw SVG
 			let chosenSvg;
 			if (system.isCanon && system.isLegends) {
 				chosenSvg = sharedSvg;
@@ -402,7 +377,6 @@ export default function PixiMarkers({
 				chosenSvg = errorSvg;
 			}
 
-        // Calculate size
         const [w, h] = calculateIconSize(
           zoomLevel,
           system.starType,
@@ -410,12 +384,10 @@ export default function PixiMarkers({
         );
         if (w === 0 && h === 0) return null;
 
-        // If hovered, pick a bigger version
         const isHovered = system.id === hoveredMarkerId;
         const bigSvg = updateSvgSize(chosenSvg, w + 20, h + 20);
         const sizedSvg = updateSvgSize(chosenSvg, w, h);
 
-        // Unique icon ID for caching
         const finalIconId = `${
           system.isCanon && system.isLegends
             ? "shared-svg-icon"
@@ -471,15 +443,13 @@ export default function PixiMarkers({
     setActivePopup,
   ]);
 
-  // Recompute markers
   useEffect(() => {
     updateVisibleMarkers();
   }, [allSystems, activeFilters, zoomLevel, updateVisibleMarkers]);
 
-  // Recompute on map move
 	useEffect(() => {
 		map.on("move", updateVisibleMarkers);
-		map.on("zoom", updateVisibleMarkers);  // ensures markers also reposition correctly during zoom
+		map.on("zoom", updateVisibleMarkers);
 
 		return () => {
 			map.off("move", updateVisibleMarkers);
@@ -487,7 +457,6 @@ export default function PixiMarkers({
 		};
 	}, [map, updateVisibleMarkers]);
 
-  // Close the popup if user clicks elsewhere
   useEffect(() => {
     let clickHandler;
     if (activePopup) {
@@ -503,13 +472,11 @@ export default function PixiMarkers({
     }
   }, [map, activePopup]);
 
-  // Render
   return (
     <>
       <PixiOverlay
         markers={visibleMarkers}
         onSpriteCreated={(sprite, marker) => {
-          // Check if the marker has filters defined and apply them.
           if (marker.filters) {
             sprite.filters = marker.filters;
           }
@@ -530,9 +497,6 @@ export default function PixiMarkers({
   );
 }
 
-// --------------------------------------------------------------------
-// Prop Types
-// --------------------------------------------------------------------
 PixiMarkers.propTypes = {
   allSystems: PropTypes.array.isRequired,
   activeFilters: PropTypes.array.isRequired,

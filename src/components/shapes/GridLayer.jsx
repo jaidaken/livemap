@@ -76,10 +76,8 @@ const GridLayer = ({
 
     const stepSize = squareSize;
 
-    // Iterate over rows and columns to create grid squares and labels
     for (let i = 0; i < 26; i++) {
       for (let j = 0; j < 26; j++) {
-        // Calculate the bounds of the current grid square
         const squareBounds = [
           [
             bottomLeftCoord[0] + i * stepSize,
@@ -91,7 +89,6 @@ const GridLayer = ({
           ],
         ];
 
-        // Add the grid lines to the map
         L.rectangle(squareBounds, {
           color: lineColor,
           weight: lineWeight(),
@@ -100,14 +97,11 @@ const GridLayer = ({
           className: "grid-square"
         }).addTo(gridLayer);
 
-        // Calculate the label position
         const labelLat = bottomLeftCoord[0] + i * stepSize;
         const labelLng = bottomLeftCoord[1] + j * stepSize;
 
-        // Calculate the label for the current grid square
         const label = `${String.fromCharCode(65 + j)}${25 - i}`;
 
-        // Add the label marker to the specified position
         L.marker([labelLat, labelLng], {
           icon: L.divIcon({
             className: "grid-label",

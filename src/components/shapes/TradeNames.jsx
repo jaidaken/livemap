@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Polygon, Tooltip } from "react-leaflet";
 import PropTypes from "prop-types";
 
-// Ensure TradeNames is declared before usage
 const TradeNames = (props) => {
 	const { text, coords, color, rotation, textStyle } = props;
 

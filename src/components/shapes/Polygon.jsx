@@ -87,7 +87,6 @@ PolygonObject.propTypes = {
   plot: PropTypes.string,
 };
 
-// Memoize the PolygonObject component to prevent unnecessary re-renders
 const MemoizedPolygonObject = React.memo(PolygonObject);
 
 export default MemoizedPolygonObject;

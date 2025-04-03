@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Polygon } from "react-leaflet";
 import PropTypes from "prop-types";
 
-// Ensure NebulaObject is declared before usage
 const NebulaObject = (props) => {
 
 		const [zoomLevel, setZoomLevel] = useState(() => {
@@ -62,7 +61,6 @@ const NebulaObject = (props) => {
     return [45, 45];
   };
 
-  // Define your styles within the component
 
   const Style = {
     fillColor: color || "#0079C0",

@@ -135,8 +135,6 @@ function ChosenPlots() {
   );
 }
 
-// Memoize the named function component:
 const MemoChosenPlots = React.memo(ChosenPlots);
 
-// Export the memoized version:
 export default MemoChosenPlots;

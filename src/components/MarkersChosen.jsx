@@ -13,7 +13,6 @@ import MemoAreaPlots from "./plots/AreaPlots.jsx";
 import MemoChosenPlots from "./plots/ChosenPlots.jsx";
 import MemoNebulaPlots from "./plots/NebulaPlots.jsx";
 import MemoLanePlots from "./plots/LanePlots.jsx";
-// import MemoizedStar from "./shapes/Star.jsx";
 
 export default function Markers() {
   const map = useMap();
@@ -57,7 +56,7 @@ export default function Markers() {
     if (newSystemAdded) {
       console.log("New system added, fetching data...");
       fetchAllData();
-      handleAddSystem(); // Reset state after fetching
+      handleAddSystem();
     }
   }, [newSystemAdded, fetchAllData, handleAddSystem]);
 
@@ -83,15 +82,7 @@ export default function Markers() {
     };
   }, [map, handleZoomEnd, handleMoveEnd]);
 
-  // const handleSystemSelect = useCallback(
-  //   (selectedSystem) => {
-  //     const { latitude, longitude } = selectedSystem;
-  //     map.flyTo([latitude, longitude], 7, { animate: false });
-  //   },
-  //   [map]
-  // );
-
-	const ANIMATION_DURATION = 2500; // 2 seconds for gentle smoothness
+	const ANIMATION_DURATION = 2500;
 	const animationFrame = useRef();
 
 	const easeInOutSine = (t) => -(Math.cos(Math.PI * t) - 1) / 2;
@@ -111,7 +102,6 @@ export default function Markers() {
         const elapsed = now - animationStart;
         const progress = Math.min(elapsed / ANIMATION_DURATION, 1);
 
-        // Simple easing (ease-in-out)
 				const easeProgress = easeInOutSine(progress);
 
         const intermediateLat =
@@ -151,7 +141,7 @@ export default function Markers() {
 
       {!loading && (
         <PixiMarkers
-          key="pixi-markers" // explicitly stable key
+          key="pixi-markers"
           allSystems={allSystems}
           activeFilters={activeFilters}
           map={map}

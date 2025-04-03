@@ -17,7 +17,7 @@ module.exports = {
   },
   settings: {
     react: {
-      version: "detect", // Automatically detect the React version
+      version: "detect",
     },
   },
   plugins: ["react", "react-hooks", "react-refresh"],
