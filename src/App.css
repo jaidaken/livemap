@@ -302,6 +302,7 @@ canvas {
   padding: 10px;
   border-radius: 5px;
   width: auto;
+	max-height: 100px;
   display: inline-block;
   font-family: "Myriad Pro";
   font-size: 1.2rem;

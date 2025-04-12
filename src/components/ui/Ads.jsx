@@ -14,11 +14,6 @@ const Ads = () => {
         );
         div.innerHTML = `
           <div class="ads-item">
-						<script
-							async
-							src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9043801834976142"
-							crossorigin="anonymous">
-						</script>
           </div>
         `;
         return div;
