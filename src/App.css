@@ -290,6 +290,32 @@ canvas {
   font-size: 1.3rem;
   font-weight: bold;
 }
+
+.ads-container {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  width: auto;
+  display: inline-block;
+  font-family: "Myriad Pro";
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+
+.ads-item {
+  /* Your styling for the ad item, for example, width and height */
+  width: 300px;
+  height: 250px;
+  background: #fff; /* temporary background for debugging */
+}
+
 .patreon-item {
   align-items: center;
   margin-bottom: 0px;
@@ -371,6 +397,9 @@ canvas {
   .patreon-container {
     padding: 4px;
     font-size: 0.7rem;
+  }
+  .ads-container {
+		display: none;
   }
   .search-container {
     padding: 4px 12px 4px 4px !important;

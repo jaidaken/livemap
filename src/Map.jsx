@@ -6,6 +6,7 @@ import { CRS } from "leaflet";
 
 import GridLayer from "./components/shapes/GridLayer.jsx";
 import Key from "./components/ui/Key.jsx";
+import Ads from "./components/ui/Ads.jsx";
 import Patreon from "./components/ui/Patreon.jsx";
 // import AddSystemForm from "./components/AddSystem.jsx";
 import { SystemProvider } from "./components/functions/SystemProvider.jsx";
@@ -56,7 +57,7 @@ function FixIOSLayout() {
     }, 300);
 
     return () => clearTimeout(timer);
-	}, [map]);
+  }, [map]);
 
   return null;
 }
@@ -98,7 +99,7 @@ function App() {
   const bottomLeftCoord = [
     desiredTopRightCorner[0] - squareSize * 15,
     desiredTopRightCorner[1] - squareSize * 11,
-	];
+  ];
   return (
     <div className="App">
       <div className="map-container">
@@ -111,7 +112,7 @@ function App() {
           zoom={initialZoom}
           minZoom={minZoom}
           maxZoom={maxZoom}
-					scrollWheelZoom={true}
+          scrollWheelZoom={true}
           doubleClickZoom={false}
           whenCreated={(map) => {
             map.on("moveend", handleMapMoveEnd);
@@ -123,10 +124,12 @@ function App() {
               url="/src/assets/images/{z}/{x}/{y}.jpg"
               opacity={0.6}
             /> */}
-            <TileLayer attribution="" url="" />
+						<TileLayer attribution="" url="" />
+						<Ads />
             <Patreon />
             <Key />
-						<FixIOSLayout />
+
+            <FixIOSLayout />
             <Suspense fallback={<div>Loading Markers...</div>}>
               <Markers />
             </Suspense>
