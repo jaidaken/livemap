@@ -17,13 +17,13 @@ const Markers = React.lazy(() => import("./components/Markers.jsx"));
 const MapEvents = () => {
   useMapEvents({
     click: (e) => {
-      console.log(`[${e.latlng.lat}, ${e.latlng.lng}],`);
+      // console.log(`[${e.latlng.lat}, ${e.latlng.lng}],`);
       // navigator.clipboard.writeText(`[${e.latlng.lat}, ${e.latlng.lng}],`);
     },
     zoomend: (event) => {
       const newZoomLevel = event.target.getZoom();
       localStorage.setItem("zoomLevel", newZoomLevel.toString());
-      console.log("Zoom Level:", newZoomLevel);
+      // console.log("Zoom Level:", newZoomLevel);
     },
     moveend(e) {
       const { lat, lng } = e.target.getCenter();
