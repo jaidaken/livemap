@@ -312,8 +312,8 @@ canvas {
 
 .ads-item {
   /* Your styling for the ad item, for example, width and height */
-  width: 300px;
-  height: 250px;
+	width: auto;
+	height: auto;
   background: #fff; /* temporary background for debugging */
 }
 
