@@ -14,15 +14,16 @@ const Ads = () => {
         );
         div.innerHTML = `
           <div class="ads-item">
-					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9043801834976142"
-					crossorigin="anonymous"></script>
-					<ins class="adsbygoogle"
-					style="display:inline-block;width:728px;height:100px"
-					data-ad-client="ca-pub-9043801834976142"
-					data-ad-slot="6539702628"></ins>
-					<script>
-					(adsbygoogle = window.adsbygoogle || []).push({});
-					</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9043801834976142"
+crossorigin="anonymous"></script>
+<!-- bottom ad -->
+<ins class="adsbygoogle"
+style="display:inline-block;width:320px;height:100px"
+data-ad-client="ca-pub-9043801834976142"
+data-ad-slot="6539702628"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
           </div>
         `;
         return div;
