@@ -6,7 +6,7 @@ import { CRS } from "leaflet";
 
 import GridLayer from "./components/shapes/GridLayer.jsx";
 import Key from "./components/ui/Key.jsx";
-import Ads from "./components/ui/Ads.jsx";
+// import Ads from "./components/ui/Ads.jsx";
 import Patreon from "./components/ui/Patreon.jsx";
 // import AddSystemForm from "./components/AddSystem.jsx";
 import { SystemProvider } from "./components/functions/SystemProvider.jsx";
@@ -16,7 +16,8 @@ const Markers = React.lazy(() => import("./components/Markers.jsx"));
 
 const MapEvents = () => {
   useMapEvents({
-    click: (e) => {
+    click: () => {
+    // click: (e) => {
       // console.log(`[${e.latlng.lat}, ${e.latlng.lng}],`);
       // navigator.clipboard.writeText(`[${e.latlng.lat}, ${e.latlng.lng}],`);
     },
@@ -125,7 +126,7 @@ function App() {
               opacity={0.6}
             /> */}
 						<TileLayer attribution="" url="" />
-						<Ads />
+						{/* <Ads /> */}
             <Patreon />
             <Key />
 

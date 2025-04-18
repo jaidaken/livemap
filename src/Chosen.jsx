@@ -17,9 +17,10 @@ const Markers = React.lazy(() => import("./components/MarkersChosen.jsx"));
 
 const MapEvents = () => {
   useMapEvents({
-    click: (e) => {
+    click: () => {
+			// click: (e) => {
       // console.log(`[${e.latlng.lat}, ${e.latlng.lng}],`);
-      navigator.clipboard.writeText(`[${e.latlng.lat}, ${e.latlng.lng}],`);
+      // navigator.clipboard.writeText(`[${e.latlng.lat}, ${e.latlng.lng}],`);
     },
     zoomend: (event) => {
       const newZoomLevel = event.target.getZoom();
