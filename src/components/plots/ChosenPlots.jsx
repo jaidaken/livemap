@@ -27,14 +27,7 @@ function ChosenPlots() {
         lineOpacity={0}
       />
       <PolygonObject
-        plot="royen"
-        color="purple"
-        line="#a38b2c"
-        opacity={0.7}
-        lineOpacity={0}
-      />
-      <PolygonObject
-        plot="royen2"
+        plot="cis"
         color="purple"
         line="#a38b2c"
         opacity={0.7}

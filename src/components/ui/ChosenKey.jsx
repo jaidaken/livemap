@@ -42,7 +42,7 @@ const ChosenKey = () => {
 
           <div class="key-item">
             <div style="background: #8129A8; width: 20px; height: 20px; border-radius: 50%; display: inline-block; margin-right: 5px;"></div>
-            <span>Royen's Secularists</span>
+            <span>CIS</span>
           </div>
 
 					<div class="key-item">
