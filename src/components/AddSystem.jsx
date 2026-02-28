@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useMap } from "react-leaflet";
 import { useSystemContext } from "./functions/useSystemContext";
-import { supabase, authenticateSupabase } from "./functions/supabase";
+import { api, authenticateAPI } from "./functions/api";
 
 const AddSystemForm = () => {
   const [formData, setFormData] = useState({
@@ -50,26 +50,20 @@ const AddSystemForm = () => {
       }
 
       if (!authenticated) {
-        await authenticateSupabase();
+        await authenticateAPI();
         setAuthenticated(true);
       }
 
-      const { error } = await supabase.from("systems").upsert([
-        {
-          name: formData.name,
-          latitude: parseFloat(formData.latitude),
-          longitude: parseFloat(formData.longitude),
-          starType: formData.starType,
-          wiki: formData.wiki,
-          isCanon: formData.isCanon,
-          isLegends: formData.isLegends,
-          alignRight: formData.alignRight,
-        },
-      ]);
-
-      if (error) {
-        throw error;
-      }
+      await api.upsert("systems", [{
+        name: formData.name,
+        latitude: parseFloat(formData.latitude),
+        longitude: parseFloat(formData.longitude),
+        starType: formData.starType,
+        wiki: formData.wiki,
+        isCanon: formData.isCanon,
+        isLegends: formData.isLegends,
+        alignRight: formData.alignRight,
+      }], true);
 
       console.log("System added:", formData);
       setFormData({

@@ -1,9 +1,9 @@
-import { supabase } from "./supabase";
+import { api } from "./api";
 
 let cachedSystems = null;
 
-const handleSupabaseError = (error, action) => {
-  console.error(`Supabase error ${action}:`, error);
+const handleAPIError = (error, action) => {
+  console.error(`API error ${action}:`, error);
   throw error;
 };
 
@@ -27,9 +27,9 @@ export const fetchSystems = async () => {
 
   try {
     console.log("Fetching systems from database");
-    const { data, error } = await supabase.from("systems").select("*");
+    const data = await api.select("systems", "select=*");
 
-    if (error) handleSupabaseError(error, "fetching systems");
+    if (!data) handleAPIError(new Error('No data returned'), "fetching systems");
 
     const systems = data.map((system) => ({
       id: system.id,
@@ -75,16 +75,12 @@ export const addSystem = async (name, latitude, longitude, starType) => {
       throw new Error("Latitude and Longitude must be valid numbers.");
     }
 
-    const { data, error } = await supabase.from("systems").upsert([
-      {
-        name,
-        latitude: latitudeValue,
-        longitude: longitudeValue,
-        starType,
-      },
-    ]);
-
-    if (error) handleSupabaseError(error, "adding system");
+    const data = await api.upsert("systems", [{
+      name,
+      latitude: latitudeValue,
+      longitude: longitudeValue,
+      starType,
+    }], true);
 
     console.log("System added:", data);
     cachedSystems = null;
@@ -101,12 +97,7 @@ export const addSystem = async (name, latitude, longitude, starType) => {
 
 export const updateSystem = async (systemId, updatedData) => {
   try {
-    const { data, error } = await supabase
-      .from("systems")
-      .update(updatedData)
-      .match({ id: systemId });
-
-    if (error) handleSupabaseError(error, "updating system");
+    const data = await api.update("systems", updatedData, `id=eq.${systemId}`);
 
     console.log("System updated:", data);
     return data;
@@ -118,12 +109,7 @@ export const updateSystem = async (systemId, updatedData) => {
 
 export const deleteSystem = async (systemId) => {
   try {
-    const { data, error } = await supabase
-      .from("systems")
-      .delete()
-      .match({ id: systemId });
-
-    if (error) handleSupabaseError(error, "deleting system");
+    const data = await api.delete("systems", `id=eq.${systemId}`);
 
     console.log("System deleted:", data);
     return data;

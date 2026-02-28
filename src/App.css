@@ -176,7 +176,7 @@ canvas {
   width: 100%;
   position: relative;
   margin: 0px;
-  font-family: "Myriad Pro";
+  font-family: "Exo 2", sans-serif;
   font-size: 1.2rem;
   font-weight: bold;
 }
@@ -258,7 +258,7 @@ canvas {
   border-radius: 5px;
   position: relative;
   margin: 0px;
-  font-family: "Myriad Pro";
+  font-family: "Exo 2", sans-serif;
   width: 100%;
   font-weight: bold;
 }

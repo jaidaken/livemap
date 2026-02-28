@@ -24,3 +24,8 @@ dist-ssr
 *.sw?
 /src/assets/images
 .env
+postgres-data/
+init-db.sql
+init-schema.sql
+init-data.sql
+systems-data.json
