@@ -286,7 +286,7 @@ canvas {
   border-radius: 5px;
   position: relative;
   margin: 0px;
-  font-family: "Myriad Pro";
+  font-family: "Exo 2", sans-serif;
   font-size: 1.3rem;
   font-weight: bold;
 }
