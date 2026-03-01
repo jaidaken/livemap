@@ -11,6 +11,9 @@
   },
   "dependencies": {
     "@auth0/auth0-react": "^2.2.4",
+    "@turf/bezier-spline": "^7.3.4",
+    "@turf/helpers": "^7.3.4",
+    "maplibre-gl": "^5.19.0",
     "patreon": "^0.4.1",
     "pixi-filters": "^3.2.2",
     "prop-types": "^15.8.1",
@@ -28,6 +31,7 @@
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
+    "sharp": "^0.34.5",
     "vite": "^5.1.4"
   }
 }

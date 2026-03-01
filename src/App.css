@@ -10,16 +10,16 @@
 	font-family:"myriad-pro-condensed";
 	src: local('myriad-pro-condensed'), url("https://use.typekit.net/af/c63dde/0000000000000000000170a8/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("woff2"),url("https://use.typekit.net/af/c63dde/0000000000000000000170a8/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("woff"),url("https://use.typekit.net/af/c63dde/0000000000000000000170a8/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("opentype");
 	font-display:swap;font-style:normal;font-weight:700;font-stretch:normal;
-	}
+}
 
-	@font-face {
+@font-face {
 	font-family:"myriad-pro";
 	src: local('myriad-pro'), url("https://use.typekit.net/af/1b1b1e/00000000000000000001709e/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("woff2"),url("https://use.typekit.net/af/1b1b1e/00000000000000000001709e/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("woff"),url("https://use.typekit.net/af/1b1b1e/00000000000000000001709e/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("opentype");
 	font-display:swap;
 	font-style:normal;
 	font-weight:700;
 	font-stretch:normal;
-	}
+}
 
 
 html, body {
@@ -29,18 +29,231 @@ html, body {
 	cursor: none;
 }
 
+.App {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
 .map-container {
   width: 100%;
   height: 100%;
+  position: relative;
+  overflow: hidden;
 }
+
+/* ── MapLibre GL container ──────────────────────────────────────────── */
+
+.maplibre-container {
+  width: 100vw;
+  height: 100vh;
+}
+
+.maplibre-container canvas {
+  cursor: none !important;
+}
+
+.maplibregl-ctrl-attrib {
+  display: none !important;
+}
+
+/* ── Zone title markers ─────────────────────────────────────────────── */
+
+.zone-title-marker {
+  font-family: "myriad-pro-condensed", sans-serif;
+  color: #231F20;
+  text-align: center;
+  pointer-events: none;
+  white-space: nowrap;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1.1;
+}
+
+.zone-title-marker span {
+  display: block;
+}
+
+/* ── System popup ───────────────────────────────────────────────────── */
+
+.system-popup .maplibregl-popup-content {
+  padding: 10px 20px;
+  border-radius: 8px;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.system-popup .maplibregl-popup-close-button {
+  font-size: 18px;
+  padding: 4px 8px;
+}
+
+/* ── Overlay positions (React components over the map) ──────────────── */
+
+.overlay-topright {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 10;
+}
+
+.overlay-bottomleft {
+  position: absolute;
+  bottom: 44px;
+  left: 10px;
+  z-index: 10;
+}
+
+.overlay-bottomleft-lower {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  z-index: 10;
+}
+
+.overlay-bottomright {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  z-index: 10;
+}
+
+/* ── Shared UI styles ───────────────────────────────────────────────── */
 
 .tradeName {
 	font-weight: 400;
 	font-family: 'Univers Next Pro Light Cond', sans-serif !important;
   text-align: center;
-
-
 }
+
+.search-container {
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 10px 16px 10px 10px;
+  border-radius: 5px;
+  width: auto;
+  margin: 0px;
+	cursor: none;
+}
+
+canvas {
+	cursor: none;
+}
+
+.search-bar {
+  display: flex;
+  flex-direction: column;
+}
+
+.search-bar input {
+  width: 100%;
+  font-family: "Myriad Pro", sans-serif;
+  font-size: 1.2rem;
+  list-style-type: none;
+}
+
+.search-bar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.search-bar li {
+  margin: 4px 0 4px 2px;
+  font-family: "Myriad Pro", sans-serif;
+  font-size: 1.2rem;
+}
+
+.search-bar li:hover {
+  background-color: #e0e0e0;
+}
+
+.key-container {
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  width: auto;
+  margin: 0px;
+  font-family: "Exo 2", sans-serif;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.key-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.key-item img {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+}
+
+.filter-container {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 0px 0px 20px 0px;
+  font-family: "Exo 2", sans-serif;
+  width: auto;
+  font-weight: bold;
+}
+
+.filter-title {
+  text-align: center;
+  font-size: 1.4rem;
+  margin-top: -5px;
+  margin-bottom: 5px;
+  padding: 0;
+}
+
+.filter-item {
+  align-items: center;
+  margin-bottom: 0px;
+  font-size: 1.1rem;
+}
+
+.patreon-container {
+  display: flex;
+  width: auto;
+  align-items: center;
+  flex-direction: row;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 0px;
+  font-family: "Exo 2", sans-serif;
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.patreon-item {
+  align-items: center;
+  margin-bottom: 0px;
+}
+
+.title-span {
+	font-family: "Myriad-Pro-Condensed", sans-serif;
+  text-align: center;
+}
+
+/* ── Animations ─────────────────────────────────────────────────────── */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ── Leaflet compat (kept for /chosen route) ────────────────────────── */
+
 .leaflet-container {
   width: 100vw;
   height: 100vh;
@@ -65,36 +278,6 @@ html, body {
   border-radius: 3px;
 	margin: 0;
 	box-shadow: 0 1px 3px rgba(0,0,0,0);
-}
-
-.align-right {
-  justify-content: right !important;
-	align-items: right !important;
-	text-align: right !important;
-}
-
-.align-left {
-  justify-content: left !important;
-	align-items: left !important;
-	text-align: left !important;
-}
-
-.leaflet-tooltip.align-right {
-  text-align: right !important;
-}
-
-.leaflet-tooltip.align-left {
-  text-align: left !important;
-}
-
-.align-right::before {
-width: 0;
-height: 0;
-}
-
-.align-left::before {
-	width: 0;
-	height: 0;
 }
 
 .leaflet-tooltip::before {
@@ -128,211 +311,6 @@ height: 0;
   white-space: nowrap;
 }
 
-.search-container {
-  background-color: white;
-  border: 1px solid #ccc;
-  padding: 10px 16px 10px 10px;
-  border-radius: 5px;
-  width: 100%;
-  margin: 0px;
-	cursor: none;
-}
-canvas {
-	cursor: none;
-}
-
-.search-bar {
-  display: flex;
-  flex-direction: column;
-}
-
-.search-bar input {
-  width: 100%;
-  font-family: "Myriad Pro", sans-serif;
-  font-size: 1.2rem;
-  list-style-type: none;
-}
-
-.search-bar ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.search-bar li {
-  margin: 4px 0 4px 2px;
-  font-family: "Myriad Pro", sans-serif;
-  font-size: 1.2rem;
-}
-
-.search-bar li:hover {
-  background-color: #e0e0e0;
-}
-.key-container {
-  background-color: white;
-  border: 1px solid #ccc;
-  padding: 10px;
-  border-radius: 5px;
-  width: 100%;
-  position: relative;
-  margin: 0px;
-  font-family: "Exo 2", sans-serif;
-  font-size: 1.2rem;
-  font-weight: bold;
-}
-
-
-.login-modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: white;
-  padding: 20px;
-  border: 1px solid #ccc;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-}
-
-.key-item {
-  display: flex;
-  align-items: center;
-  margin-bottom: 8px;
-}
-
-.key-item img {
-  width: 24px;
-  height: 24px;
-  margin-right: 8px;
-}
-
-.leaflet-bottom .leaflet-left {
-  display: flex;
-  flex-direction: column;
-}
-
-.add-system-container  {
-  display: flex;
-  flex-direction: column;
-  background-color: white;
-  padding: 10px;
-  border-radius: 5px;
-	font-family: "Myriad Pro", sans-serif;
-	font-weight: bold;
-	width: 150px;
-	position: absolute;
-	margin: 90px 0 0 10px;
-}
-#addSystemForm {
-	display: flex;
-	flex-direction: column;
-
-}
-
-#addSystemForm div{
-	font-size: 1.1rem;
-	margin-bottom: 5px;
-	line-height: 1;
-}
-
-#addSystemForm div input{
-	width: 100%;
-}
-.checkbox {
-	width: 20px !important;
-	height: 15px;
-}
-
-#addSystemForm h2{
-	align-self: center;
-	font-size: 1.3rem;
-	margin-top: 0;
-	margin-bottom: 5px;
-}
-
-.filter-container {
-  display: flex;
-  flex-direction: column;
-  background-color: white;
-  border: 1px solid #ccc;
-  padding: 10px;
-  border-radius: 5px;
-  position: relative;
-  margin: 0px;
-  font-family: "Exo 2", sans-serif;
-  width: 100%;
-  font-weight: bold;
-}
-
-.filter-title {
-  text-align: center;
-  font-size: 1.4rem;
-  margin-top: -5px;
-  margin-bottom: 5px;
-  padding: 0;
-}
-.filter-item {
-  align-items: center;
-  margin-bottom: 0px;
-  font-size: 1.1rem;
-}
-.patreon-container {
-  display: flex;
-  width: 100%;
-  align-items: center;
-  flex-direction: row;
-  background-color: white;
-  border: 1px solid #ccc;
-  padding: 10px;
-  border-radius: 5px;
-  position: relative;
-  margin: 0px;
-  font-family: "Exo 2", sans-serif;
-  font-size: 1.3rem;
-  font-weight: bold;
-}
-
-.ads-container {
-  position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1000;
-  background-color: white;
-  border: 1px solid #ccc;
-  padding: 10px;
-  border-radius: 5px;
-  width: auto;
-	max-height: 100px;
-  display: inline-block;
-  font-family: "Myriad Pro";
-  font-size: 1.2rem;
-  font-weight: bold;
-}
-
-
-.ads-item {
-  /* Your styling for the ad item, for example, width and height */
-	width: auto;
-	height: auto;
-  background: #fff; /* temporary background for debugging */
-}
-
-.patreon-item {
-  align-items: center;
-  margin-bottom: 0px;
-}
-
-.tooltip-content {
-  white-space: pre-wrap;
-}
-
-
-.title-span {
-	font-family: "Myriad-Pro-Condensed", sans-serif;
-  text-align: center;
-}
-
-
 .leaflet-control-attribution {
   display: none;
   visibility: hidden;
@@ -343,13 +321,46 @@ canvas {
   flex-direction: column;
 }
 
+.leaflet-pixi-overlay {
+	animation: fadeIn 0.8s ease-in-out;
+	cursor: none;
+	z-index: 2000;
+}
+
+.leaflet-pixi-overlay canvas {
+	cursor: none !important;
+	z-index: 2001;
+}
+
+.leaflet-container canvas {
+  cursor: none !important;
+}
+
+.marker-animate {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.custom-label {
+	animation: fadeIn 0.8s ease-in-out;
+}
+
+.hovered {
+  transform: scale(1.2);
+  transition: transform 0.3s ease-in-out;
+}
+
+/* ── Responsive ─────────────────────────────────────────────────────── */
 
 @media only screen and (max-width: 768px) {
-
 	.map-container {
 		width: 100dvw;
-		height: 100dvh; /* or 100svh, depending on your preference */
+		height: 100dvh;
 	}
+
+  .maplibre-container {
+    height: 100dvh;
+		width: 100dvw;
+  }
 
   .leaflet-container {
     height: 100dvh;
@@ -358,7 +369,6 @@ canvas {
 
   .key-container {
     padding: 4px;
-    width: 80%;
     font-size: 0.8rem;
   }
 
@@ -383,6 +393,7 @@ canvas {
     margin-bottom: 5px;
     padding: 0;
   }
+
   .filter-item {
     align-items: center;
     margin-bottom: 0px;
@@ -395,16 +406,14 @@ canvas {
     padding: 0;
     margin: 0;
   }
+
   .patreon-container {
     padding: 4px;
     font-size: 0.7rem;
   }
-  .ads-container {
-		display: none;
-  }
+
   .search-container {
     padding: 4px 12px 4px 4px !important;
-    width: 100%;
     margin: 0px;
   }
 
@@ -420,81 +429,4 @@ canvas {
     font-size: 0.8rem;
     font-weight: bold;
   }
-
-  .leaflet-control-zoom-in {
-    width: 20px !important;
-    height: 20px !important;
-  }
-
-  .leaflet-control-zoom-out {
-    width: 20px !important;
-    height: 20px !important;
-  }
-
-  .leaflet-control-zoom-in span {
-    display: block;
-    line-height: 20px;
-    width: 20px;
-    height: 20px;
-    font-size: 1.2rem;
-  }
-  .leaflet-control-zoom-out span {
-    display: block;
-    line-height: 20px;
-    width: 20px;
-    height: 20px;
-    font-size: 1.2rem;
-  }
-
-}
-
-.marker-animate {
-  animation: fadeIn 0.5s ease-in-out;
-	animation: fadeOut 0.5s ease-in-out;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes fadeOut {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
-
-.custom-label {
-	animation: fadeIn 0.8s ease-in-out;
-}
-.leaflet-pixi-overlay {
-	animation: fadeIn 0.8s ease-in-out;
-	cursor: none;
-}
-
-.leaflet-container canvas {
-  cursor: none !important;
-}
-
-.leaflet-pixi-overlay canvas {
-  cursor: none !important;
-}
-
-.hovered {
-  transform: scale(1.2);
-  transition: transform 0.3s ease-in-out;
-}
-
-.leaflet-pixi-overlay {
-	z-index: 2000;
-}
-.leaflet-pixi-overlay canvas {
-	z-index: 2001;
 }
