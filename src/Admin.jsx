@@ -1,11 +1,7 @@
 import { useEffect, useState } from "react";
-import { MapContainer } from "react-leaflet";
-import { CRS } from "leaflet";
 import { api } from "./components/functions/api";
-import { SystemProvider } from "./components/functions/SystemProvider";
-import AddSystemForm from "./components/AddSystem";
 
-// Caddy gates /admin behind oauth2-proxy + Pocket-ID passkey upstream.
+// Caddy gates this path behind oauth2-proxy + Pocket-ID upstream.
 export default function Admin() {
 	const [state, setState] = useState({ status: "issuing" });
 
@@ -23,29 +19,21 @@ export default function Admin() {
 	}, []);
 
 	if (state.status === "issuing") {
-		return <div style={{ padding: 24, color: "#e2e2e2" }}>Issuing PostgREST token...</div>;
+		return <div style={{ padding: 24, color: "#e2e2e2", fontFamily: "monospace" }}>Issuing PostgREST token...</div>;
 	}
 	if (state.status === "error") {
 		return (
-			<div style={{ padding: 24, color: "#f88" }}>
+			<div style={{ padding: 24, color: "#f88", fontFamily: "monospace" }}>
 				<h2>Admin auth error</h2>
 				<pre>{state.message}</pre>
 			</div>
 		);
 	}
 	return (
-		<SystemProvider>
-			<div style={{ padding: 24, color: "#e2e2e2" }}>
-				<h2 style={{ marginBottom: 12 }}>swmap admin (signed in as {state.user?.email || state.user?.sub})</h2>
-				<MapContainer
-					center={[0, 0]}
-					zoom={2}
-					crs={CRS.Simple}
-					style={{ height: "70vh", width: "100%" }}
-				>
-					<AddSystemForm />
-				</MapContainer>
-			</div>
-		</SystemProvider>
+		<div style={{ padding: 24, color: "#e2e2e2", fontFamily: "monospace" }}>
+			<h2 style={{ marginBottom: 12 }}>swmap admin</h2>
+			<p>Signed in as <code>{state.user?.email || state.user?.sub}</code></p>
+			<p>PostgREST token stored in localStorage. Editor UI not wired yet.</p>
+		</div>
 	);
 }
