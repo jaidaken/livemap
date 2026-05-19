@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useMap } from "react-leaflet";
 import { useSystemContext } from "./functions/useSystemContext";
-import { api, authenticateAPI } from "./functions/api";
+import { api } from "./functions/api";
 
 const AddSystemForm = () => {
   const [formData, setFormData] = useState({
@@ -49,9 +49,8 @@ const AddSystemForm = () => {
         return;
       }
 
-      if (!authenticated) {
-        await authenticateAPI();
-        setAuthenticated(true);
+      if (!api.isAuthed()) {
+        throw new Error("Not authenticated. Wire a login form before re-enabling AddSystemForm.");
       }
 
       await api.upsert("systems", [{

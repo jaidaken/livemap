@@ -1,4 +1,4 @@
-// Native PostgREST API client - 100% self-hosted
+// PostgREST API client. Reads use VITE_API_KEY; admin writes require a JWT obtained from an interactive login (no auto-login from baked credentials).
 
 const API_URL = import.meta.env.VITE_API_URL;
 const API_KEY = import.meta.env.VITE_API_KEY;
@@ -18,37 +18,26 @@ class PostgRESTClient {
       'apikey': this.apiKey,
       ...options.headers,
     };
-
-    // If authenticated, use the auth token instead
     if (this.authToken) {
       headers['Authorization'] = `Bearer ${this.authToken}`;
     }
-
     const response = await fetch(`${this.baseUrl}${endpoint}`, {
       ...options,
       headers,
     });
-
     if (!response.ok) {
       const error = await response.json().catch(() => ({ message: response.statusText }));
       throw new Error(error.message || 'Request failed');
     }
-
-    // Handle 204 No Content responses
-    if (response.status === 204) {
-      return null;
-    }
-
+    if (response.status === 204) return null;
     return response.json();
   }
 
-  // GET request
   async select(table, query = '') {
     const queryString = query ? `?${query}` : '';
     return this.request(`/${table}${queryString}`);
   }
 
-  // POST request (insert)
   async insert(table, data, returnData = true) {
     const headers = returnData ? { 'Prefer': 'return=representation' } : {};
     return this.request(`/${table}`, {
@@ -58,7 +47,6 @@ class PostgRESTClient {
     });
   }
 
-  // PATCH request (update)
   async update(table, data, query) {
     return this.request(`/${table}?${query}`, {
       method: 'PATCH',
@@ -67,17 +55,15 @@ class PostgRESTClient {
     });
   }
 
-  // DELETE request
   async delete(table, query) {
     return this.request(`/${table}?${query}`, {
       method: 'DELETE',
     });
   }
 
-  // UPSERT request (insert or update)
   async upsert(table, data, returnData = true) {
     const headers = {
-      'Prefer': returnData ? 'return=representation,resolution=merge-duplicates' : 'resolution=merge-duplicates'
+      'Prefer': returnData ? 'return=representation,resolution=merge-duplicates' : 'resolution=merge-duplicates',
     };
     return this.request(`/${table}`, {
       method: 'POST',
@@ -86,42 +72,36 @@ class PostgRESTClient {
     });
   }
 
-  // Authentication
+  // Interactive login. Caller supplies creds from a form, never from env.
   async authenticate(email, password) {
-    try {
-      const response = await fetch(`${AUTH_URL}/auth/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Authentication failed');
-      }
-
-      const data = await response.json();
-
-      if (data.access_token) {
-        this.authToken = data.access_token;
-        localStorage.setItem('auth_token', data.access_token);
-      }
-
-      return data;
-    } catch (error) {
-      console.error('Authentication error:', error.message);
-      throw error;
+    const response = await fetch(`${AUTH_URL}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    });
+    if (!response.ok) throw new Error('Authentication failed');
+    const data = await response.json();
+    if (data.access_token) {
+      this.authToken = data.access_token;
+      localStorage.setItem('auth_token', data.access_token);
     }
+    return data;
+  }
+
+  restoreToken() {
+    const token = localStorage.getItem('auth_token');
+    if (token) this.authToken = token;
+  }
+
+  clearToken() {
+    this.authToken = null;
+    localStorage.removeItem('auth_token');
+  }
+
+  isAuthed() {
+    return this.authToken !== null;
   }
 }
 
-// Create and export the API client
 export const api = new PostgRESTClient(API_URL, API_KEY);
-
-// Export authentication function for convenience
-export const authenticateAPI = async () => {
-  const email = import.meta.env.VITE_APP_USER_EMAIL;
-  const password = import.meta.env.VITE_APP_USER_PASSWORD;
-  return api.authenticate(email, password);
-};
+api.restoreToken();
