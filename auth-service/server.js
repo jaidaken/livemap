@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const cors = require('cors');
 
 const app = express();
-const PORT = 3001;
+const PORT = parseInt(process.env.PORT || '3001', 10);
 
 // Get credentials from environment variables
 const VALID_EMAIL = process.env.VITE_APP_USER_EMAIL || 'jamiehewitt@pm.me';
@@ -24,10 +24,10 @@ app.post('/auth/login', (req, res) => {
 
   // Validate credentials
   if (email === VALID_EMAIL && password === VALID_PASSWORD) {
-    // Create JWT token with postgres role
+    // role=swmap matches the DB user that owns public.systems
     const token = jwt.sign(
       {
-        role: 'postgres',
+        role: 'swmap',
         email: email
       },
       JWT_SECRET,
